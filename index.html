@@ -190,7 +190,7 @@ function doTree() {
     $('#bottom_right').html('');
 
     // ************** Generate the tree diagram  *****************
-    var margin = {top: 40, right: 120, bottom: 20, left: 120},
+    var margin = {top: 80, right: 120, bottom: 20, left: 120},
       width = 960 - margin.right - margin.left,
       height = 500 - margin.top - margin.bottom;
       
@@ -204,11 +204,12 @@ function doTree() {
 
     var svg = d3.select("#bottom_right").append("svg")
       .attr("width", width + margin.right + margin.left)
-      // .attr("height", height + margin.top + margin.bottom)
+      .attr("height", height + margin.top + margin.bottom)
       .append("g")
-        .call(d3.behavior.zoom().scaleExtent([1,8]).on("zoom", zoom))
-      .append("g");
 
+        .call(d3.behavior.zoom().scaleExtent([1,8]).on("zoom", zoom))
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top +")");
     root = treeData[0];
       
     update(root);
