@@ -206,10 +206,10 @@ function doTree() {
       .attr("width", width + margin.right + margin.left)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
-
+      .attr("transform", "translate(" + margin.left + "," + margin.top +")")
         .call(d3.behavior.zoom().scaleExtent([1,8]).on("zoom", zoom))
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top +")");
+      .append("g");
+      
     root = treeData[0];
       
     update(root);
