@@ -21,17 +21,29 @@
         };
 
         $('document').ready( function() {
+            // Create the PEG editor
             editor = ace.edit("editor");
             editor.setTheme("ace/theme/monokai");
             editor.getSession().setMode("ace/mode/javascript");
+            
+            // Don't do any static syntax analysis
             editor.setOption("useWorker", false);
+            
+            // Personal preferences:
             editor.setOption("tabSize", 2);
+            editor.setOption('scrollPastEnd',100);
+
+            // Store retrieve text
             editor.setValue(localStorage["grammar"]);
             editor.getSession().on("change", function() {
                 localStorage.setItem("grammar", editor.getValue());
             });
+
+            // Resize editor
             $('#editor').css("height", window.innerHeight);
             editor.resize();
+
+            // Create parse string editor
             output = ace.edit("output");
             output.setOption("useWorker", false);
             output.setValue(localStorage["source"]);
@@ -39,6 +51,7 @@
                 localStorage.setItem("source", output.getValue());
                 $('#parse_btn').click();
             });
+            
             $('#output').css('height', window.innerHeight / 2);
             output.resize();
             $('#build_parser_btn').click( function() {
