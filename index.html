@@ -81,6 +81,14 @@
     <style type="text/css">
 		body {
             background-color: white;
+            overflow: hidden !important;
+        }
+        #container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
         }
         #left {
           position: absolute;
@@ -94,6 +102,7 @@
           top:  0;
           right: 0;
           bottom: 0;
+
           left: 50%;
         }
         #top_right {
@@ -111,7 +120,6 @@
           right: 0;
           bottom: 0;
           left: 0;
-          overflow: scroll;
         }
         svg {
             pointer-events: all;
@@ -132,6 +140,7 @@
     </style>  
     </head>
     <body>
+        <div id="container">
     <!-- toolbars -->
         <div id="toolbar" class="">
             
@@ -169,7 +178,7 @@
         </div>
         
         
-    
+    </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     
     <!-- Include all compiled plugins (below), or include individual files as needed -->    
@@ -195,9 +204,10 @@ function doTree() {
 
     var svg = d3.select("#bottom_right").append("svg")
       .attr("width", width + margin.right + margin.left)
-      .attr("height", height + margin.top + margin.bottom)
+      // .attr("height", height + margin.top + margin.bottom)
       .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .call(d3.behavior.zoom().scaleExtent([1,8]).on("zoom", zoom))
+      .append("g");
 
     root = treeData[0];
       
@@ -245,15 +255,19 @@ function doTree() {
 
     }
     // zoom and pan
-    var zoom = d3.behavior.zoom()
-    .on("zoom",function() {
-        g.attr("transform","translate("+ 
-            d3.event.translate.join(",")+")scale("+d3.event.scale+")");
-        g.selectAll("path")  
-            .attr("d", path.projection(projection)); 
-    });
+    // var zoom = d3.behavior.zoom()
+    // .on("zoom",function() {
+    //     g.attr("transform","translate("+ 
+    //         d3.event.translate.join(",")+")scale("+d3.event.scale+")");
+    //     g.selectAll("path")  
+    //         .attr("d", path.projection(projection)); 
+    // });
 
-    svg.call(zoom)
+    // svg.call(zoom)
+    function zoom() {
+  svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
+
 };
 </script>
   </body>
