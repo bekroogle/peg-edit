@@ -64,8 +64,9 @@
                 try {
                     editor.getSession().clearAnnotations();
                     parser = PEG.buildParser(editor.getValue());
-
+                    $('.alert-warning').remove();
                 } catch(exn) {
+                  $('#bottom_right').html('<div class="alert alert-warning" role="alert">Grammar Error: '+ exn.message +'</div>');
                   console.log(exn);
                   //if (!editor.getSession().$annotations) {
                     editor.getSession().$annotations = [];
