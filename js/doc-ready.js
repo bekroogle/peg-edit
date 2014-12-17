@@ -20,12 +20,12 @@ $('document').ready(function() {
     // Store retrieve text
     editor.setValue(localStorage["grammar"]);
     if (editor.getValue !== "") {
-        $('#build_parser_btn').click();
+        $('#build_parser_btn a').click();
     }
 
     editor.getSession().on("change", function() {
         localStorage.setItem("grammar", editor.getValue());
-        $('#build_parser_btn').click();
+        $('#build_parser_btn a').click();
     });
 
     // Resize editor
@@ -38,12 +38,12 @@ $('document').ready(function() {
     output.setValue(localStorage["source"]);
     output.getSession().on('change', function() {
         localStorage.setItem("source", output.getValue());
-        $('#parse_btn').click();
+        $('#parse_btn a').click();
     });
 
     $('#output').css('height', window.innerHeight / 2);
     output.resize();
-    $('#build_parser_btn').click(function() {
+    $('#build_parser_btn a').click(function() {
         try {
             editor.getSession().clearAnnotations();
             parser = PEG.buildParser(editor.getValue());
@@ -76,7 +76,7 @@ $('document').ready(function() {
 
         // If a parser hasn't been built, build one:
         if (!parser) {
-            $('#build_parser_btn').click();
+            $('#build_parser_btn a').click();
         }
 
         // Now parse!
@@ -104,7 +104,7 @@ $('document').ready(function() {
 
     $(output).focus(function() {
         if (editor.getValue()) {
-            $('#build_parser_btn').click();
+            $('#build_parser_btn a').click();
         }
     });
 
