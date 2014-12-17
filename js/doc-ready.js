@@ -117,4 +117,8 @@ $('document').ready(function() {
         $(this).tab('show');
         editor.execCommand('showSettingsMenu');
     });
+
+    $('#tree-reset').click(function() {
+        $('#parse_btn a').click();
+    });
 });

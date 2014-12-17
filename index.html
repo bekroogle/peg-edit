@@ -5,7 +5,7 @@
     
     
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./css/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   </head>
@@ -45,8 +45,10 @@
             </ul>
               <div id="treediv"></div>
               <div class="btn-group zoom-btn-group bottom right" role="group" aria-label="...">
-                <button type="button" class="btn btn-default">-</button>
-                <button type="button" class="btn btn-default">+</button>
+                <button type="button" class="btn btn-default disabled" data-toggle="tooltip" data-placement="top" title="Zoom Out" id="tree-zoom-out"><span class="glyphicon glyphicon-zoom-out"></span></button>
+                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Reset" id="tree-reset"><span class="glyphicon glyphicon-repeat"></span></button>
+                <button type="button" class="btn btn-default disabled" data-toggle="tooltip" data-placement="top" title="Zoom In" id="tree-zoom-in"><span class="glyphicon glyphicon-zoom-in"></span></button>
+
               </div>
           </div>
       </div>
@@ -59,7 +61,7 @@
     <script src="./js/peg-0.8.0.js" type="text/javascript"></script>
     <!--jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="./js/bootstrap.min.js" type="text/javascript"></script>
     <script src="./js/doc-ready.js" type="text/javascript"></script>
     <script src="./js/d3.min.js" type="text/javascript"></script>
     <script src="./js/do-tree.js" type="text/javascript"></script>
