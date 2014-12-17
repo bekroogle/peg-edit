@@ -20,12 +20,12 @@ $('document').ready(function() {
     // Store retrieve text
     editor.setValue(localStorage["grammar"]);
     if (editor.getValue !== "") {
-        $('#build_parser_btn a').click();
+        $('#build_parser_btn').click();
     }
 
     editor.getSession().on("change", function() {
         localStorage.setItem("grammar", editor.getValue());
-        $('#build_parser_btn a').click();
+        $('#build_parser_btn').click();
     });
 
     // Resize editor
@@ -38,12 +38,12 @@ $('document').ready(function() {
     output.setValue(localStorage["source"]);
     output.getSession().on('change', function() {
         localStorage.setItem("source", output.getValue());
-        $('#parse_btn a').click();
+        $('#parse_btn').click();
     });
 
     $('#output').css('height', window.innerHeight / 2);
     output.resize();
-    $('#build_parser_btn a').click(function() {
+    $('#build_parser_btn').click(function() {
         try {
             editor.getSession().clearAnnotations();
             parser = PEG.buildParser(editor.getValue());
@@ -70,13 +70,13 @@ $('document').ready(function() {
 
     });
 
-    $('#parse_btn a').click(function(e) {
+    $('#parse_btn').click(function(e) {
         e.preventDefault();
 
 
         // If a parser hasn't been built, build one:
         if (!parser) {
-            $('#build_parser_btn a').click();
+            $('#build_parser_btn').click();
         }
 
         // Now parse!
@@ -104,21 +104,21 @@ $('document').ready(function() {
 
     $(output).focus(function() {
         if (editor.getValue()) {
-            $('#build_parser_btn a').click();
+            $('#build_parser_btn').click();
         }
     });
 
     $('#peg_editor a').click(function(e) {
         e.preventDefault();
-        $(this).tab('show');
+       
     });
-    $('#peg_editor_settings a').click(function(e) {
+    $('#peg_editor_settings').click(function(e) {
         e.preventDefault();
-        $(this).tab('show');
+        
         editor.execCommand('showSettingsMenu');
     });
 
     $('#tree-reset').click(function() {
-        $('#parse_btn a').click();
+        $('#parse_btn').click();
     });
 });

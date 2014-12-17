@@ -1,72 +1,62 @@
-    body {
-            background-color: white;
-            /*overflow: hidden !important;*/
-        }
-        #container {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-        }
-        #left {
-          position: absolute;
-          top: 0;
-          right: 50%;
-          left: 0;
-          bottom: 0;
-        }
-        #right {
-          position: absolute;
-          top:  0;
-          right: 0;
-          bottom: 0;
-
-          left: 50%;
-        }
-        #top_right {
-          position: relative;
-          top: 0;
-          right: 0;
-          left: 0;
-          bottom: 50%;
-
-        }
-        #bottom_right {
-          position: relative;
-          border: 1px solid black;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-        }
-        svg {
-            pointer-events: all;
-        }
-
-        .zoom-btn-group {
-          position: fixed;
-        }
-
-        .bottom {
-          bottom: 1rem;
-        }
-
-        .right {
-          right: 1rem;
-        }
-
-
-        .node circle {
-            fill: #fff;
-            stroke: steelblue;
-            stroke-width: 3px;
-        }
-
-        .node text { font: 12px sans-serif; }
-
-        .link {
-            fill: none;
-            stroke: #ccc;
-            stroke-width: 2px;
-        }
+body {
+  background-color: white;
+  /*overflow: hidden !important;*/
+}
+#container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+#left {
+  position: absolute;
+  top: 0;
+  right: 50%;
+  left: 0;
+  bottom: 0;
+}
+#right {
+  position: absolute;
+  top:  0;
+  right: 0;
+  bottom: 0;
+  left: 50%;
+}
+#top_right {
+  position: relative;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 50%;
+}
+#bottom_right {
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+svg {
+    pointer-events: all;
+}
+.zoom-btn-group {
+  position: fixed;
+}
+.bottom {
+  bottom: 1rem;
+}
+.right {
+  right: 1rem;
+}
+.node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 3px;
+}
+.node text { font: 12px sans-serif; }
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 2px;
+}

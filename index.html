@@ -16,9 +16,8 @@
       <div id="left">
             <ul class="nav nav-tabs">
               <li role="presentation" id="peg_editor" class="active"><a href="#">PEG Editor</a></li>
-              <li role="presentation" id="peg_editor_settings"><a href="#"><span class="glyphicon glyphicon-cog"></span>&nbsp;Settings</a></li>
-              <li role="presentation" id="build_parser_btn"><a href="#" aria-label="Left Align">
-              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Build Parser</a></li>
+              <li role="presentation"><a href="#" id="peg_editor_settings"><span class="glyphicon glyphicon-cog"></span>&nbsp;Settings</a></li>
+              <li role="presentation"><a id="build_parser_btn" href="#"><span class="glyphicon glyphicon-ok"></span>&nbsp;Build Parser</a></li>
             </ul>
           <div id="editor"></div>
       </div>
@@ -28,12 +27,11 @@
           <div id="top_right">
             <ul class="nav nav-tabs">
               <li role="presentation" class="active"><a href="#">Parse Tree</a></li>
-              <li role="presentation" id="parse_btn">
-                <a href="#"> 
+              <li role="presentation">
+                <a href="#" id="parse_btn"> 
                   <span class="glyphicon glyphicon-play" aria-hidden="true"></span>&nbsp;Parse
                 </a>
               </li>
-              <li role="presentation"><a href="#">Messages</a></li>
             </ul>
             <div id="output"></div>
           </div>
@@ -41,7 +39,9 @@
           <div id="bottom_right">
             <ul class="nav nav-tabs">
               <li role="presentation" class="active"><a href="#">Parse Tree</a></li>
+              <!-- not yet implemented
               <li role="presentation"><a href="#">Output</a></li>
+              -->
             </ul>
               <div id="treediv"></div>
               <div class="btn-group zoom-btn-group bottom right" role="group" aria-label="...">
