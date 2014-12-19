@@ -49,7 +49,7 @@ $('document').ready(function() {
             parser = PEG.buildParser(editor.getValue());
             $('.alert-warning').remove();
         } catch (exn) {
-            $('#bottom_right').html('<div class="alert alert-warning" role="alert">Grammar Error: ' + exn.message + '</div>');
+            $('#treediv').html('<div class="alert alert-warning" role="alert">Grammar Error: ' + exn.message + '</div>');
             console.log(exn);
             //if (!editor.getSession().$annotations) {
             editor.getSession().$annotations = [];
@@ -83,11 +83,12 @@ $('document').ready(function() {
         try {
             result = parser.parse(output.getValue());
             treeData = result;
+            $('.alert').remove();
             doTree();
 
             // Log any parse errors in the console:                    
         } catch (e) {
-            $('#bottom_right').html('<div class="alert alert-danger" role="alert">Parse Error: ' + e.message + '</div>');
+            $('#treediv').html('<div class="alert alert-danger" role="alert">Parse Error: ' + e.message + '</div>');
             console.error(e);
         }
     });

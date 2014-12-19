@@ -31,7 +31,7 @@ function doTree() {
 
   debugData = svg;
 
-  root = treeData[0];
+  root = treeData;
 
   update(root);
 
