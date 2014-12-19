@@ -17,7 +17,7 @@ $('document').ready(function() {
 
     // Personal preferences:
     editor.setOption("tabSize", 2);
-    editor.setOption('scrollPastEnd', 100);
+    editor.setOption('scrollPastEnd', '40');
 
     // Store retrieve text
     editor.setValue(localStorage["grammar"]);
