@@ -25,7 +25,9 @@ $('document').ready(function() {
 
     editor.getSession().on("change", function() {
         localStorage.setItem("grammar", editor.getValue());
-        $('#build_parser_btn').click();
+        if ($('#auto-build').prop('checked')) {
+            $('#build_parser_btn').click();
+        }
     });
 
     // Resize editor
