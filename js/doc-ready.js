@@ -3,7 +3,9 @@ var treeData;
 var changeSize = function(target, delta) {
     target.setOption('fontSize', target.getOption('fontSize') + delta);
 };
-
+var setSize = function(target, size) {
+    target.setOption('fontSize', size);
+};
 $('document').ready(function() {
     // Create the PEG editor
     editor = ace.edit("editor");
@@ -95,16 +97,19 @@ $('document').ready(function() {
         }
     });
 
-    $('#zoom_in_btn').click(function() {
+    $('#peg-zoom-in').click(function() {
         changeSize(editor, 2);
         changeSize(output, 2);
 
     });
-    $('#zoom_out_btn').click(function() {
+    $('#peg-zoom-out').click(function() {
         changeSize(editor, -2);
         changeSize(output, -2);
     });
-
+    $('#peg-reset').click(function() {
+        setSize(editor, 14);
+        setSize(output, 14);
+    });
     $(output).focus(function() {
         if (editor.getValue()) {
             $('#build_parser_btn').click();

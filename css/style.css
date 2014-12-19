@@ -42,12 +42,19 @@ svg {
 }
 .zoom-btn-group {
   position: fixed;
+  z-index: 100;
 }
 .bottom {
   bottom: 1rem;
 }
 .right {
   right: 1rem;
+}
+.half-right {
+  right: 52%;
+}
+.top {
+  top: 1rem;
 }
 .node circle {
     fill: #fff;
