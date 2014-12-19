@@ -32,12 +32,10 @@ $('document').ready(function() {
         }
     });
 
-    // Resize editor
-    $('#editor').css("height", window.innerHeight);
-    editor.resize();
 
     // Create parse string editor
     output = ace.edit("output");
+    output.setTheme("ace/theme/monokai");
     output.setOption("useWorker", false);
     output.setValue(localStorage["source"]);
     output.getSession().on('change', function() {
@@ -45,8 +43,8 @@ $('document').ready(function() {
         $('#parse_btn').click();
     });
 
-    $('#output').css('height', window.innerHeight / 2);
-    output.resize();
+    resizeElements();
+
     $('#build_parser_btn').click(function() {
         try {
             editor.getSession().clearAnnotations();
@@ -130,3 +128,17 @@ $('document').ready(function() {
         $('#parse_btn').click();
     });
 });
+
+var resizeElements = function() {
+    // Resize editor
+    $('#editor').height(window.innerHeight * .8)
+    editor.resize();
+
+    $('#right-panel').height($('#left-panel').height());
+    
+    $('#output').height(window.innerHeight * .3);
+    output.resize();
+
+    $('#treediv').height(window.innerHeight * .4);
+};
+

@@ -2,99 +2,80 @@
 <html>
   <head>
     <title>PEGedit</title>
-    <link href='./bootstrap/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <meta charset='utf-8'>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
+    <link href='./css/foundation.css' rel='stylesheet'>
     <link href='./css/style.css' rel='stylesheet'>
   </head>
   <body>
-    <div id='left'>
-      <ul class='nav nav-tabs'>
-        <li class='active' role='presentation'>
-          <a href='#'>
-            PEG Editor
-          </a>
-          <li role='presentation'>
-            <a href='#' id='peg_editor_settings'>
-              <span class='glyphicon glyphicon-cog'>
-                Settings
-              </span>
-            </a>
-          </li>
-          <li role='presentation'>
-            <a href='#' id='build_parser_btn'>
-              <span class='glyphicon glyphicon-ok'>
-                Build Parser
-              </span>
-            </a>
-          </li>
-          <li role='presentation'>
-            <a href='#'>
-              <label>
-                <input id='auto-build' type='checkbox'>
-                Auto-build parser on change?
-              </label>
-            </a>
-          </li>
-        </li>
-      </ul>
-      <div id='editor'></div>
-      <div class='btn-group zoom-btn-group bottom half-right' role='group'>
-        <button class='btn btn-default' data-placement='bottom' data-toggle='tooltip' id='peg-zoom-out' title='Zoom out' type='button'>
-          <span class='glyphicon glyphicon-zoom-out'></span>
-        </button>
-        <button class='btn btn-default' data-placement='bottom' data-toggle='tooltip' id='peg-reset' title='Reset zoom' type='button'>
-          <span class='glyphicon glyphicon-repeat'></span>
-        </button>
-        <button class='btn btn-default' data-placement='bottom' data-toggle='tooltip' id='peg-zoom-in' title='Zoom in' type='button'>
-          <span class='glyphicon glyphicon-zoom-in'></span>
-        </button>
+    <div class='row'>
+      <div class='large-6 columns panel' id='left-panel'>
+        <nav class='top-bar' data-topbar role='navigation'>
+          <ul class='title-area'>
+            <li class='name'>
+              <h1>
+                <a href='#'>PEG.js editor</a>
+              </h1>
+            </li>
+            <li class='toggle-topbar menu-icon'>
+              <a href='#'>
+                <span>Menu</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div id='editor'></div>
+      </div>
+      <div class='large-6 columns panel' id='right-panel'>
+        <div class='row'>
+          <div class='large-12 columns'>
+            <nav class='top-bar' data-topbar role='navigation'>
+              <ul class='title-area'>
+                <li class='name'>
+                  <h1>
+                    <a href='#'>Parse string editor</a>
+                  </h1>
+                </li>
+                <li class='toggle-topbar menu-icon'>
+                  <a href='#'>
+                    <span>Menu</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <div id='output'></div>
+          </div>
+        </div>
+        <div class='row'>
+          <div class='large-12 columns'>
+            <p>
+              <nav class='top-bar' data-topbar role='navigation'>
+                <ul class='title-area'>
+                  <li class='name'>
+                    <h1>
+                      <a href='#'>Parse tree view</a>
+                    </h1>
+                  </li>
+                  <li class='toggle-topbar menu-icon'>
+                    <a href='#'>
+                      <span>Menu</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+              <div id='treediv'></div>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js'></script>
+    <script src='./js/peg-0.8.0.js'></script>
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script src='./js/foundation/foundation.js'></script>
+    <script src='./js/foundation/foundation.equalizer.js'></script>
+    <script src='./js/doc-ready.js'></script>
+    <script src='./js/d3.min.js'></script>
+    <script src='./js/do-tree.js'></script>
   </body>
-  <div id='right'>
-    <div id='top_right'>
-      <ul class='nav nav-tabs'>
-        <li class='active' role='presentation'>
-          <a href='#'>
-            Parse string
-          </a>
-        </li>
-        <li role='presentation'>
-          <a href='#' id='parse_btn'>
-            <span aria-hidden='true' class='glyphicon glyhpicon-play'>
-              Parse
-            </span>
-          </a>
-        </li>
-      </ul>
-      <div id='output'></div>
-    </div>
-    <div id='bottom_right'>
-      <ul class='nav nav-tabs'>
-        <li class='active' role='presentation'>
-          <a href='#'>
-            Parse tree
-          </a>
-        </li>
-      </ul>
-      <div id='treediv'></div>
-      <div class='btn-group zoom-btn-group bottom half-right' role='group'>
-        <button class='btn btn-default' data-placement='bottom' data-toggle='tooltip' id='tree-zoom-out' title='Zoom out' type='button'>
-          <span class='glyphicon glyphicon-zoom-out'></span>
-        </button>
-        <button class='btn btn-default' data-placement='bottom' data-toggle='tooltip' id='tree-reset' title='Reset zoom' type='button'>
-          <span class='glyphicon glyphicon-repeat'></span>
-        </button>
-        <button class='btn btn-default' data-placement='bottom' data-toggle='tooltip' id='tree-zoom-in' title='Zoom in' type='button'>
-          <span class='glyphicon glyphicon-zoom-in'></span>
-        </button>
-      </div>
-    </div>
-  </div>
-  <script src='//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js'></script>
-  <script src='./js/peg-0.8.0.js'></script>
-  <script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-  <script src='./js/bootstrap.min.js'></script>
-  <script src='./js/doc-ready.js'></script>
-  <script src='./js/d3.min.js'></script>
-  <script src='./js/do-tree.js'></script>
 </html>

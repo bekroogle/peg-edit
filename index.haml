@@ -2,9 +2,59 @@
 %html
   %head
     %title PEGedit
-    %link(rel="stylesheet" href="./bootstrap/dist/css/bootstrap.min.css")
+    %meta(charset="utf-8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %link(rel="stylesheet" href="./css/foundation.css")
     %link(rel="stylesheet" href="./css/style.css")
+
   %body
+    .row
+      .large-6.columns.panel#left-panel
+        %nav.top-bar(data-topbar role="navigation")
+          %ul.title-area
+            %li.name
+              %h1
+                %a(href="#")PEG.js editor
+            %li.toggle-topbar.menu-icon
+              %a(href="#")
+                %span Menu 
+        #editor
+      .large-6.columns.panel#right-panel
+        .row
+          .large-12.columns
+            %nav.top-bar(data-topbar role="navigation")
+              %ul.title-area
+                %li.name
+                  %h1
+                    %a(href="#")Parse string editor
+                %li.toggle-topbar.menu-icon
+                  %a(href="#")
+                    %span Menu 
+        
+            #output
+        .row
+          .large-12.columns
+            %p
+              %nav.top-bar(data-topbar role="navigation")
+                %ul.title-area
+                  %li.name
+                    %h1
+                      %a(href="#")Parse tree view
+                  %li.toggle-topbar.menu-icon
+                    %a(href="#")
+                      %span Menu 
+              #treediv
+
+    %script(src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js")          
+    %script(src="./js/peg-0.8.0.js")
+    %script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
+    %script(src="./js/foundation/foundation.js")
+    %script(src="./js/foundation/foundation.equalizer.js")
+    %script(src="./js/doc-ready.js")
+    %script(src="./js/d3.min.js")
+    %script(src="./js/do-tree.js")
+
+  -#
     #left
       %ul.nav.nav-tabs
         %li.active(role = "presentation")
@@ -31,36 +81,36 @@
           %span.glyphicon.glyphicon-repeat
         %button#peg-zoom-in.btn.btn-default(type="button" data-toggle="tooltip" data-placement="bottom" title="Zoom in")
           %span.glyphicon.glyphicon-zoom-in
-  #right
-    #top_right
-      %ul.nav.nav-tabs
-        %li.active(role="presentation")
-          %a(href="#")
-            Parse string
-        %li(role="presentation")
-          %a#parse_btn(href="#")
-            %span.glyphicon.glyhpicon-play(aria-hidden="true")
-              Parse
-      #output
-    #bottom_right
-      %ul.nav.nav-tabs
-        %li.active(role="presentation")
-          %a(href="#")
-            Parse tree
-      #treediv
-      .btn-group.zoom-btn-group.bottom.half-right(role="group")
-        %button#tree-zoom-out.btn.btn-default(type="button" data-toggle="tooltip" data-placement="bottom" title="Zoom out")
-          %span.glyphicon.glyphicon-zoom-out
-        %button#tree-reset.btn.btn-default(type="button" data-toggle="tooltip" data-placement="bottom" title="Reset zoom")
-          %span.glyphicon.glyphicon-repeat
-        %button#tree-zoom-in.btn.btn-default(type="button" data-toggle="tooltip" data-placement="bottom" title="Zoom in")
-          %span.glyphicon.glyphicon-zoom-in
-  %script(src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js")          
-  %script(src="./js/peg-0.8.0.js")
-  %script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
-  %script(src="./js/bootstrap.min.js")
-  %script(src="./js/doc-ready.js")
-  %script(src="./js/d3.min.js")
-  %script(src="./js/do-tree.js")
+    #right
+      #top_right
+        %ul.nav.nav-tabs
+          %li.active(role="presentation")
+            %a(href="#")
+              Parse string
+          %li(role="presentation")
+            %a#parse_btn(href="#")
+              %span.glyphicon.glyhpicon-play(aria-hidden="true")
+                Parse
+        #output
+      #bottom_right
+        %ul.nav.nav-tabs
+          %li.active(role="presentation")
+            %a(href="#")
+              Parse tree
+        #treediv
+        .btn-group.zoom-btn-group.bottom.half-right(role="group")
+          %button#tree-zoom-out.btn.btn-default(type="button" data-toggle="tooltip" data-placement="bottom" title="Zoom out")
+            %span.glyphicon.glyphicon-zoom-out
+          %button#tree-reset.btn.btn-default(type="button" data-toggle="tooltip" data-placement="bottom" title="Reset zoom")
+            %span.glyphicon.glyphicon-repeat
+          %button#tree-zoom-in.btn.btn-default(type="button" data-toggle="tooltip" data-placement="bottom" title="Zoom in")
+            %span.glyphicon.glyphicon-zoom-in
+    %script(src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js")          
+    %script(src="./js/peg-0.8.0.js")
+    %script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
+    %script(src="./js/bootstrap.min.js")
+    %script(src="./js/doc-ready.js")
+    %script(src="./js/d3.min.js")
+    %script(src="./js/do-tree.js")
 
 
