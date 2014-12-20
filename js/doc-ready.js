@@ -140,12 +140,16 @@ $('document').ready(function() {
     $('#sample_one').click(function(e) {
         e.preventDefault();
         editor.setValue(simple_expr);
+        $('#build_parser_btn').click();
         output.setValue("(3 + 5) * (2 + 2)");
+        $('#parse_btn').click();
     });
     $('#left-assoc').click(function(e) {
         e.preventDefault();
         editor.setValue(commutative);
+        $('#build_parser_btn').click();
         output.setValue("1-4/2-3");
+        $('#parse_btn').click();
     });
 });
 
