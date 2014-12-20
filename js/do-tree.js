@@ -28,7 +28,7 @@ function doTree() {
     .attr("width", width + margin.right + margin.left)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    .attr("transform", "translate(" + width/2 + "," + margin.top + ")")
     .call(d3.behavior.zoom().scaleExtent([0.5, 10]).on("zoom", zoom))
     .append("g");
 
