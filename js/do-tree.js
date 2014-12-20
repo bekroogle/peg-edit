@@ -7,9 +7,12 @@ function doTree() {
       right: 120,
       bottom: 20,
       left: 120
-    },
-    width = 960 - margin.right - margin.left,
-    height = 500 - margin.top - margin.bottom;
+    };
+  console.log("height: "+ $('#treediv').height());
+  console.log("width: "+ $('#treediv').width());
+  
+  var width = $('#treediv').width() - margin.right - margin.left,
+      height = $('#treediv').height() - margin.top - margin.bottom;
 
   var i = 0;
 
