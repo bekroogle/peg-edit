@@ -97,15 +97,24 @@ $('document').ready(function() {
 
     $('#peg-zoom-in').click(function() {
         changeSize(editor, 2);
-        changeSize(output, 2);
 
     });
     $('#peg-zoom-out').click(function() {
         changeSize(editor, -2);
-        changeSize(output, -2);
     });
+    
     $('#peg-reset').click(function() {
         setSize(editor, 14);
+    });
+
+    $('#source-zoom-in').click(function() {
+        changeSize(output, 2);
+
+    });
+    $('#source-zoom-out').click(function() {
+        changeSize(output, -2);
+    });
+    $('#source-reset').click(function() {
         setSize(output, 14);
     });
     $(output).focus(function() {

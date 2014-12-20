@@ -9,14 +9,16 @@
   </head>
   <body>
     <div class='row'>
+      <!-- Left panel -->
       <div class='large-6 columns panel' id='left-panel'>
-        <nav class='top-bar' data-topbar role='navigation'>
+        <nav class='top-bar' data-topbar='' role='navigation'>
           <ul class='title-area'>
             <li class='name'>
               <h1>
-                <a href='#'>PEG.js editor</a>
+                <a href='#'>My Site</a>
               </h1>
             </li>
+            <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
             <li class='toggle-topbar menu-icon'>
               <a href='#'>
                 <span>Menu</span>
@@ -24,8 +26,33 @@
             </li>
           </ul>
           <section class='top-bar-section'>
-            <ul class='left'>
+            <!-- Right Nav Section -->
+            <ul class='button-group right'>
               <li>
+                <a class='button' href='#' id='peg-zoom-out'>-</a>
+              </li>
+              <li>
+                <a class='button' href='#' id='peg-zoom-in'>+</a>
+              </li>
+              <li class='divider'></li>
+              <li class='active has-form'>
+                <a class='button' href='#' id='peg_editor_settings'>Editor Settings</a>
+              </li>
+            </ul>
+            <!-- Left Nav Section -->
+            <ul class='left'>
+              <li class='has-dropdown has-form'>
+                <a href='#'>Sample Grammars</a>
+                <ul class='dropdown'>
+                  <li>
+                    <a href='#'>First link in dropdown</a>
+                  </li>
+                  <li class='active'>
+                    <a href='#'>Active link in dropdown</a>
+                  </li>
+                </ul>
+              </li>
+              <li class='active'>
                 <a class='button' href='#' id='build_parser_btn'>Build Parser &raquo;</a>
               </li>
             </ul>
@@ -33,7 +60,9 @@
         </nav>
         <div id='editor'></div>
       </div>
+      <!-- Right panel -->
       <div class='large-6 columns panel' id='right-panel'>
+        <!-- Parse string editor -->
         <div class='row'>
           <div class='large-12 columns'>
             <nav class='top-bar' data-topbar role='navigation'>
@@ -50,8 +79,20 @@
                 </li>
               </ul>
               <section class='top-bar-section'>
-                <ul class='left'>
+                <ul class='button-group right'>
                   <li>
+                    <a class='button' href='#' id='source-zoom-out'>-</a>
+                  </li>
+                  <li>
+                    <a class='button' href='#' id='source-zoom-in'>+</a>
+                  </li>
+                  <li class='divider'></li>
+                  <li class='active has-form'>
+                    <a class='button' href='#' id='peg_editor_settings'>Editor Settings</a>
+                  </li>
+                </ul>
+                <ul class='left'>
+                  <li class='active'>
                     <a class='button' href='#' id='parse_btn'>Parse &raquo;</a>
                   </li>
                 </ul>
@@ -60,6 +101,7 @@
             <div id='output'></div>
           </div>
         </div>
+        <!-- Parse tree view -->
         <div class='row'>
           <div class='large-12 columns'>
             <p>
@@ -76,6 +118,20 @@
                     </a>
                   </li>
                 </ul>
+                <section class='top-bar-section'>
+                  <ul class='button-group right'>
+                    <li>
+                      <a class='button' href='#'>-</a>
+                    </li>
+                    <li>
+                      <a class='button' href='#'>+</a>
+                    </li>
+                    <li class='divider'></li>
+                    <li class='active has-form'>
+                      <a class='button' href='#' id='tree-reset'>Reload</a>
+                    </li>
+                  </ul>
+                </section>
               </nav>
               <div id='treediv'></div>
             </p>
