@@ -23,12 +23,13 @@
                 %span Menu
           %section.top-bar-section
             / Right Nav Section
-            %ul.button-group.right
-              %li                 
-                %a#peg-zoom-out.button(href="#")-
-              %li
-                %a#peg-zoom-in.button(href="#") +
-              %li.divider
+            %ul.right
+              %ul.left.button-group
+                %li                 
+                  %a#peg-zoom-out.button(href="#")-
+                %li
+                  %a#peg-zoom-in.button(href="#") +
+                %li.divider
               %li.active.has-form
                 %a#peg_editor_settings.button{:href => "#"} Editor Settings
               
@@ -61,12 +62,13 @@
                   %a(href="#")
                     %span Menu 
               %section.top-bar-section
-                %ul.button-group.right
-                  %li                 
-                    %a#source-zoom-out.button(href="#")-
-                  %li
-                    %a#source-zoom-in.button(href="#") +
-                  %li.divider
+                %ul.right
+                  %ul.button-group.left
+                    %li                 
+                      %a#source-zoom-out.button(href="#")-
+                    %li
+                      %a#source-zoom-in.button(href="#") +
+                    %li.divider
                   %li.active.has-form
                     %a#peg_editor_settings.button{:href => "#"} Editor Settings
                 %ul.left
@@ -87,12 +89,13 @@
                     %a(href="#")
                       %span Menu 
                 %section.top-bar-section
-                  %ul.button-group.right
-                    %li                 
-                      %a.button(href="#")-
-                    %li
-                      %a.button(href="#") +
-                    %li.divider
+                  %ul.right
+                    %ul.button-group.left
+                      %li                 
+                        %a.button(href="#")-
+                      %li
+                        %a.button(href="#") +
+                      %li.divider
                     %li.active.has-form
                       %a#tree-reset.button{:href => "#"} Reload
               #treediv
