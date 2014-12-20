@@ -24,16 +24,20 @@ function doTree() {
       return [d.x, d.y];
     });
 
-   svg = d3.select("#treediv").append("svg")
-    .attr("width", width + margin.right + margin.left)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + width/2 + "," + margin.top + ")")
-    .call(d3.behavior.zoom().scaleExtent([0.5, 10]).on("zoom", zoom))
+  var svg = d3.select("#treediv").append("svg")
+      .attr("width", width + margin.right + margin.left)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")  
+      .attr("transform", "translate(" + width/2 + "," + margin.top + ")")
+      .call(d3.behavior.zoom().scaleExtent([0.5, 3]).on("zoom", zoom))
     .append("g");
-
-  debugData = svg;
-
+  
+  svg.append("rect")
+    .attr("class", "overlay")
+    .attr("width", width * 10)
+    .attr("height", height * 10)
+    .attr("transform", "translate("+ width * -5 +","+ height * -5 + ")");
+  
   root = treeData;
 
   update(root);
@@ -89,16 +93,7 @@ function doTree() {
         .attr("d", diagonal);
 
     }
-    // zoom and pan
-    // var zoom = d3.behavior.zoom()
-    // .on("zoom",function() {
-    //     g.attr("transform","translate("+ 
-    //         d3.event.translate.join(",")+")scale("+d3.event.scale+")");
-    //     g.selectAll("path")  
-    //         .attr("d", path.projection(projection)); 
-    // });
 
-  // svg.call(zoom)
   function zoom() {
     svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
   }

@@ -35,6 +35,9 @@ svg {
     stroke: #ccc;
     stroke-width: 2px;
 }
+.overlay {
+  fill: none;
+}
 /*.columns {
   background-color: gray;
   border: 1px solid black;
