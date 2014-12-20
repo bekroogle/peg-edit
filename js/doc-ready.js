@@ -7,6 +7,7 @@ var setSize = function(target, size) {
     target.setOption('fontSize', size);
 };
 $('document').ready(function() {
+    $(document).foundation();
     // Create the PEG editor
     editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
@@ -136,6 +137,16 @@ $('document').ready(function() {
     $('#tree-reset').click(function() {
         $('#parse_btn').click();
     });
+    $('#sample_one').click(function(e) {
+        e.preventDefault();
+        editor.setValue(simple_expr);
+        output.setValue("(3 + 5) * (2 + 2)");
+    });
+    $('#left-assoc').click(function(e) {
+        e.preventDefault();
+        editor.setValue(commutative);
+        output.setValue("1-4/2-3");
+    });
 });
 
 var resizeElements = function() {
@@ -151,3 +162,120 @@ var resizeElements = function() {
     $('#treediv').height(window.innerHeight * .4);
 };
 
+simple_expr = "/* This Parsing Expression Grammar (PEG) parses simple arithmetic expressions \n \
+ * comprising only plus, times, and parentheses (no left-associative \n \
+ * operations, e.g. minus or divide). \n \
+ * \n \
+ * Author: Benjamin Kruger (bekroogle@gmail.com) \n \
+ */ \n \
+ \n \
+start = add \n \
+ \n \
+add \n \
+= l:mult plus r:add { \n \
+    return { \n \
+      name: '+',  \n \
+      children: [l, r] \n \
+    };  \n \
+  } \n \
+/ mult \n \
+  \n \
+mult \n \
+= l:fact times r:mult {  \n \
+    return { \n \
+      name: '*',  \n \
+      children: [l, r] \n \
+    }; \n \
+  } \n \
+/ fact \n \
+ \n \
+ \n \
+fact \n \
+= open_paren a:add close_paren { return a; } \n \
+/ number { return {name: parseInt(text())};} \n \
+ \n \
+number = d:(digit+) ws { return d; } \n \
+ \n \
+digit = [0-9] \n \
+ \n \
+plus = oper:'+' ws { return oper; } \n \
+minus= oper:'-' ws { return oper; } \n \
+times = oper:'*' ws { return oper; } \n \
+divide = oper:'/' ws { return oper; } \n \
+open_paren = oper:'(' ws { return oper; } \n \
+close_paren = oper:')' ws { return oper; } \n \
+ \n \
+ws = [ \\t\\n]* "
+
+
+commutative = "/* This Parsing Expression Grammar (PEG) parses arithmetic expressions and \n \
+* handles left-associativity by refactoring left-associative operations into \n \
+* commutative ones. \n \
+* \n \
+* e.g.: a - b is treated as a + (-b), while a / b is treated as a * (1/b). \n \
+* In this manner, expressions like 1 - 2 - 3 can be parsed right-associative, \n \
+* yet their parse trees still imply the correct answer. \n \
+* \n \
+* Author: Benjamin Kruger <bekroogle@gmail.com> \n \
+*/ \n \
+  \n \
+start = add \n \
+  \n \
+add \n \
+= l:subtract plus r:add { \n \
+return { \n \
+name: '+', \n \
+children: [l, r] \n \
+}; \n \
+} \n \
+/ subtract \n \
+subtract \n \
+= l:neg r:subtract { \n \
+return{ \n \
+name: '+', \n \
+children: [l, r] \n \
+}; \n \
+} \n \
+/ neg \n \
+neg \n \
+= minus n:mult { \n \
+return { \n \
+name: '*', \n \
+children: [n, {name: '-1'}] \n \
+}; \n \
+} \n \
+/ mult \n \
+mult \n \
+= l:div times r:mult { \n \
+return { \n \
+name: '*', \n \
+children: [l, r] \n \
+}; \n \
+} \n \
+/ div \n \
+div \n \
+= num:recip denom:div { \n \
+return { \n \
+name: '*', \n \
+children: [num, denom] \n \
+}; \n \
+} \n \
+/ recip \n \
+recip \n \
+= divide n:number { \n \
+return { \n \
+name: '/', \n \
+children: [{name: '1'}, n] \n \
+}; \n \
+} \n \
+/ parens \n \
+parens \n \
+= '(' a:add ')' { return a; } \n \
+/ number \n \
+  \n \
+plus = oper:'+' ws { return oper; } \n \
+minus= oper:'-' ws { return oper; } \n \
+times = oper:'*' ws { return oper; } \n \
+divide = oper:'/' ws { return oper; } \n \
+number = n:([0-9]+) ws { return {name: parseInt(n, 10)}; } \n \
+ws = [ \\t\\n]* { return ''; }"
