@@ -1,0 +1,111 @@
+!!! 5
+%html.no-js(lang="en")
+  %head
+    %meta(charset="utf-8")
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    %title C.PEGjs ("See Spot PEGjs")
+    %link(rel="stylesheet" href="stylesheets/app.css")
+    %link(rel="stylesheet" href="stylesheets/style.css")
+    %script(src="bower_components/modernizr/modernizr.js")
+  %body
+    .row
+
+      / Left panel
+      .large-6.columns.panel#left-panel
+        %nav.top-bar(data-topbar role="navigation")
+          %ul.title-area
+            %li.name
+              %h1
+                %a{:href => "#"} PEG.js editor
+            %li.toggle-topbar.menu-icon
+              %a{:href => "#"}
+                %span
+          %section.top-bar-section
+            / Left Nav Section
+            %ul.left
+              %li.has-dropdown.has-form
+                %a(href="#" data-dropdown="drop") Sample Grammars
+                %ul#drop.dropdown(data-dropdown-content)
+                  %li
+                    %a#sample_one{:href => "#"} Simple expressions
+                  %li
+                    %a#left-assoc{:href => "#"} Left-associative refactored
+              %li.active
+                %a#build_parser_btn.button{:href => "#"} Build Parser &raquo;
+          %section.top-bar-section
+            / Right Nav Section
+            %ul.right.button-group
+              %li                 
+                %a#peg-zoom-out.button(href="#")-
+              %li
+                %a#peg-zoom-in.button(href="#") +
+              %li.divider
+              %li.has-form
+                %a#peg_editor_settings.button{:href => "#"} Editor Settings
+             
+
+        #editor
+      
+      / Right panel
+      .large-6.columns.panel#right-panel
+        
+        / Parse string editor
+        .row
+          .large-12.columns
+            %nav.top-bar(data-topbar role="navigation")
+              %ul.title-area
+                %li.name
+                  %h1
+                    %a(href="#")Parse string editor
+                %li.toggle-topbar.menu-icon
+                  %a(href="#")
+                    %span 
+              %section.top-bar-section
+                %ul.right
+                  %ul.button-group.left
+                    %li                 
+                      %a#source-zoom-out.button(href="#")-
+                    %li
+                      %a#source-zoom-in.button(href="#") +
+                    %li.divider
+                  %li.active.has-form
+                    %a#peg_editor_settings.button{:href => "#"} Editor Settings
+                %ul.left
+                  %li.active
+                    %a#parse_btn.button(href="#") Parse &raquo;
+            #output
+
+        / Parse tree view
+        .row
+          .large-12.columns
+            %p
+              %nav.top-bar(data-topbar role="navigation")
+                %ul.title-area
+                  %li.name
+                    %h1
+                      %a(href="#")Parse tree view
+                  %li.toggle-topbar.menu-icon
+                    %a(href="#")
+                      %span 
+                %section.top-bar-section
+                  %ul.right
+                    / %ul.button-group.left
+                    /   %li                 
+                    /     %a.button.disabled(href="#")-
+                    /   %li
+                    /     %a.button(href="#") +
+                    /   %li.divider
+                    %li.active.has-form
+                      %a#tree-reset.button{:href => "#"} Reload
+              #treediv
+    %script(src="./bower_components/jquery/dist/jquery.min.js")
+    %script(src="./bower_components/foundation/js/foundation.min.js")
+    %script(src="./bower_components/foundation/js/foundation/foundation.joyride.js")
+    %script(src="./bower_components/jquery.cookie/jquery.cookie.js")
+    %script(src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js")
+    %script(src="./bower_components/ace/libs/ace/ace.js")
+    %script(src="./bower_components/pegjs/peg-0.8.0.js")
+    %script(src="./js/doc-ready.js")
+    %script(src="./bower_components/d3/d3.min.js")
+    %script(src="./js/do-tree.js")
+    %script(src="./js/app.js")
