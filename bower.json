@@ -1,0 +1,12 @@
+{
+  "name": "foundation-compass-app",
+  "version": "0.0.1",
+  "private": "true",
+  "dependencies": {
+    "foundation": "zurb/bower-foundation",
+    "ace": "~1.1.8",
+    "pegjs": "~0.8.0",
+    "d3": "~3.5.2",
+    "foundation-icons": "*"
+  }
+}

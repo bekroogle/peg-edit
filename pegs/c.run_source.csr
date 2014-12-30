@@ -1,6 +1,0 @@
-int i
-int j
-i=1
-loop 3:
-i=i*2
-repeat
