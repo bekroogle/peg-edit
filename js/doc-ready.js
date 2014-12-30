@@ -1,16 +1,20 @@
 var parser;
 var treeData;
+var globalAceTheme = "ace/theme/solarized_dark";
+
 var changeSize = function(target, delta) {
     target.setOption('fontSize', target.getOption('fontSize') + delta);
 };
 var setSize = function(target, size) {
     target.setOption('fontSize', size);
 };
+
 $('document').ready(function() {
-    $(document).foundation();
+    console.log("me");
+    $(document).foundation();    
     // Create the PEG editor
     editor = ace.edit("editor");
-    editor.setTheme("ace/theme/monokai");
+    editor.setTheme(globalAceTheme);
     editor.getSession().setMode("ace/mode/javascript");
 
     // No static JS analysis
@@ -36,7 +40,7 @@ $('document').ready(function() {
 
     // Create parse string editor
     output = ace.edit("output");
-    output.setTheme("ace/theme/monokai");
+    output.setTheme(globalAceTheme);
     output.setOption("useWorker", false);
     output.setValue(localStorage["source"]);
     output.getSession().on('change', function() {
@@ -95,7 +99,9 @@ $('document').ready(function() {
             console.error(e);
         }
     });
-
+    $('#help-button').click(function() {
+        $(document).foundation('joyride', 'start');
+    })
     $('#peg-zoom-in').click(function() {
         changeSize(editor, 2);
 
@@ -134,6 +140,12 @@ $('document').ready(function() {
         editor.execCommand('showSettingsMenu');
     });
 
+    $('#source_editor_settings').click(function(e) {
+        e.preventDefault();
+        
+        output.execCommand('showSettingsMenu');
+    });
+
     $('#tree-reset').click(function() {
         $('#parse_btn').click();
     });
@@ -151,7 +163,19 @@ $('document').ready(function() {
         output.setValue("1-4/2-3");
         $('#parse_btn').click();
     });
+
+    $('.ace_print-margin').attr('id', 'firstStop');
+    $('#output > .ace_scroller').attr('id', 'stopTwo');
+    $('#sample_one').click();
+    startRide();
+
 });
+var startRide = function() {
+    if (!localStorage.getItem("joyride")) {
+        $(document).foundation('joyride', 'start');
+    }
+    localStorage.setItem("joyride", "true");
+};
 
 var resizeElements = function() {
     // Resize editor
