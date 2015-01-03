@@ -166,12 +166,20 @@ $('document').ready(function() {
 
     $('.ace_print-margin').attr('id', 'firstStop');
     $('#output > .ace_scroller').attr('id', 'stopTwo');
-    $('#sample_one').click();
+
     startRide();
 
 });
+
+/** startRide
+ *  If a visitor is a virgin, it loads the first sample and takes them on a 
+ *  joyride.
+ *
+ *  It then marks them down as ridden . . . no longer a virgin.
+ */
 var startRide = function() {
     if (!localStorage.getItem("joyride")) {
+        $('#sample_one').click();
         $(document).foundation('joyride', 'start');
     }
     localStorage.setItem("joyride", "true");
