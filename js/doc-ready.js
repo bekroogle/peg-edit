@@ -273,8 +273,6 @@ var doParse = function(e) {
         result = parser.parse(output.getValue());
         
         treeData = result;
-        
-        $('.alert').remove();
         var formatted_result = JSON.stringify(result, null, 2);
 
         console.log(formatted_result);
@@ -283,8 +281,10 @@ var doParse = function(e) {
         doTree();
         
         $('#console-view').html('<pre>'+traverse(result)+'</pre>');
-        // console.dir(result);
-        // Log any parse errors in the console:                    
+        
+        $(document).foundation();
+        $(document).foundation('tab','reflow');
+    // Log any parse errors in the console:                    
     } catch (e) {
         $('parser-output').html('<div class="alert alert-danger" role="alert">Parse Error: ' + e.message + '</div>');
         console.error(e);
