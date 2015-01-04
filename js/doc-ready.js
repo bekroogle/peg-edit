@@ -101,7 +101,7 @@ $('document').ready(function() {
         e.preventDefault();
        
     });
-    $('#peg_editor_settings').click(function(e) {
+    $('#peg-editor-settings-btn').click(function(e) {
         e.preventDefault();
         
         editor.execCommand('showSettingsMenu');
