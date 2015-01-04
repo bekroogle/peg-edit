@@ -1,6 +1,7 @@
-var parser;
-var debugData;
-var treeData;
+var parser,
+    debugData,
+    treeData,
+    global_gist_data;
 var globalAceTheme = "ace/theme/solarized_dark";
 
 var changeSize = function(target, delta) {
@@ -136,7 +137,7 @@ $('document').ready(function() {
     $('#output > .ace_scroller').attr('id', 'stopTwo');
     $('#open_gist_btn').click( function(e) {
         e.preventDefault();
-        debugData =  open_gist($('#gist-id').val());
+        global_gist_data =  open_gist($('#gist-id').val());
         $('#gist-prompt').foundation('reveal', 'close');
     });
     
@@ -188,14 +189,14 @@ var open_gist = function(gistid) {
                 JSON.parse(localStorage.getItem("gist_history")) || [];
             gist_history.push(gistid);
             localStorage.setItem("gist_history", JSON.stringify(gist_history));
-            debugData = gist_data;
+            global_gist_data = gist_data;
 
 
             localStorage.setItem("gist_data", JSON.stringify(gist_data));
             
             // Clear list of files from previously loaded gist:
-            $('#files-in-gist').nextAll().html('');
-
+            $('.file-name').remove();
+            
             // Build list of files in the current gist: 
             for (var file in gist_data.data["files"]) {
                 $('#files-in-gist').append('<li><a class="file-name" href="#">'+ file +'</a></li>');
@@ -210,11 +211,15 @@ $('#files-in-gist').click( function(e) {
     var filename = e.target.firstChild.nodeValue;
     $('#left-panel h1').html(filename);
     console.log(filename);
-    var contents = debugData.data["files"][filename];
+    var contents = global_gist_data.data["files"][filename];
     console.log(contents.content);
     editor.setValue(contents.content);
-
-    // $('#peg-editor-menu').foundation('offcanvas', 'hide', 'move-right');
+    try {
+        buildParser();
+    } catch(ex) {
+        console.log(ex);
+    }
+    // $('#peg-editor-menu').foundation('offcanvas', 'toggle', 'move-right');
 });
 
 
