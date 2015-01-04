@@ -10,17 +10,12 @@
     %script(src="bower_components/modernizr/modernizr.js")
   %body
     .row
-      .large-1.columns
-        &nbsp;
       .large-10.columns
         %h4 PEGedit &raquo; a web-based PEG.js design tool.
-      .large-1.columns
-        %a#help-button{:href => "#"} Help
+      
     .row
-      .large-1.column
-        &nbsp;
       / Left panel
-      .small-6.large-5.columns.panel#left-panel
+      .small-6.columns.panel#left-panel
         #peg-editor-menu.off-canvas-wrap{"data-offcanvas" => ""}
           .inner-wrap
             %nav.tab-bar
@@ -65,8 +60,8 @@
       -#      
       -# Right panel
       -#
-      .small-6.large-5.columns.panel#right-panel
-        
+      .small-6.columns.panel#right-panel
+          
         -# Top right
         .row
           .large-12.columns#top-right
@@ -110,8 +105,7 @@
                     %li.active.has-form
                       %a#tree-reset.button{:href => "#"} Reload
               #treediv
-      .large-1.column
-        &nbsp;
+      
     %ol.joyride-list{"data-joyride" => ""}
       %li{"data-options" => "prev_button: false; postRideCallback: function(){alert('test');}"}
         %h4 Welcome to PEGedit
