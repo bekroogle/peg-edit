@@ -61,12 +61,12 @@ $('document').ready(function() {
         buildParser();
     });
 
-    $('#parse_btn').click(function(e) {
+    $('#parse-btn').click(function(e) {
         e.preventDefault();
         doParse(e);
     });
     
-    $('#help-button').click(function() {
+    $('#help-btn').click(function() {
         $(document).foundation('joyride', 'start');
     })
     $('#peg-zoom-in-btn').click(function() {
