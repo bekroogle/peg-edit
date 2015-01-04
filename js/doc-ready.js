@@ -69,11 +69,11 @@ $('document').ready(function() {
     $('#help-button').click(function() {
         $(document).foundation('joyride', 'start');
     })
-    $('#peg-zoom-in').click(function() {
+    $('#peg-zoom-in-btn').click(function() {
         changeSize(editor, 2);
 
     });
-    $('#peg-zoom-out').click(function() {
+    $('#peg-zoom-out-btn').click(function() {
         changeSize(editor, -2);
     });
     

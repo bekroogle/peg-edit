@@ -29,19 +29,30 @@
                   %span
               %section.middle.tab-bar-section
                 %h1.title PEG.js Editor
-
             %aside.left-off-canvas-menu
               %ul.off-canvas-list
                 %li
                   %label Actions:
                 %li#build_parser_btn
-                  %a.button{:href => "#"} Build Parser
+                  %a{:href => "#"}
+                    %i.foundicon-website
+                      Build Parser
                 %li
                   %label Open Grammar:
                 %li
                   %a#open-gist-btn{:href => "#", "data-reveal-id" => "gist-prompt"} By Gist ID
                 %li#files-in-gist
                   %label Files in Gist:
+                %li
+                  %label Settings
+                %li
+                  %a#peg-zoom-in-btn{:href => "#"}
+                    %i.foundicon-plus
+                      Increase Font Size
+                %li
+                  %a#peg-zoom-out-btn{:href => "#"}
+                    %i.foundicon-minus
+                      Decrease Font Size
             %a.exit-off-canvas{:href => "#"}      
 
             #editor

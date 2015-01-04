@@ -1,6 +1,11 @@
 @import "settings";
 @import "foundation";
 
+.valign-mid {
+  vertical-align: middle !important;
+}
+
+
 // Or selectively include components
 // @import
 //   "foundation/components/accordion",
