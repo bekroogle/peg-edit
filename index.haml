@@ -33,7 +33,11 @@
             %aside.left-off-canvas-menu
               %ul.off-canvas-list
                 %li
-                  %label Open Grammar...
+                  %label Actions:
+                %li#build_parser_btn
+                  %a.button{:href => "#"} Build Parser
+                %li
+                  %label Open Grammar:
                 %li
                   %a#open-gist-btn{:href => "#", "data-reveal-id" => "gist-prompt"} By Gist ID
                 %li#files-in-gist
@@ -131,6 +135,7 @@
     %script(src="./bower_components/jquery/dist/jquery.min.js")
     %script(src="./bower_components/foundation/js/foundation.min.js")
     %script(src="./bower_components/foundation/js/foundation/foundation.joyride.js")
+    %script(src="./bower_components/foundation/js/foundation/foundation.offcanvas.js")
     %script(src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js")
     %script(src="./bower_components/ace/libs/ace/ace.js")
     %script(src="./bower_components/pegjs/peg-0.8.0.js")
