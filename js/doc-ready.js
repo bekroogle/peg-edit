@@ -27,13 +27,14 @@ $('document').ready(function() {
     // Store retrieve text
     editor.setValue(localStorage["grammar"]);
     if (editor.getValue !== "") {
-        $('#build_parser_btn').click();
+        buildParser();
+
     }
 
     editor.getSession().on("change", function() {
         localStorage.setItem("grammar", editor.getValue());
         if ($('#auto-build').prop('checked')) {
-            $('#build_parser_btn').click();
+            buildParser();
         }
     });
 
@@ -45,60 +46,21 @@ $('document').ready(function() {
     output.setValue(localStorage["source"]);
     output.getSession().on('change', function() {
         localStorage.setItem("source", output.getValue());
-        $('#parse_btn').click();
+        doParse();
     });
 
     resizeElements();
 
-    $('#build_parser_btn').click(function() {
-        try {
-            editor.getSession().clearAnnotations();
-            parser = PEG.buildParser(editor.getValue());
-            $('.alert-warning').remove();
-        } catch (exn) {
-            $('#treediv').html('<div class="alert alert-warning" role="alert">Grammar Error: ' + exn.message + '</div>');
-            console.log(exn);
-            //if (!editor.getSession().$annotations) {
-            editor.getSession().$annotations = [];
-            //}
-
-            var myAnno = {
-                "column": exn['column'],
-                "row": exn['line'] - 1,
-                "type": "error",
-                "raw": exn['message'],
-                "text": exn['message']
-            };
-
-            editor.getSession().$annotations.push(myAnno);
-            editor.getSession().setAnnotations(editor.getSession().$annotations);
-        } // catch(exn)      
-
-
+    $('#build_parser_btn').click(function(e) {
+        e.preventDefault();
+        buildParser();
     });
 
     $('#parse_btn').click(function(e) {
         e.preventDefault();
-
-
-        // If a parser hasn't been built, build one:
-        if (!parser) {
-            $('#build_parser_btn').click();
-        }
-
-        // Now parse!
-        try {
-            result = parser.parse(output.getValue());
-            treeData = result;
-            $('.alert').remove();
-            doTree();
-
-            // Log any parse errors in the console:                    
-        } catch (e) {
-            $('#treediv').html('<div class="alert alert-danger" role="alert">Parse Error: ' + e.message + '</div>');
-            console.error(e);
-        }
+        doParse(e);
     });
+    
     $('#help-button').click(function() {
         $(document).foundation('joyride', 'start');
     })
@@ -126,7 +88,7 @@ $('document').ready(function() {
     });
     $(output).focus(function() {
         if (editor.getValue()) {
-            $('#build_parser_btn').click();
+            buildParser();
         }
     });
 
@@ -147,21 +109,23 @@ $('document').ready(function() {
     });
 
     $('#tree-reset').click(function() {
-        $('#parse_btn').click();
+        doParse();
+
     });
     $('#sample_one').click(function(e) {
         e.preventDefault();
         editor.setValue(simple_expr);
-        $('#build_parser_btn').click();
+        
+        buildParser();
         output.setValue("(3 + 5) * (2 + 2)");
-        $('#parse_btn').click();
+        doParse();
     });
     $('#left-assoc').click(function(e) {
         e.preventDefault();
         editor.setValue(commutative);
         $('#build_parser_btn').click();
         output.setValue("1-4/2-3");
-        $('#parse_btn').click();
+        doParse();
     });
 
     $('.ace_print-margin').attr('id', 'firstStop');
@@ -198,50 +162,116 @@ var resizeElements = function() {
     $('#treediv').height(window.innerHeight * .4);
 };
 
-simple_expr = "/* This Parsing Expression Grammar (PEG) parses simple arithmetic expressions \n \
- * comprising only plus, times, and parentheses (no left-associative \n \
- * operations, e.g. minus or divide). \n \
- * \n \
- * Author: Benjamin Kruger (bekroogle@gmail.com) \n \
- */ \n \
- \n \
-start = add \n \
- \n \
-add \n \
-= l:mult plus r:add { \n \
-    return { \n \
-      name: '+',  \n \
-      children: [l, r] \n \
-    };  \n \
-  } \n \
-/ mult \n \
-  \n \
-mult \n \
-= l:fact times r:mult {  \n \
-    return { \n \
-      name: '*',  \n \
-      children: [l, r] \n \
-    }; \n \
-  } \n \
-/ fact \n \
- \n \
- \n \
-fact \n \
-= open_paren a:add close_paren { return a; } \n \
-/ number { return {name: parseInt(text())};} \n \
- \n \
-number = d:(digit+) ws { return d; } \n \
- \n \
-digit = [0-9] \n \
- \n \
-plus = oper:'+' ws { return oper; } \n \
-minus= oper:'-' ws { return oper; } \n \
-times = oper:'*' ws { return oper; } \n \
-divide = oper:'/' ws { return oper; } \n \
-open_paren = oper:'(' ws { return oper; } \n \
-close_paren = oper:')' ws { return oper; } \n \
- \n \
-ws = [ \\t\\n]* "
+/** open_gist(gistid)
+ *  loads a project from a gist
+ *  @param gistid The id of the gist (the last segment of the url)
+ */
+var open_gist = function(gistid) {
+    $.ajax({
+        url: 'https://api.github.com/gists/' + gistid,
+        type: 'GET',
+        dataType: 'jsonp',
+        success: function(gist_data) {
+            debugData = gist_data;
+            localStorage.setItem("gist_data", JSON.stringify(gist_data));
+            var file_list;
+            for (var file in gist_data.data["files"]) {
+                $('#gist-file-list').append('<li><a href="#">'+ file +'</a></li>');
+                console.log('<li><a href="#">'+ file +'</a></li>');
+            }
+            // $('#gist-file-list').foundation('reveal', 'open');
+            // for (var file in gist_data.data["files"]) {
+                
+            //     workspace.push({
+            //         "title": file,
+            //         "language": gist_data.data.files[file].language,
+            //         "key": workspace.length,
+            //         "contents": gist_data.data.files[file].content,
+            //         "dirty": false
+            //     });         
+            // }
+        }
+    });
+};
+
+
+var buildParser = function() {
+    try {
+        editor.getSession().clearAnnotations();
+        parser = PEG.buildParser(editor.getValue());
+        $('.alert-warning').remove();
+    } catch (exn) {
+        $('#treediv').html('<div class="alert alert-warning" role="alert">Grammar Error: ' + exn.message + '</div>');
+        console.log(exn);
+        //if (!editor.getSession().$annotations) {
+        editor.getSession().$annotations = [];
+        //}
+
+        var myAnno = {
+            "column": exn['column'],
+            "row": exn['line'] - 1,
+            "type": "error",
+            "raw": exn['message'],
+            "text": exn['message']
+        };
+
+        editor.getSession().$annotations.push(myAnno);
+        editor.getSession().setAnnotations(editor.getSession().$annotations);
+    } // catch(exn)      
+};
+
+var doParse = function(e) {
+    // If a parser hasn't been built, build one:
+    if (!parser) {
+        buildParser();
+    }
+
+    // Now parse!
+    try {
+        result = parser.parse(output.getValue());
+        treeData = result;
+        
+        $('.alert').remove();
+        var formatted_result = JSON.stringify(result, null, 2);
+
+        console.log(formatted_result);
+        $('#treediv').html('<pre>'+ formatted_result +'</pre>');
+        // console.dir(result);
+        // Log any parse errors in the console:                    
+    } catch (e) {
+        $('#treediv').html('<div class="alert alert-danger" role="alert">Parse Error: ' + e.message + '</div>');
+        console.error(e);
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 commutative = "/* This Parsing Expression Grammar (PEG) parses arithmetic expressions and \n \
@@ -315,3 +345,48 @@ times = oper:'*' ws { return oper; } \n \
 divide = oper:'/' ws { return oper; } \n \
 number = n:([0-9]+) ws { return {name: parseInt(n, 10)}; } \n \
 ws = [ \\t\\n]* { return ''; }"
+
+simple_expr = "/* This Parsing Expression Grammar (PEG) parses simple arithmetic expressions \n \
+ * comprising only plus, times, and parentheses (no left-associative \n \
+ * operations, e.g. minus or divide). \n \
+ * \n \
+ * Author: Benjamin Kruger (bekroogle@gmail.com) \n \
+ */ \n \
+ \n \
+start = add \n \
+ \n \
+add \n \
+= l:mult plus r:add { \n \
+    return { \n \
+      name: '+',  \n \
+      children: [l, r] \n \
+    };  \n \
+  } \n \
+/ mult \n \
+  \n \
+mult \n \
+= l:fact times r:mult {  \n \
+    return { \n \
+      name: '*',  \n \
+      children: [l, r] \n \
+    }; \n \
+  } \n \
+/ fact \n \
+ \n \
+ \n \
+fact \n \
+= open_paren a:add close_paren { return a; } \n \
+/ number { return {name: parseInt(text())};} \n \
+ \n \
+number = d:(digit+) ws { return d; } \n \
+ \n \
+digit = [0-9] \n \
+ \n \
+plus = oper:'+' ws { return oper; } \n \
+minus= oper:'-' ws { return oper; } \n \
+times = oper:'*' ws { return oper; } \n \
+divide = oper:'/' ws { return oper; } \n \
+open_paren = oper:'(' ws { return oper; } \n \
+close_paren = oper:')' ws { return oper; } \n \
+ \n \
+ws = [ \\t\\n]* "
