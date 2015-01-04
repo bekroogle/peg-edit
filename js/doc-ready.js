@@ -56,7 +56,7 @@ $('document').ready(function() {
 
     resizeElements();
 
-    $('#build_parser_btn').click(function(e) {
+    $('#build-parser-btn').click(function(e) {
         e.preventDefault();
         buildParser();
     });
