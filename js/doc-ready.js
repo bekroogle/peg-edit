@@ -213,8 +213,8 @@ $('#files-in-gist').click( function(e) {
     var contents = debugData.data["files"][filename];
     console.log(contents.content);
     editor.setValue(contents.content);
-    editor.setValue(debugData.data["files"][filename]);
-    $('#peg-editor-menu').foundation('offcanvas', 'hide', 'move-right');
+
+    // $('#peg-editor-menu').foundation('offcanvas', 'hide', 'move-right');
 });
 
 
