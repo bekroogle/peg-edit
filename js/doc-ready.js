@@ -169,8 +169,8 @@ var resizeElements = function() {
     
     $('#output').height(window.innerHeight * .3);
     output.resize();
-
     $('#treediv').height(window.innerHeight * .4);
+    $('#tree-view').height(window.innerHeight * .4);
 };
 
 /** open_gist(gistid)
@@ -229,7 +229,7 @@ var buildParser = function() {
         parser = PEG.buildParser(editor.getValue());
         $('.alert-warning').remove();
     } catch (exn) {
-        $('#treediv').html('<div class="alert alert-warning" role="alert">Grammar Error: ' + exn.message + '</div>');
+        $('#parser-output').html('<div class="alert alert-warning" role="alert">Grammar Error: ' + exn.message + '</div>');
         console.log(exn);
         //if (!editor.getSession().$annotations) {
         editor.getSession().$annotations = [];
@@ -247,7 +247,19 @@ var buildParser = function() {
         editor.getSession().setAnnotations(editor.getSession().$annotations);
     } // catch(exn)      
 };
-
+var traverse = function(ast) {
+  if (ast.token === "number") {
+    return ast.name;
+  }
+  if (ast.token === "oper") {
+   switch (ast.name) {
+    case "+": return traverse(ast.children[0]) + traverse(ast.children[1]);
+    case "*": return traverse(ast.children[0]) * traverse(ast.children[1]);
+    case "/": return traverse(ast.children[0]) / traverse(ast.children[1]);
+    case "^": return power(traverse(ast.children[0]), traverse(ast.children[1]));
+   }
+  }
+ };
 var doParse = function(e) {
     // If a parser hasn't been built, build one:
     if (!parser) {
@@ -256,18 +268,25 @@ var doParse = function(e) {
 
     // Now parse!
     try {
+
+        // The resulting data structure:
         result = parser.parse(output.getValue());
+        
         treeData = result;
         
         $('.alert').remove();
         var formatted_result = JSON.stringify(result, null, 2);
 
         console.log(formatted_result);
-        $('#treediv').html('<pre>'+ formatted_result +'</pre>');
+        $('#parser-output').html('<pre>'+ formatted_result +'</pre>');
+
+        doTree();
+        
+        $('#console-view').html('<pre>'+traverse(result)+'</pre>');
         // console.dir(result);
         // Log any parse errors in the console:                    
     } catch (e) {
-        $('#treediv').html('<div class="alert alert-danger" role="alert">Parse Error: ' + e.message + '</div>');
+        $('parser-output').html('<div class="alert alert-danger" role="alert">Parse Error: ' + e.message + '</div>');
         console.error(e);
     }
 };

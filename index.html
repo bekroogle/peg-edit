@@ -130,30 +130,31 @@
         </div>
         <div class='row'>
           <div class='large-12 columns' id='bottom-right'>
-            <p>
-              <nav class='top-bar' data-topbar role='navigation'>
-                <ul class='title-area'>
-                  <li class='name'>
-                    <h1>
-                      <a href='#'>Parse tree view</a>
-                    </h1>
-                  </li>
-                  <li class='toggle-topbar menu-icon'>
-                    <a href='#'>
-                      <span></span>
-                    </a>
-                  </li>
-                </ul>
-                <section class='top-bar-section'>
-                  <ul class='right'>
-                    <li class='active has-form'>
-                      <a class='button' href='#' id='tree-reset'>Reload</a>
-                    </li>
-                  </ul>
-                </section>
-              </nav>
-              <div id='treediv'></div>
-            </p>
+            <p></p>
+            <dl class='tabs' data-tab=''>
+              <dd class='active'>
+                <a href='#parser-output'>Parser Output</a>
+              </dd>
+              <dd>
+                <a href='#tree-view'>Tree View</a>
+              </dd>
+              <dd>
+                <a href='#console-view'>Console View</a>
+              </dd>
+            </dl>
+            <div class='tabs-content'>
+              <div class='content' id='parser-output'>
+                test
+              </div>
+              <div class='content' id='tree-view'>
+                <div id='treediv'></div>
+                test2
+              </div>
+              <div class='content' id='console-view'>
+                test3
+              </div>
+            </div>
+            <div id='treediv'></div>
           </div>
         </div>
       </div>
@@ -204,6 +205,7 @@
     <script src='./bower_components/foundation/js/foundation.min.js'></script>
     <script src='./bower_components/foundation/js/foundation/foundation.joyride.js'></script>
     <script src='./bower_components/foundation/js/foundation/foundation.offcanvas.js'></script>
+    <script src='./bower_components/foundation/js/foundation/foundation.tabs.js'></script>
     <script src='//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js'></script>
     <script src='./bower_components/ace/libs/ace/ace.js'></script>
     <script src='./bower_components/pegjs/peg-0.8.0.js'></script>
