@@ -43,13 +43,17 @@
           <section class='top-bar-section'>
             <ul class='left'>
               <li class='has-dropdown has-form'>
-                <a data-dropdown='drop' href='#' id='samples'>Sample Grammars</a>
+                <a data-dropdown='drop' href='#' id='samples'>Load Grammar</a>
                 <ul class='dropdown' data-dropdown-content='' id='drop'>
                   <li>
                     <a href='#' id='sample_one'>Simple expressions</a>
                   </li>
                   <li>
                     <a href='#' id='left-assoc'>Left-associative refactored</a>
+                  </li>
+                  <li class='divider'></li>
+                  <li>
+                    <a data-reveal-id='gist-prompt' href='#'>From Gist ID...</a>
                   </li>
                 </ul>
               </li>
@@ -174,6 +178,25 @@
         <p>Click here to pick one of the sample grammars.</p>
       </li>
     </ol>
+    <div class='reveal-modal tiny' data-reveal='' id='gist-prompt'>
+      <h4>Load file by Gist ID</h4>
+      <form>
+        <row>
+          <div class='small-2 columns'>
+            <label class='right inline' for='gist-id'>
+              Gist ID:
+            </label>
+          </div>
+          <div class='small-8 columns'>
+            <input id='gist-id' type='text'>
+          </div>
+          <div class='small-2 columns'>
+            <a class='button secondary' data-reveal-id='gist-file-picker' href='#' id='open_gist_btn'>Go!</a>
+          </div>
+        </row>
+      </form>
+      <a class='close-reveal-modal'>&#215;</a>
+    </div>
     <script src='./bower_components/jquery/dist/jquery.min.js'></script>
     <script src='./bower_components/foundation/js/foundation.min.js'></script>
     <script src='./bower_components/foundation/js/foundation/foundation.joyride.js'></script>

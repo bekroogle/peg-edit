@@ -1,4 +1,5 @@
 var parser;
+var debugData;
 var treeData;
 var globalAceTheme = "ace/theme/solarized_dark";
 
@@ -8,6 +9,9 @@ var changeSize = function(target, delta) {
 var setSize = function(target, size) {
     target.setOption('fontSize', size);
 };
+
+
+
 
 $('document').ready(function() {
     console.log("me");
@@ -130,6 +134,11 @@ $('document').ready(function() {
 
     $('.ace_print-margin').attr('id', 'firstStop');
     $('#output > .ace_scroller').attr('id', 'stopTwo');
+    $('#open_gist_btn').click( function(e) {
+        open_gist($('#gist-id').val());
+        $('#gist-prompt').foundation('reveal', 'close');
+    });
+    
 
     startRide();
 
@@ -172,6 +181,10 @@ var open_gist = function(gistid) {
         type: 'GET',
         dataType: 'jsonp',
         success: function(gist_data) {
+            var gist_history = 
+                JSON.parse(localStorage.getItem("gist_history")) || [];
+            gist_history.push(gistid);
+            localStorage.setItem("gist_history", JSON.stringify(gist_history));
             debugData = gist_data;
             localStorage.setItem("gist_data", JSON.stringify(gist_data));
             var file_list;

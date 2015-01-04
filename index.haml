@@ -33,12 +33,15 @@
             
             %ul.left
               %li.has-dropdown.has-form
-                %a#samples{"href" => "#", "data-dropdown" => "drop"} Sample Grammars
+                %a#samples{"href" => "#", "data-dropdown" => "drop"}Load Grammar
                 %ul#drop.dropdown{"data-dropdown-content" => ""}
                   %li
                     %a#sample_one{:href => "#"} Simple expressions
                   %li
                     %a#left-assoc{:href => "#"} Left-associative refactored
+                  %li.divider
+                  %li
+                    %a{:href => "#", "data-reveal-id" => "gist-prompt"} From Gist ID...
               %li.active
                 %a#build_parser_btn.button{:href => "#"} Build Parser &raquo;
           %section.top-bar-section
@@ -125,11 +128,20 @@
       %li{"data-id" => "samples", "data-button" => "Got it!"}
         %h4 Try a sample to start!
         %p Click here to pick one of the sample grammars.
-        
 
+    #gist-prompt.reveal-modal.tiny{"data-reveal" => ""}
+      %h4 Load file by Gist ID
+      %form
+        %row
+          .small-2.columns
+            %label.right.inline{"for" => "gist-id"}
+              Gist ID:
+          .small-8.columns
+            %input#gist-id{"type" => "text"}
+          .small-2.columns
+            %a#open_gist_btn.button.secondary{:href => "#", "data-reveal-id" => "gist-file-picker"} Go!
+      %a.close-reveal-modal &#215;
 
-
-    
     %script(src="./bower_components/jquery/dist/jquery.min.js")
     %script(src="./bower_components/foundation/js/foundation.min.js")
     %script(src="./bower_components/foundation/js/foundation/foundation.joyride.js")
