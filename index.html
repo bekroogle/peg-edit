@@ -27,59 +27,34 @@
       </div>
       <!-- Left panel -->
       <div class='small-6 large-5 columns panel' id='left-panel'>
-        <nav class='top-bar' data-topbar role='navigation'>
-          <ul class='title-area'>
-            <li class='name'>
-              <h1>
-                <a href='#'>PEG.js editor</a>
-              </h1>
-            </li>
-            <li class='toggle-topbar menu-icon'>
-              <a href='#'>
-                <span></span>
-              </a>
-            </li>
-          </ul>
-          <section class='top-bar-section'>
-            <ul class='left'>
-              <li class='has-dropdown has-form'>
-                <a data-dropdown='drop' href='#' id='samples'>Load Grammar</a>
-                <ul class='dropdown' data-dropdown-content='' id='drop'>
-                  <li>
-                    <a href='#' id='sample_one'>Simple expressions</a>
-                  </li>
-                  <li>
-                    <a href='#' id='left-assoc'>Left-associative refactored</a>
-                  </li>
-                  <li class='divider'></li>
-                  <li>
-                    <a data-reveal-id='gist-prompt' href='#'>From Gist ID...</a>
-                  </li>
-                </ul>
-              </li>
-              <li class='active'>
-                <a class='button' href='#' id='build_parser_btn'>Build Parser &raquo;</a>
-              </li>
-            </ul>
-          </section>
-          <section class='top-bar-section'>
-            <ul class='right button-group'>
-              <li>
-                <a class='button' href='#' id='peg-zoom-out'>-</a>
-              </li>
-              <li>
-                <a class='button' href='#' id='peg-zoom-in'>+</a>
-              </li>
-              <li class='divider'></li>
-              <li class='has-form'>
-                <a class='button' href='#' id='peg_editor_settings'>
-                  <i class='foundicon-settings'></i>
+        <div class='off-canvas-wrap' data-offcanvas='' id='peg-editor-menu'>
+          <div class='inner-wrap'>
+            <nav class='tab-bar'>
+              <section class='left-small'>
+                <a class='left-off-canvas-toggle menu-icon' href='#'>
+                  <span></span>
                 </a>
-              </li>
-            </ul>
-          </section>
-        </nav>
-        <div id='editor'></div>
+              </section>
+              <section class='middle tab-bar-section'>
+                <h1 class='title'>PEG.js Editor</h1>
+              </section>
+            </nav>
+            <aside class='left-off-canvas-menu'>
+              <ul class='off-canvas-list'>
+                <li>
+                  <label>Open Grammar...</label>
+                </li>
+                <li>
+                  <a data-reveal-id='gist-prompt' href='#' id='open-gist-btn'>By Gist ID</a>
+                </li>
+                <li id='files-in-gist'>
+                  <label>Files in Gist:</label>
+                </li>
+              </ul>
+            </aside>
+            <div id='editor'></div>
+          </div>
+        </div>
       </div>
       <div class='small-6 large-5 columns panel' id='right-panel'>
         <div class='row'>

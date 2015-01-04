@@ -135,7 +135,8 @@ $('document').ready(function() {
     $('.ace_print-margin').attr('id', 'firstStop');
     $('#output > .ace_scroller').attr('id', 'stopTwo');
     $('#open_gist_btn').click( function(e) {
-        open_gist($('#gist-id').val());
+        e.preventDefault();
+        debugData =  open_gist($('#gist-id').val());
         $('#gist-prompt').foundation('reveal', 'close');
     });
     
@@ -181,31 +182,40 @@ var open_gist = function(gistid) {
         type: 'GET',
         dataType: 'jsonp',
         success: function(gist_data) {
+            
+            // To be used for creating a list of recent gist ids:
             var gist_history = 
                 JSON.parse(localStorage.getItem("gist_history")) || [];
             gist_history.push(gistid);
             localStorage.setItem("gist_history", JSON.stringify(gist_history));
             debugData = gist_data;
+
+
             localStorage.setItem("gist_data", JSON.stringify(gist_data));
-            var file_list;
+            
+            // Clear list of files from previously loaded gist:
+            $('#files-in-gist').nextAll().html('');
+
+            // Build list of files in the current gist: 
             for (var file in gist_data.data["files"]) {
-                $('#gist-file-list').append('<li><a href="#">'+ file +'</a></li>');
-                console.log('<li><a href="#">'+ file +'</a></li>');
+                $('#files-in-gist').append('<li><a class="file-name" href="#">'+ file +'</a></li>');
+                // console.log('<li><a href="#">'+ file +'</a></li>');
             }
-            // $('#gist-file-list').foundation('reveal', 'open');
-            // for (var file in gist_data.data["files"]) {
-                
-            //     workspace.push({
-            //         "title": file,
-            //         "language": gist_data.data.files[file].language,
-            //         "key": workspace.length,
-            //         "contents": gist_data.data.files[file].content,
-            //         "dirty": false
-            //     });         
-            // }
+            return gist_data;
         }
     });
 };
+// Handle clicks on files in list:
+$('#files-in-gist').click( function(e) {
+    var filename = e.target.firstChild.nodeValue;
+    $('#left-panel h1').html(filename);
+    console.log(filename);
+    var contents = debugData.data["files"][filename];
+    console.log(contents.content);
+    editor.setValue(contents.content);
+    editor.setValue(debugData.data["files"][filename]);
+    $('#peg-editor-menu').foundation('offcanvas', 'hide', 'move-right');
+});
 
 
 var buildParser = function() {

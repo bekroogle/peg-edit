@@ -21,41 +21,27 @@
         &nbsp;
       / Left panel
       .small-6.large-5.columns.panel#left-panel
-        %nav.top-bar(data-topbar role="navigation")
-          %ul.title-area
-            %li.name
-              %h1
-                %a{:href => "#"} PEG.js editor
-            %li.toggle-topbar.menu-icon
-              %a{:href => "#"}
-                %span
-          %section.top-bar-section
-            
-            %ul.left
-              %li.has-dropdown.has-form
-                %a#samples{"href" => "#", "data-dropdown" => "drop"}Load Grammar
-                %ul#drop.dropdown{"data-dropdown-content" => ""}
-                  %li
-                    %a#sample_one{:href => "#"} Simple expressions
-                  %li
-                    %a#left-assoc{:href => "#"} Left-associative refactored
-                  %li.divider
-                  %li
-                    %a{:href => "#", "data-reveal-id" => "gist-prompt"} From Gist ID...
-              %li.active
-                %a#build_parser_btn.button{:href => "#"} Build Parser &raquo;
-          %section.top-bar-section
-            
-            %ul.right.button-group
-              %li                 
-                %a#peg-zoom-out.button(href="#")-
-              %li
-                %a#peg-zoom-in.button(href="#") +
-              %li.divider
-              %li.has-form
-                %a#peg_editor_settings.button{:href => "#"}
-                  %i.foundicon-settings
-        #editor
+        #peg-editor-menu.off-canvas-wrap{"data-offcanvas" => ""}
+          .inner-wrap
+            %nav.tab-bar
+              %section.left-small
+                %a.left-off-canvas-toggle.menu-icon{:href => "#"}
+                  %span
+              %section.middle.tab-bar-section
+                %h1.title PEG.js Editor
+
+            %aside.left-off-canvas-menu
+              %ul.off-canvas-list
+                %li
+                  %label Open Grammar...
+                %li
+                  %a#open-gist-btn{:href => "#", "data-reveal-id" => "gist-prompt"} By Gist ID
+                %li#files-in-gist
+                  %label Files in Gist:
+
+
+            #editor
+
 
       -#      
       -# Right panel
