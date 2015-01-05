@@ -66,20 +66,25 @@ function doTree() {
           return "translate(" + d.x + "," + d.y + ")";
         });
 
-      nodeEnter.append("circle")
-        .attr("r", 10)
+      // nodeEnter.append("circle")
+      //   .attr("r", 10)
+      //   .style("fill", "#fff");
+      nodeEnter.append("ellipse")
+        .attr("rx", 20)
+        .attr("ry", 10)
         .style("fill", "#fff");
 
       nodeEnter.append("text")
-        .attr("y", function(d) {
-          return d.children || d._children ? -18 : 18;
-        })
+        // .attr("y", function(d) {
+        //   return d.children || d._children ? -18 : 18;
+        // })
         .attr("dy", ".35em")
         .attr("text-anchor", "middle")
         .text(function(d) {
           return d.name;
         })
-        .style("fill-opacity", 1);
+        .style("fill-opacity", 1)
+
 
       // Declare the linksâ€¦
       var link = svg.selectAll("path.link")
@@ -92,7 +97,19 @@ function doTree() {
         .attr("class", "link")
         .attr("d", diagonal);
 
-    }
+$('.node :first-child').each( function( index ) {
+  var textWidth =  $(this).next().width() + 1;
+  var shapeWidth = $(this).attr("rx");
+  var newWidth = shapeWidth > textWidth ? shapeWidth : textWidth;
+  $(this).attr("rx", newWidth); 
+}); 
+
+/*      $('.node:first-child').attr("width",
+                                  $('.node:nth-child(2)').attr("width") + "1em");
+*/
+// Some conditionals here would be good to ensure it doesn't shrink beyond the standard size?
+    
+  };
 
   function zoom() {
     svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");

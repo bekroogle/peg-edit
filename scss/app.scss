@@ -18,6 +18,60 @@
   border:1px solid green;
 }
 
+body {
+  background-color: white;
+  /*overflow: hidden !important;*/
+}
+#editor {
+  width: 100%;
+}
+#treediv {
+  background-color: white;
+}
+svg {
+    pointer-events: all;
+}
+.zoom-btn-group {
+  position: fixed;
+  z-index: 100;
+}
+.bottom {
+  bottom: 1rem;
+}
+.half-right {
+  right: 52%;
+}
+.top {
+  top: 1rem;
+}
+
+@mixin nodeshape() {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 3px;
+    min-width: 20px;
+}
+.node {
+  circle { @include nodeshape(); }
+  rect { @include nodeshape(); }
+  ellipse { @include nodeshape(); }
+  } 
+
+
+.node text { font: 12px sans-serif; }
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 2px;
+}
+.overlay {
+  fill: none;
+}
+
+/*.columns {
+  background-color: gray;
+  border: 1px solid black;
+}*/
 // Or selectively include components
 // @import
 //   "foundation/components/accordion",
