@@ -11,15 +11,16 @@
   %body
     <a href="https://github.com/bekroogle/pegedit"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 100;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
     .row
-      .small-2.columns &nbsp;
+      .small-2.columns
       .small-7.columns
         .center
           %h4 PEGedit &raquo; a web-based PEG.js design tool.
       .small-2.columns
         .right
-          %a#help-btn{:href => "#"} Help       
+          %a#login-btn{:href => "#"} Login
+          %a#help-btn{:href => "#"} Help
       .small-1.columns &nbsp;
-      
+
 
     .row
       / Left panel
@@ -44,8 +45,10 @@
                   %label Open Grammar:
                 %li
                   %a#open-gist-btn{:href => "#", "data-reveal-id" => "gist-prompt"} By Gist ID
+                %li
+                  %a#open-samples-btn{:href => "#"} Samples
                 %li#files-in-gist
-                  %label Files in Gist:
+                  %label Files in collection:
                 %li
                   %label Settings
                 %li
@@ -60,16 +63,16 @@
                   %a#peg-editor-settings-btn{:href => "#"}
                     %i.foundicon-settings
                       Advanced Settings
-            %a.exit-off-canvas{:href => "#"}      
+            %a.exit-off-canvas{:href => "#"}
 
             #editor
 
 
-      -#      
+      -#
       -# Right panel
       -#
       .small-6.columns.panel#right-panel
-          
+
         -# Top right
         .row
           .large-12.columns#top-right
@@ -80,11 +83,11 @@
                     %a(href="#")Parse string editor
                 %li.toggle-topbar.menu-icon
                   %a(href="#")
-                    %span 
+                    %span
               %section.top-bar-section
                 %ul.right
                   %ul.button-group.left
-                    %li                 
+                    %li
                       %a#source-zoom-out.button(href="#")-
                     %li
                       %a#source-zoom-in.button(href="#") +
@@ -112,7 +115,7 @@
               #treediv.content
               #console-view.content
             #treediv
-      
+
     %ol.joyride-list{"data-joyride" => ""}
       %li{"data-options" => "prev_button: false; postRideCallback: function(){alert('test');}"}
         %h4 Welcome to PEGedit
@@ -126,11 +129,11 @@
       %li{"data-id" => "stopTwo", "data-options" => "tip_location: left"}
         %h4 Parse Something!
         %p  The text that your PEGjs grammar will be parsing goes here.
-      
+
       %li{"data-id" => "treediv", "data-options" => "tip_location: top"}
         %h4 And see your parse tree!
         %p You can use the mouse, scroll wheel and gestures to pan or zoom the tree.
-      
+
       %li{"data-id" => "samples", "data-button" => "Got it!"}
         %h4 Try a sample to start!
         %p Click here to pick one of the sample grammars.
@@ -152,11 +155,14 @@
     %script(src="./bower_components/foundation/js/foundation.min.js")
     %script(src="./bower_components/foundation/js/foundation/foundation.joyride.js")
     %script(src="./bower_components/foundation/js/foundation/foundation.offcanvas.js")
-    %script(src="./bower_components/foundation/js/foundation/foundation.tabs.js")
+    %script(src="./bower_components/foundation/js/foundation/foundation.tab.js")
     %script(src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js")
     %script(src="./bower_components/ace/libs/ace/ace.js")
     %script(src="./bower_components/pegjs/peg-0.8.0.js")
+    %script(src="./bower_components/hello/src/hello.js")
+    %script(src="./bower_components/hello/src/modules/github.js")
     %script(src="./js/doc-ready.js")
     %script(src="./bower_components/d3/d3.min.js")
     %script(src="./js/do-tree.js")
     %script(src="./js/app.js")
+    

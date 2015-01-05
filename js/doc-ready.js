@@ -3,6 +3,17 @@ var parser,
     treeData,
     global_gist_data;
 var globalAceTheme = "ace/theme/solarized_dark";
+var github;
+var GITHUB_CLIENT_ID = {
+    'local.knarly.com' : 'ca7e06a718b2e8eef737',
+    'adodson.com' : 'd934ef34e2e40cf9b00a',
+    'listerine' : '3ac9eebdd6994a1ff1e5',
+    '162.228.123.56' : '2c7fcc80070f5e9fb49f'
+}[window.location.hostname];
+
+var OAUTH_PROXY_URL = {
+    'local.knarly.com' : 'http://local.knarly.com:5500/proxy',
+}[window.location.hostname] || 'https://auth-server.herokuapp.com/proxy';
 
 var changeSize = function(target, delta) {
     target.setOption('fontSize', target.getOption('fontSize') + delta);
@@ -11,12 +22,31 @@ var setSize = function(target, size) {
     target.setOption('fontSize', size);
 };
 
+var login = function(network) {
+    github = hello(network);
 
+    github.login( function(){
+        github.api( '/gists', function(r) {
+        localStorage.setItem('gist_catalog', JSON.stringify(r));
+        console.dir(r);
+        //document.getElementById('result').innerHTML = JSON.stringify(r,null,2);
+    });
+  });
+};
 
+hello.init({github : GITHUB_CLIENT_ID,},{
+    redirect_uri : './redirect.html',
+    oauth_proxy : OAUTH_PROXY_URL
+});
+
+$('#login-btn').click( function(e) {
+    e.preventDefault();
+    login('github');
+});
 
 $('document').ready(function() {
     console.log("me");
-    $(document).foundation();    
+    $(document).foundation();
     // Create the PEG editor
     editor = ace.edit("editor");
     editor.setTheme(globalAceTheme);
@@ -65,7 +95,7 @@ $('document').ready(function() {
         e.preventDefault();
         doParse(e);
     });
-    
+
     $('#help-btn').click(function() {
         $(document).foundation('joyride', 'start');
     })
@@ -76,7 +106,7 @@ $('document').ready(function() {
     $('#peg-zoom-out-btn').click(function() {
         changeSize(editor, -2);
     });
-    
+
     $('#peg-reset').click(function() {
         setSize(editor, 14);
     });
@@ -99,17 +129,17 @@ $('document').ready(function() {
 
     $('#peg_editor a').click(function(e) {
         e.preventDefault();
-       
+
     });
     $('#peg-editor-settings-btn').click(function(e) {
         e.preventDefault();
-        
+
         editor.execCommand('showSettingsMenu');
     });
 
     $('#source_editor_settings').click(function(e) {
         e.preventDefault();
-        
+
         output.execCommand('showSettingsMenu');
     });
 
@@ -120,7 +150,7 @@ $('document').ready(function() {
     $('#sample_one').click(function(e) {
         e.preventDefault();
         editor.setValue(simple_expr);
-        
+
         buildParser();
         output.setValue("(3 + 5) * (2 + 2)");
         doParse();
@@ -140,14 +170,13 @@ $('document').ready(function() {
         global_gist_data =  open_gist($('#gist-id').val());
         $('#gist-prompt').foundation('reveal', 'close');
     });
-    
 
     startRide();
 
 });
 
 /** startRide
- *  If a visitor is a virgin, it loads the first sample and takes them on a 
+ *  If a visitor is a virgin, it loads the first sample and takes them on a
  *  joyride.
  *
  *  It then marks them down as ridden . . . no longer a virgin.
@@ -166,12 +195,17 @@ var resizeElements = function() {
     editor.resize();
 
     $('#right-panel').height($('#left-panel').height());
-    
+
     $('#output').height(window.innerHeight * .3);
     output.resize();
     $('#treediv').height(window.innerHeight * .4);
     $('#tree-view').height(window.innerHeight * .4);
 };
+$('#open-samples-btn').click( function(e) {
+    e.preventDefault();
+    global_gist_data = open_gist('cb3f08209da9b0f8da82');
+});
+
 
 /** open_gist(gistid)
  *  loads a project from a gist
@@ -183,9 +217,9 @@ var open_gist = function(gistid) {
         type: 'GET',
         dataType: 'jsonp',
         success: function(gist_data) {
-            
+
             // To be used for creating a list of recent gist ids:
-            var gist_history = 
+            var gist_history =
                 JSON.parse(localStorage.getItem("gist_history")) || [];
             gist_history.push(gistid);
             localStorage.setItem("gist_history", JSON.stringify(gist_history));
@@ -193,11 +227,11 @@ var open_gist = function(gistid) {
 
 
             localStorage.setItem("gist_data", JSON.stringify(gist_data));
-            
+
             // Clear list of files from previously loaded gist:
             $('.file-name').remove();
-            
-            // Build list of files in the current gist: 
+
+            // Build list of files in the current gist:
             for (var file in gist_data.data["files"]) {
                 $('#files-in-gist').append('<li><a class="file-name" href="#">'+ file +'</a></li>');
                 // console.log('<li><a href="#">'+ file +'</a></li>');
@@ -245,7 +279,7 @@ var buildParser = function() {
 
         editor.getSession().$annotations.push(myAnno);
         editor.getSession().setAnnotations(editor.getSession().$annotations);
-    } // catch(exn)      
+    } // catch(exn)
 };
 var traverse = function(ast) {
   if (ast.token === "number") {
@@ -271,7 +305,7 @@ var doParse = function(e) {
 
         // The resulting data structure:
         result = parser.parse(output.getValue());
-        
+
         treeData = result;
         var formatted_result = JSON.stringify(result, null, 2);
 
@@ -279,12 +313,12 @@ var doParse = function(e) {
         $('#parser-output').html('<pre>'+ formatted_result +'</pre>');
 
         doTree();
-        
+
         $('#console-view').html('<pre>'+traverse(result)+'</pre>');
-        
+
         $(document).foundation();
         $(document).foundation('tab','reflow');
-    // Log any parse errors in the console:                    
+    // Log any parse errors in the console:
     } catch (e) {
         $('parser-output').html('<div class="alert alert-danger" role="alert">Parse Error: ' + e.message + '</div>');
         console.error(e);
