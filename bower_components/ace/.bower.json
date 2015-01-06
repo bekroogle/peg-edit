@@ -1,0 +1,15 @@
+{
+  "name": "ace",
+  "homepage": "https://github.com/ajaxorg/ace",
+  "version": "1.1.8",
+  "_release": "1.1.8",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.8",
+    "commit": "b8e3198ba8e9fe98cdda85e90f517b94d4452b5e"
+  },
+  "_source": "git://github.com/ajaxorg/ace.git",
+  "_target": "~1.1.8",
+  "_originalSource": "ace",
+  "_direct": true
+}
