@@ -8,15 +8,16 @@
     %link{"rel" => "stylesheet", "href"=>"./bower_components/foundation-icons/foundation_icons_general/stylesheets/general_foundicons.css"}
     %script(src="bower_components/modernizr/modernizr.js")
   %body
-    .row
+    #top-row.row
       .small-2.columns
       .small-7.columns
         .center
           %h4 PEGedit &raquo; a web-based PEG.js design tool.
       .small-3.columns
         .right
-          %a#login-btn{:href => "#", "data-reveal-id" => "token-prompt"} Login
           %a#help-btn{:href => "#"} Help
+          %a#login-btn{:href => "#", "data-reveal-id" => "token-prompt"} Login
+          
     .row
       / Left panel
       .small-6.columns.panel#left-panel
@@ -110,6 +111,8 @@
               #treediv.content
               #console-view.content
             #treediv
+    .row
+      #status.small-12-columns
 
     %ol.joyride-list{"data-joyride" => ""}
       %li{"data-options" => "prev_button: false; postRideCallback: function(){alert('test');}"}
@@ -155,7 +158,7 @@
           .small-8.columns
             %input#access-token{"type" => "text"}
           .small-3.columns
-            %a#set-token-btn.button.small{:href => "#"} Validate
+            %a#set-token-btn.button.small{:href => "#"} Set token
         %row
           .small-2.columns
           .small-8.columns
@@ -170,6 +173,7 @@
     %script(src="./bower_components/foundation/js/foundation/foundation.joyride.js")
     %script(src="./bower_components/foundation/js/foundation/foundation.offcanvas.js")
     %script(src="./bower_components/foundation/js/foundation/foundation.tab.js")
+    %script(src="./bower_components/foundation/js/foundation/foundation.alert.js")
     %script(src="./bower_components/ace-builds/src/ace.js")
     %script(src="./bower_components/pegjs/peg-0.8.0.js")
     %script(src="./bower_components/hello/src/hello.js")

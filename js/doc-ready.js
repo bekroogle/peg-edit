@@ -2,6 +2,7 @@ var parser,
     debugData,
     treeData,
     global_gist_data;
+    logged_in = false;
 var globalAceTheme = "ace/theme/solarized_dark";
 var github;
 var GITHUB_CLIENT_ID = {
@@ -336,6 +337,48 @@ $('#login-btn').click( function(e) {
 
 $('#set-token-btn').click( function(e) {
     e.preventDefault();
-    localStorage["github_access_token"] = $('#access-token').val() || localStorage["github_access_token"];
-    $('#token-prompt').foundation('reveal', 'close'); 
+    $.ajax({
+        url: "https://api.github.com/user?access_token="+ ($('#access-token').val() || localStorage.getItem('github_access_token')),
+        type: "GET"
+
+    // On success:
+    }).done( function(data) {
+        // Update the state of the loggin-in flag:
+        logged_in = true;
+
+        // If the token isn't in storage yet, put it there.
+        localStorage["github_access_token"] = $('#access-token').val() || localStorage["github_access_token"];
+        
+        // Get rid of the login button:
+        $('#login-btn').css('display', 'none');
+        
+        // Show the user's GitHub avatar:
+        $('#top-row .small-3 .right').append('Logged in as: '+ data.login + '<img id="avatar" src="'+ data.avatar_url  +'" height="45px"/>');
+        $('#avatar').height('45px');
+        
+        // Close the prompt:
+        $('#token-prompt').foundation('reveal', 'close');
+    
+    // On failure:
+    }).fail( function(data) {
+        // Update the state of the loggin-in flag:
+        logged_in = false;
+
+        // Notify the user with an alert-box:
+        createAlert('alert', 'Unable to login with that token.', '#status');
+
+        $('#token-prompt').foundation('reveal','close');
+    });
+
+
+     
 });
+
+var createAlert = function(classes, text, parent) {
+    parent = parent || 'body';
+    var classlist = "alert-box " + classes;
+    var alertMarkup = '<div data-alert class="'+ classlist + '">' + text + '<a href="#" class="close">&times;</a>'         
+    $(parent).append(alertMarkup);
+    $('.alert-box').css("margin-top", $('.alert-box').height() * -1);
+    $(document).foundation('reflow');
+};
