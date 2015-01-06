@@ -1430,7 +1430,7 @@ $info-color: #a0d3e8;
 // Transitions and breakpoint styles
 // $topbar-transition-speed: 300ms;
 // Using rem-calc for the below breakpoint causes issues with top bar
-$topbar-breakpoint: #{upper-bound(small-range)}; // Change to 9999px for always mobile layout
+$topbar-breakpoint: #{lower-bound(small-range)}; // Change to 9999px for always mobile layout
 // $topbar-media-query: $medium-up;
 
 // Divider Styles

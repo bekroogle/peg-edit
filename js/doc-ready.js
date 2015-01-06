@@ -15,38 +15,9 @@ var OAUTH_PROXY_URL = {
     'local.knarly.com' : 'http://local.knarly.com:5500/proxy',
 }[window.location.hostname] || 'https://auth-server.herokuapp.com/proxy';
 
-var changeSize = function(target, delta) {
-    target.setOption('fontSize', target.getOption('fontSize') + delta);
-};
-var setSize = function(target, size) {
-    target.setOption('fontSize', size);
-};
-
-var login = function(network) {
-    github = hello(network);
-
-    github.login( function(){
-        github.api( '/gists', function(r) {
-        localStorage.setItem('gist_catalog', JSON.stringify(r));
-        console.dir(r);
-        //document.getElementById('result').innerHTML = JSON.stringify(r,null,2);
-    });
-  });
-};
-
-hello.init({github : GITHUB_CLIENT_ID,},{
-    redirect_uri : './redirect.html',
-    oauth_proxy : OAUTH_PROXY_URL
-});
-
-$('#login-btn').click( function(e) {
-    e.preventDefault();
-    login('github');
-});
-
 $('document').ready(function() {
-    console.log("me");
     $(document).foundation();
+        
     // Create the PEG editor
     editor = ace.edit("editor");
     editor.setTheme(globalAceTheme);
@@ -85,7 +56,9 @@ $('document').ready(function() {
     });
 
     resizeElements();
-
+    Mousetrap.bind('v 1', function() { alert('cool'); });
+    Mousetrap.bind('v 2', function() { $('#treediv').addClass('active'); });
+    Mousetrap.bind('v 3', function() { alert('cool'); });
     $('#build-parser-btn').click(function(e) {
         e.preventDefault();
         buildParser();
@@ -170,9 +143,17 @@ $('document').ready(function() {
         global_gist_data =  open_gist($('#gist-id').val());
         $('#gist-prompt').foundation('reveal', 'close');
     });
+    
+    // If there's a GitHub access token in local storage, make it the default value for the
+    // login prompt:
+    $('#access-token').attr('placeholder', localStorage.getItem('github_access_token'));
 
+    if (localStorage.getItem('github_access_token')) {
+        // $('#access-token').val(localStorage.getItem('github_access_token') || '');
+    }
+    
     startRide();
-
+    $(document).foundation('reflow');
 });
 
 /** startRide
@@ -324,3 +305,37 @@ var doParse = function(e) {
         console.error(e);
     }
 };
+
+var changeSize = function(target, delta) {
+    target.setOption('fontSize', target.getOption('fontSize') + delta);
+};
+var setSize = function(target, size) {
+    target.setOption('fontSize', size);
+};
+
+var login = function(network) {
+    github = hello(network);
+
+    github.login( function(){
+        github.api( '/me', function(r) {
+        localStorage.setItem('gist_catalog', JSON.stringify(r));
+        console.dir(r);
+        //document.getElementById('result').innerHTML = JSON.stringify(r,null,2);
+    });
+  });
+};
+
+hello.init({github : GITHUB_CLIENT_ID,},{
+    redirect_uri : './redirect.html',
+    oauth_proxy : OAUTH_PROXY_URL
+});
+
+$('#login-btn').click( function(e) {
+    e.preventDefault();
+});
+
+$('#set-token-btn').click( function(e) {
+    e.preventDefault();
+    localStorage["github_access_token"] = $('#access-token').val() || localStorage["github_access_token"];
+    $('#token-prompt').foundation('reveal', 'close'); 
+});
