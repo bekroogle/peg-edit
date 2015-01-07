@@ -11,7 +11,12 @@ var logged_in = false;
 var globalAceTheme = "ace/theme/solarized_dark";
 
 $('document').ready(function() {
-    $(document).foundation();
+    $(document).foundation({
+        offcanvas : {
+            open_method: 'move',
+            close_on_click: true
+        }
+    });
     
     // Create the PEG editor
     initPegEditor();
@@ -142,7 +147,21 @@ var openUserGists = function() {
                     '</ul>'+    // .left-submenu
                 '</li>' // .has-submenu
             );
-        }     
+        }
+        // $('.left-submenu').click( function(e) {
+        //     console.log($(this));
+        // });     
+        $('a.gist-file-name').click( function(e) {
+            e.preventDefault();
+            console.log('clicked');
+            var filename = $(this).html();
+            $.get('https://api.github.com/gists/'+ $(this).attr('gistid'))
+                .done( function (data) {
+                    editor.setValue(data.files[filename].content);
+
+                });
+        });
+        $(document).foundation('offcanvas', 'reflow');
     });
 };
 
@@ -151,7 +170,7 @@ var getGistList = function(gist) {
     for (var file in gist.files) {
         rtn_str = rtn_str +
         '<li>'+
-            '<a href="#">'+ 
+            '<a class="gist-file-name" gistid="' + gist.id + '" href="#">'+ 
                 gist.files[file].filename +
             '</a>'+
         '</li>'
@@ -292,23 +311,9 @@ var createButtonEvents = function() {
         e.preventDefault();
         buildParser();
     });
-    
-    $('#files-in-gist').click( function(e) {
-        console.log($(e.target).attr('gist-id'));
-        // var filename = e.target.firstChild.nodeValue;
-        // $('#left-panel h1').html(filename);
-        // console.log(filename);
-        // var contents = global_gist_data.data.files[filename];
-        // console.log(contents.content);
-        // editor.setValue(contents.content);
-        // try {
-        //     buildParser();
-        // } catch(ex) {
-        //     console.log(ex);
-        // }
-        // $('#peg-editor-menu').foundation('offcanvas', 'toggle', 'move-right');
-    });
-    
+      
+
+
     $('#help-btn').click(function(e) {
         e.preventDefault();
         $(document).foundation('joyride', 'start');
