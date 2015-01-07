@@ -319,6 +319,11 @@ var createButtonEvents = function() {
         global_gist_data = open_gist('cb3f08209da9b0f8da82');
     });
 
+    $('#parse-btn').click(function(e) {
+        e.preventDefault();
+        doParse(e);
+    });
+
     $('#peg-editor-settings-btn').click(function(e) {
         e.preventDefault();
         editor.execCommand('showSettingsMenu');
