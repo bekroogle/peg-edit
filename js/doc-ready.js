@@ -97,6 +97,43 @@ var open_gist = function(gistid) {
     });
 };
 
+var openUserGists = function() {
+    $.ajax({
+        url: 'https://api.github.com/users/' + 
+            localStorage.getItem('github-login') +
+            '/gists?access_token=' +
+            localStorage.getItem('github_access_token'),
+        // 'https://api.github.com/users/'+ 
+        //     localStorage.getItem('github-login') +
+        //     'gists/?access_token=' +
+        //     localStorage.getItem('github_access_token') ,
+        type: 'GET',
+        dataType: 'jsonp',
+        success: function(gist_data) {
+
+            // To be used for creating a list of recent gist ids:
+        
+            global_gist_data = gist_data;
+
+
+            localStorage.setItem('gist_data', JSON.stringify(gist_data));
+
+            // Clear list of files from previously loaded gist:
+            $('.file-name').remove();
+
+            // Build list of files in the current gist:
+            for (var gist in gist_data.data) {
+                for (var file in gist_data.data[gist].files) {
+                    console.log(gist_data.data[gist].files[file].filename)
+                    $('#files-in-gist').append('<li><a class="file-name" href="#">'+
+                         gist_data.data[gist].files[file].filename +
+                        '</a></li>');
+            }
+        }        
+            return gist_data;
+        }
+    });
+};
 var buildParser = function() {
     try {
         editor.getSession().clearAnnotations();
@@ -182,9 +219,9 @@ var setToken = function(showAlert) {
     }).done( function(data) {
         // Update the state of the logged_in flag:
         logged_in = true;
+        localStorage.setItem('github-login',data.login)
         $('#login-btn').toggleClass('gone');
-//        $('#user-account').addClass('has-dropdown');
-//        $('#user-account').append('<ul class="dropdown"><li><a href="#">First Link</a></li></ul>');
+
         // If the token isn't in storage yet, put it there.
         localStorage["github_access_token"] = $('#access-token').val() || localStorage["github_access_token"];
         
@@ -192,7 +229,7 @@ var setToken = function(showAlert) {
         $('#user-account').toggleClass('gone');
         
         // Show the user's GitHub name and avatar:
-        $('#github-id').html(data.login + ' ');
+        $('#github-id').html(localStorage.getItem('github-login') + ' ');
         $('#github-id').append('<img src="' + data.avatar_url + '" class="thumbnail"/>');
 
         $(document).foundation('reflow');
@@ -250,7 +287,12 @@ var createButtonEvents = function() {
         e.preventDefault();
         $(document).foundation('joyride', 'start');
     });
-    
+
+    $('#load-user-gists').click( function(e) {
+        e.preventDefault();
+        openUserGists();
+    });
+
     $('#login-btn').click( function(e) {
         e.preventDefault();
     });
