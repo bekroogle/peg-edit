@@ -4,17 +4,6 @@ var parser,
     global_gist_data;
     logged_in = false;
 var globalAceTheme = "ace/theme/solarized_dark";
-var github;
-var GITHUB_CLIENT_ID = {
-    'local.knarly.com' : 'ca7e06a718b2e8eef737',
-    'adodson.com' : 'd934ef34e2e40cf9b00a',
-    'listerine' : '3ac9eebdd6994a1ff1e5',
-    '162.228.123.56' : '2c7fcc80070f5e9fb49f'
-}[window.location.hostname];
-
-var OAUTH_PROXY_URL = {
-    'local.knarly.com' : 'http://local.knarly.com:5500/proxy',
-}[window.location.hostname] || 'https://auth-server.herokuapp.com/proxy';
 
 $('document').ready(function() {
     $(document).foundation();
@@ -60,91 +49,19 @@ $('document').ready(function() {
     Mousetrap.bind('v 1', function() { alert('cool'); });
     Mousetrap.bind('v 2', function() { $('#treediv').addClass('active'); });
     Mousetrap.bind('v 3', function() { alert('cool'); });
-    $('#build-parser-btn').click(function(e) {
-        e.preventDefault();
-        buildParser();
-    });
 
-    $('#parse-btn').click(function(e) {
-        e.preventDefault();
-        doParse(e);
-    });
+    createButtonEvents();
 
-    $('#help-btn').click(function() {
-        $(document).foundation('joyride', 'start');
-    })
-    $('#peg-zoom-in-btn').click(function() {
-        changeSize(editor, 2);
-
-    });
-    $('#peg-zoom-out-btn').click(function() {
-        changeSize(editor, -2);
-    });
-
-    $('#peg-reset').click(function() {
-        setSize(editor, 14);
-    });
-
-    $('#source-zoom-in').click(function() {
-        changeSize(output, 2);
-
-    });
-    $('#source-zoom-out').click(function() {
-        changeSize(output, -2);
-    });
-    $('#source-reset').click(function() {
-        setSize(output, 14);
-    });
+   
     $(output).focus(function() {
         if (editor.getValue()) {
             buildParser();
         }
     });
 
-    $('#peg_editor a').click(function(e) {
-        e.preventDefault();
-
-    });
-    $('#peg-editor-settings-btn').click(function(e) {
-        e.preventDefault();
-
-        editor.execCommand('showSettingsMenu');
-    });
-
-    $('#source_editor_settings').click(function(e) {
-        e.preventDefault();
-
-        output.execCommand('showSettingsMenu');
-    });
-
-    $('#tree-reset').click(function() {
-        doParse();
-
-    });
-    $('#sample_one').click(function(e) {
-        e.preventDefault();
-        editor.setValue(simple_expr);
-
-        buildParser();
-        output.setValue("(3 + 5) * (2 + 2)");
-        doParse();
-    });
-    $('#left-assoc').click(function(e) {
-        e.preventDefault();
-        editor.setValue(commutative);
-        $('#build_parser_btn').click();
-        output.setValue("1-4/2-3");
-        doParse();
-    });
-
     $('.ace_print-margin').attr('id', 'firstStop');
     $('#output > .ace_scroller').attr('id', 'stopTwo');
-    $('#open_gist_btn').click( function(e) {
-        e.preventDefault();
-        global_gist_data =  open_gist($('#gist-id').val());
-        $('#gist-prompt').foundation('reveal', 'close');
-    });
-    
+     
     // If there's a GitHub access token in local storage, make it the default value for the
     // login prompt:
     $('#access-token').attr('placeholder', localStorage.getItem('github_access_token'));
@@ -183,10 +100,6 @@ var resizeElements = function() {
     $('#treediv').height(window.innerHeight * .4);
     $('#tree-view').height(window.innerHeight * .4);
 };
-$('#open-samples-btn').click( function(e) {
-    e.preventDefault();
-    global_gist_data = open_gist('cb3f08209da9b0f8da82');
-});
 
 
 /** open_gist(gistid)
@@ -223,20 +136,7 @@ var open_gist = function(gistid) {
     });
 };
 // Handle clicks on files in list:
-$('#files-in-gist').click( function(e) {
-    var filename = e.target.firstChild.nodeValue;
-    $('#left-panel h1').html(filename);
-    console.log(filename);
-    var contents = global_gist_data.data["files"][filename];
-    console.log(contents.content);
-    editor.setValue(contents.content);
-    try {
-        buildParser();
-    } catch(ex) {
-        console.log(ex);
-    }
-    // $('#peg-editor-menu').foundation('offcanvas', 'toggle', 'move-right');
-});
+
 
 
 var buildParser = function() {
@@ -314,28 +214,7 @@ var setSize = function(target, size) {
     target.setOption('fontSize', size);
 };
 
-var login = function(network) {
-    github = hello(network);
-
-    github.login( function(){
-        github.api( '/me', function(r) {
-        localStorage.setItem('gist_catalog', JSON.stringify(r));
-        console.dir(r);
-        //document.getElementById('result').innerHTML = JSON.stringify(r,null,2);
-    });
-  });
-};
-
-hello.init({github : GITHUB_CLIENT_ID,},{
-    redirect_uri : './redirect.html',
-    oauth_proxy : OAUTH_PROXY_URL
-});
-
-$('#login-btn').click( function(e) {
-    e.preventDefault();
-});
-
-$('#set-token-btn').click( function(e) {
+var setToken = function(e) {
     e.preventDefault();
     $.ajax({
         url: "https://api.github.com/user?access_token="+ ($('#access-token').val() || localStorage.getItem('github_access_token')),
@@ -372,13 +251,9 @@ $('#set-token-btn').click( function(e) {
 
         // Notify the user with an alert-box:
         createAlert('alert', 'Unable to login with that token.', '#status');
-
         $('#token-prompt').foundation('reveal','close');
-    });
-
-
-     
-});
+    });  
+};
 
 var createAlert = function(classes, text, parent) {
     parent = parent || 'body';
@@ -387,4 +262,117 @@ var createAlert = function(classes, text, parent) {
     $(parent).append(alertMarkup);
     $('.alert-box').css("margin-top", $('.alert-box').height() * -1);
     $(document).foundation('reflow');
+};
+
+var createButtonEvents = function() {
+    
+    $('#build-parser-btn').click(function(e) {
+        e.preventDefault();
+        buildParser();
+    });
+    
+    $('#files-in-gist').click( function(e) {
+        var filename = e.target.firstChild.nodeValue;
+        $('#left-panel h1').html(filename);
+        console.log(filename);
+        var contents = global_gist_data.data["files"][filename];
+        console.log(contents.content);
+        editor.setValue(contents.content);
+        try {
+            buildParser();
+        } catch(ex) {
+            console.log(ex);
+        }
+        // $('#peg-editor-menu').foundation('offcanvas', 'toggle', 'move-right');
+    });
+    
+    $('#help-btn').click(function(e) {
+        e.preventDefault();
+        $(document).foundation('joyride', 'start');
+    });
+
+    $('#left-assoc').click(function(e) {
+        e.preventDefault();
+        editor.setValue(commutative);
+    
+        $('#build_parser_btn').click();
+        output.setValue("1-4/2-3");
+        doParse();
+    });
+    
+    $('#login-btn').click( function(e) {
+        e.preventDefault();
+    });
+    
+    $('#peg_editor a').click(function(e) {
+        e.preventDefault();
+    });
+   
+    $('#open_gist_btn').click( function(e) {
+        e.preventDefault();
+        global_gist_data =  open_gist($('#gist-id').val());
+        $('#gist-prompt').foundation('reveal', 'close');
+    });
+    
+    $('#open-samples-btn').click( function(e) {
+        e.preventDefault();
+        global_gist_data = open_gist('cb3f08209da9b0f8da82');
+    });
+
+    $('#peg-editor-settings-btn').click(function(e) {
+        e.preventDefault();
+        editor.execCommand('showSettingsMenu');
+    });
+
+    $('#peg-reset').click(function(e) {
+        e.preventDefault();
+        setSize(editor, 14);
+    });
+
+    $('#peg-zoom-in-btn').click(function(e) {
+        e.preventDefault();
+        changeSize(editor, 2);
+    });
+
+    $('#peg-zoom-out-btn').click(function(e) {
+        e.preventDefault();
+        changeSize(editor, -2);
+    });
+
+    $('#sample_one').click(function(e) {
+        e.preventDefault();
+        editor.setValue(simple_expr);
+        buildParser();
+        output.setValue("(3 + 5) * (2 + 2)");
+        doParse();
+    });
+    
+    $('#set-token-btn').click(  function(e) {
+        setToken(e);
+    });
+    
+    $('#source_editor_settings').click(function(e) {
+        e.preventDefault();
+        output.execCommand('showSettingsMenu');
+    });
+
+    $('#source-reset').click(function(e) {
+        e.preventDefault();
+        setSize(output, 14);
+    });
+
+    $('#source-zoom-in').click(function(e) {
+        e.preventDefault();
+        changeSize(output, 2);
+    });
+    
+    $('#source-zoom-out').click(function(e) {
+        e.preventDefault();
+        changeSize(output, -2);
+    });
+    
+    $('#tree-reset').click(function(e) {
+        e.preventDefault();
+        doParse();
+    });
 };
