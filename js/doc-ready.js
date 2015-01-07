@@ -127,12 +127,17 @@ var openUserGists = function() {
             for (var gist in gist_data.data) {
                 for (var file in gist_data.data[gist].files) {
                     gist_map = gist_map + '{"'+
-                        gist_data.data[gist].id +
-                         '": "'+ gist_data.data[gist].files[file].filename +
+                        'gist_id" : "' + gist_data.data[gist].id +
+                         '", "file_name": '+ gist_data.data[gist].files[file].filename +
                          '"}';
-                
-                    $('#files-in-gist').append('<li><a class="file-name" href="#">'+
-                         gist_data.data[gist].files[file].filename +
+                    gist_map = gist_map + JSON.stringify(
+                        {
+                            "gist_id": gist_data.data[gist].id,
+                            "file_name": gist_data.data[gist].files[file].filename,
+                            "contents":  gist_data.data[gist].files[file].contents,})
+                    $('#files-in-gist').append('<li><a class="file-name"'+ 
+                        'gist-id="'+ gist_data.data[gist].id +'" href="#">'+
+                         gist_data.data[gist].description +
                         '</a></li>');
             }
         }    
@@ -277,17 +282,18 @@ var createButtonEvents = function() {
     });
     
     $('#files-in-gist').click( function(e) {
-        var filename = e.target.firstChild.nodeValue;
-        $('#left-panel h1').html(filename);
-        console.log(filename);
-        var contents = global_gist_data.data.files[filename];
-        console.log(contents.content);
-        editor.setValue(contents.content);
-        try {
-            buildParser();
-        } catch(ex) {
-            console.log(ex);
-        }
+        console.log($(e.target).attr('gist-id'));
+        // var filename = e.target.firstChild.nodeValue;
+        // $('#left-panel h1').html(filename);
+        // console.log(filename);
+        // var contents = global_gist_data.data.files[filename];
+        // console.log(contents.content);
+        // editor.setValue(contents.content);
+        // try {
+        //     buildParser();
+        // } catch(ex) {
+        //     console.log(ex);
+        // }
         // $('#peg-editor-menu').foundation('offcanvas', 'toggle', 'move-right');
     });
     
