@@ -345,7 +345,8 @@ $('#set-token-btn').click( function(e) {
     }).done( function(data) {
         // Update the state of the loggin-in flag:
         logged_in = true;
-
+        $('#user-account').addClass('has-dropdown');
+        $('#user-account').append('<ul class="dropdown"><li><a href="#">First Link</a></li></ul>')
         // If the token isn't in storage yet, put it there.
         localStorage["github_access_token"] = $('#access-token').val() || localStorage["github_access_token"];
         
@@ -357,7 +358,7 @@ $('#set-token-btn').click( function(e) {
         $('#github-id').html(data.login + ' ');
         $('#github-id').append('<img src="' + data.avatar_url + '" class="thumbnail"/>');
 
-
+        $(document).foundation('reflow');
         
         // $('#avatar').height('44px');
         
