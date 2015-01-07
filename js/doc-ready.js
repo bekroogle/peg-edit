@@ -157,8 +157,9 @@ var openUserGists = function() {
             var filename = $(this).html();
             $.get('https://api.github.com/gists/'+ $(this).attr('gistid'))
                 .done( function (data) {
+                    $('#peg-editor-title').html(filename);
                     editor.setValue(data.files[filename].content);
-
+                    buildParser();
                 });
         });
         $(document).foundation('offcanvas', 'reflow');
