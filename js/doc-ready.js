@@ -121,15 +121,23 @@ var openUserGists = function() {
             // Clear list of files from previously loaded gist:
             $('.file-name').remove();
 
+            var gist_map = "["
+
             // Build list of files in the current gist:
             for (var gist in gist_data.data) {
                 for (var file in gist_data.data[gist].files) {
-                    console.log(gist_data.data[gist].files[file].filename)
+                    gist_map = gist_map + '{"'+
+                        gist_data.data[gist].id +
+                         '": "'+ gist_data.data[gist].files[file].filename +
+                         '"}';
+                
                     $('#files-in-gist').append('<li><a class="file-name" href="#">'+
                          gist_data.data[gist].files[file].filename +
                         '</a></li>');
             }
-        }        
+        }    
+            gist_map = gist_map + ']';
+            console.log(gist_map);    
             return gist_data;
         }
     });
