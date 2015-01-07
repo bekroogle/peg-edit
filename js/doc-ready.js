@@ -1,8 +1,12 @@
+"use strict";
+
 var parser,
-    debugData,
+    //debugData,
     treeData,
+    editor,
+    output,
     global_gist_data;
-    logged_in = false;
+var logged_in = false;
 var globalAceTheme = "ace/theme/solarized_dark";
 
 $('document').ready(function() {
@@ -36,25 +40,25 @@ $('document').ready(function() {
  *  It then marks them down as ridden . . . no longer a virgin.
  */
 var startRide = function() {
-    if (!localStorage.getItem("joyride")) {
+    if (!localStorage.getItem('joyride')) {
         $('#sample_one').click();
         $(document).foundation('joyride', 'start');
     }
-    localStorage.setItem("joyride", "true");
+    localStorage.setItem('joyride', 'true');
 };
 
 var resizeElements = function() {
     // Resize peg editor:
-    $('#editor').height(window.innerHeight * .8)
+    $('#editor').height(window.innerHeight * 0.8);
     editor.resize();
 
     $('#right-panel').height($('#left-panel').height());
 
     // Resize source editor:
-    $('#output').height(window.innerHeight * .3);
+    $('#output').height(window.innerHeight * 0.3);
     output.resize();
-    $('#treediv').height(window.innerHeight * .4);
-    $('#tree-view').height(window.innerHeight * .4);
+    $('#treediv').height(window.innerHeight * 0.4);
+    $('#tree-view').height(window.innerHeight * 0.4);
 };
 
 /** open_gist(gistid)
@@ -70,19 +74,19 @@ var open_gist = function(gistid) {
 
             // To be used for creating a list of recent gist ids:
             var gist_history =
-                JSON.parse(localStorage.getItem("gist_history")) || [];
+                JSON.parse(localStorage.getItem('gist_history')) || [];
             gist_history.push(gistid);
-            localStorage.setItem("gist_history", JSON.stringify(gist_history));
+            localStorage.setItem('gist_history', JSON.stringify(gist_history));
             global_gist_data = gist_data;
 
 
-            localStorage.setItem("gist_data", JSON.stringify(gist_data));
+            localStorage.setItem('gist_data', JSON.stringify(gist_data));
 
             // Clear list of files from previously loaded gist:
             $('.file-name').remove();
 
             // Build list of files in the current gist:
-            for (var file in gist_data.data["files"]) {
+            for (var file in gist_data.data.files) {
                 $('#files-in-gist').append('<li><a class="file-name" href="#">'+ file +'</a></li>');
                 // console.log('<li><a href="#">'+ file +'</a></li>');
             }
@@ -104,11 +108,11 @@ var buildParser = function() {
         //}
 
         var myAnno = {
-            "column": exn['column'],
-            "row": exn['line'] - 1,
+            "column": exn.column,
+            "row": exn.line - 1,
             "type": "error",
-            "raw": exn['message'],
-            "text": exn['message']
+            "raw": exn.message,
+            "text": exn.message
         };
 
         editor.getSession().$annotations.push(myAnno);
@@ -125,12 +129,11 @@ var traverse = function(ast) {
     case "+": return traverse(ast.children[0]) + traverse(ast.children[1]);
     case "*": return traverse(ast.children[0]) * traverse(ast.children[1]);
     case "/": return traverse(ast.children[0]) / traverse(ast.children[1]);
-    case "^": return power(traverse(ast.children[0]), traverse(ast.children[1]));
    }
   }
  };
 
-var doParse = function(e) {
+var doParse = function() {
     // If a parser hasn't been built, build one:
     if (!parser) {
         buildParser();
@@ -140,7 +143,7 @@ var doParse = function(e) {
     try {
 
         // The resulting data structure:
-        result = parser.parse(output.getValue());
+        var result = parser.parse(output.getValue());
 
         treeData = result;
         var formatted_result = JSON.stringify(result, null, 2);
@@ -178,7 +181,7 @@ var setToken = function(showAlert) {
         // Update the state of the loggin-in flag:
         logged_in = true;
         $('#user-account').addClass('has-dropdown');
-        $('#user-account').append('<ul class="dropdown"><li><a href="#">First Link</a></li></ul>')
+        $('#user-account').append('<ul class="dropdown"><li><a href="#">First Link</a></li></ul>');
         // If the token isn't in storage yet, put it there.
         localStorage["github_access_token"] = $('#access-token').val() || localStorage["github_access_token"];
         
@@ -198,7 +201,7 @@ var setToken = function(showAlert) {
         $('#token-prompt').foundation('reveal', 'close');
     
     // On failure:
-    }).fail( function(data) {
+    }).fail( function() {
         // Update the state of the loggin-in flag:
         logged_in = false;
 
@@ -213,7 +216,7 @@ var setToken = function(showAlert) {
 var createAlert = function(classes, text, parent) {
     parent = parent || 'body';
     var classlist = "alert-box " + classes;
-    var alertMarkup = '<div data-alert class="'+ classlist + '">' + text + '<a href="#" class="close">&times;</a>'         
+    var alertMarkup = '<div data-alert class="'+ classlist + '">' + text + '<a href="#" class="close">&times;</a>';         
     $(parent).append(alertMarkup);
     $('.alert-box').css("margin-top", $('.alert-box').height() * -1);
     $(document).foundation('reflow');
@@ -230,7 +233,7 @@ var createButtonEvents = function() {
         var filename = e.target.firstChild.nodeValue;
         $('#left-panel h1').html(filename);
         console.log(filename);
-        var contents = global_gist_data.data["files"][filename];
+        var contents = global_gist_data.data.files[filename];
         console.log(contents.content);
         editor.setValue(contents.content);
         try {
@@ -244,15 +247,6 @@ var createButtonEvents = function() {
     $('#help-btn').click(function(e) {
         e.preventDefault();
         $(document).foundation('joyride', 'start');
-    });
-
-    $('#left-assoc').click(function(e) {
-        e.preventDefault();
-        editor.setValue(commutative);
-    
-        $('#build_parser_btn').click();
-        output.setValue("1-4/2-3");
-        doParse();
     });
     
     $('#login-btn').click( function(e) {
@@ -299,14 +293,6 @@ var createButtonEvents = function() {
         changeSize(editor, -2);
     });
 
-    $('#sample_one').click(function(e) {
-        e.preventDefault();
-        editor.setValue(simple_expr);
-        buildParser();
-        output.setValue("(3 + 5) * (2 + 2)");
-        doParse();
-    });
-    
     $('#set-token-btn').click(  function(e) {
         e.preventDefault();
         setToken(true);
@@ -351,7 +337,7 @@ var initPegEditor =  function() {
     editor.setOption('scrollPastEnd', '40');
 
     // Store retrieve text
-    editor.setValue(localStorage["grammar"]);
+    editor.setValue(localStorage.getItem('grammar'));
     if (editor.getValue !== "") {
         buildParser();
 
@@ -363,22 +349,21 @@ var initPegEditor =  function() {
             buildParser();
         }
     });
-}
+};
 
 var initSourceEditor = function() {
     output = ace.edit("output");
     output.setTheme(globalAceTheme);
     output.setOption("useWorker", false);
-    output.setValue(localStorage["source"]);
+    output.setValue(localStorage.getItem('source'));
     output.getSession().on('change', function() {
         localStorage.setItem("source", output.getValue());
         doParse();
     });
 
     resizeElements();
-    Mousetrap.bind('v 1', function() { alert('cool'); });
     Mousetrap.bind('v 2', function() { $('#treediv').addClass('active'); });
-    Mousetrap.bind('v 3', function() { alert('cool'); });
+    
 
     createButtonEvents();
 
@@ -388,4 +373,4 @@ var initSourceEditor = function() {
             buildParser();
         }
     });
-}
+};
