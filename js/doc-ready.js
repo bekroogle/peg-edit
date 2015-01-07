@@ -5,7 +5,8 @@ var parser,
     treeData,
     editor,
     output,
-    global_gist_data;
+    global_gist_data,
+    scrollStack = [];
 var logged_in = false;
 var globalAceTheme = "ace/theme/solarized_dark";
 
@@ -31,6 +32,10 @@ $('document').ready(function() {
         logout();
     }
     
+    $('aside').click( function(e) {
+        $(this).scrollTop(0);
+    });
+
     startRide();
     $(document).foundation('reflow');
 });
@@ -109,44 +114,51 @@ var openUserGists = function() {
         //     localStorage.getItem('github_access_token') ,
         type: 'GET',
         dataType: 'jsonp',
-        success: function(gist_data) {
+    }).done( function(gist_data) {
 
-            // To be used for creating a list of recent gist ids:
-        
-            global_gist_data = gist_data;
+        // To be used for creating a list of recent gist ids:
+    
+        global_gist_data = gist_data;
 
 
-            localStorage.setItem('gist_data', JSON.stringify(gist_data));
+        localStorage.setItem('gist_data', JSON.stringify(gist_data));
 
-            // Clear list of files from previously loaded gist:
-            $('.file-name').remove();
+        // Clear list of files from previously loaded gist:
+        $('.file-name').remove();
 
-            var gist_map = "["
+        var gist_map = "["
 
-            // Build list of files in the current gist:
-            for (var gist in gist_data.data) {
-                for (var file in gist_data.data[gist].files) {
-                    gist_map = gist_map + '{"'+
-                        'gist_id" : "' + gist_data.data[gist].id +
-                         '", "file_name": '+ gist_data.data[gist].files[file].filename +
-                         '"}';
-                    gist_map = gist_map + JSON.stringify(
-                        {
-                            "gist_id": gist_data.data[gist].id,
-                            "file_name": gist_data.data[gist].files[file].filename,
-                            "contents":  gist_data.data[gist].files[file].contents,})
-                    $('#files-in-gist').append('<li><a class="file-name"'+ 
-                        'gist-id="'+ gist_data.data[gist].id +'" href="#">'+
+        // Build list of files in the current gist:
+        for (var gist in gist_data.data) {
+            $('#files-in-gist').append(
+                '<li class="has-submenu">'+
+                    '<a class="file-name"'+ 'gist-id="'+ gist_data.data[gist].id +'" href="#">'+
                          gist_data.data[gist].description +
-                        '</a></li>');
-            }
-        }    
-            gist_map = gist_map + ']';
-            console.log(gist_map);    
-            return gist_data;
-        }
+                    '</a>'+ // .file-name
+                    '<ul class="left-submenu">'+
+                        '<li class="back"><a href="#">Back</a></li>'+
+                        '<li><label>'+ gist_data.data[gist].description +'</label></li>'+
+                        getGistList(gist_data.data[gist]) + 
+                    '</ul>'+    // .left-submenu
+                '</li>' // .has-submenu
+            );
+        }     
     });
 };
+
+var getGistList = function(gist) {
+    var rtn_str = ""
+    for (var file in gist.files) {
+        rtn_str = rtn_str +
+        '<li>'+
+            '<a href="#">'+ 
+                gist.files[file].filename +
+            '</a>'+
+        '</li>'
+    }
+    return rtn_str;
+};
+
 var buildParser = function() {
     try {
         editor.getSession().clearAnnotations();
@@ -154,7 +166,7 @@ var buildParser = function() {
         $('.alert-warning').remove();
     } catch (exn) {
         $('#parser-output').html('<div class="alert alert-warning" role="alert">Grammar Error: ' + exn.message + '</div>');
-        console.log(exn);
+        // console.log(exn);
         //if (!editor.getSession().$annotations) {
         editor.getSession().$annotations = [];
         //}
@@ -200,7 +212,7 @@ var doParse = function() {
         treeData = result;
         var formatted_result = JSON.stringify(result, null, 2);
 
-        console.log(formatted_result);
+        // console.log(formatted_result);
         $('#parser-output').html('<pre>'+ formatted_result +'</pre>');
 
         doTree();
