@@ -7,57 +7,13 @@ var globalAceTheme = "ace/theme/solarized_dark";
 
 $('document').ready(function() {
     $(document).foundation();
-        
+    
     // Create the PEG editor
-    editor = ace.edit("editor");
-    editor.setTheme(globalAceTheme);
-    editor.getSession().setMode("ace/mode/javascript");
-
-    // No static JS analysis
-    editor.setOption("useWorker", false);
-
-    // Personal preferences:
-    editor.setOption("tabSize", 2);
-    editor.setOption('scrollPastEnd', '40');
-
-    // Store retrieve text
-    editor.setValue(localStorage["grammar"]);
-    if (editor.getValue !== "") {
-        buildParser();
-
-    }
-
-    editor.getSession().on("change", function() {
-        localStorage.setItem("grammar", editor.getValue());
-        if ($('#auto-build').prop('checked')) {
-            buildParser();
-        }
-    });
-
+    initPegEditor();        
 
     // Create parse string editor
-    output = ace.edit("output");
-    output.setTheme(globalAceTheme);
-    output.setOption("useWorker", false);
-    output.setValue(localStorage["source"]);
-    output.getSession().on('change', function() {
-        localStorage.setItem("source", output.getValue());
-        doParse();
-    });
+    initSourceEditor();
 
-    resizeElements();
-    Mousetrap.bind('v 1', function() { alert('cool'); });
-    Mousetrap.bind('v 2', function() { $('#treediv').addClass('active'); });
-    Mousetrap.bind('v 3', function() { alert('cool'); });
-
-    createButtonEvents();
-
-   
-    $(output).focus(function() {
-        if (editor.getValue()) {
-            buildParser();
-        }
-    });
 
     $('.ace_print-margin').attr('id', 'firstStop');
     $('#output > .ace_scroller').attr('id', 'stopTwo');
@@ -89,18 +45,18 @@ var startRide = function() {
 };
 
 var resizeElements = function() {
-    // Resize editor
+    // Resize peg editor:
     $('#editor').height(window.innerHeight * .8)
     editor.resize();
 
     $('#right-panel').height($('#left-panel').height());
 
+    // Resize source editor:
     $('#output').height(window.innerHeight * .3);
     output.resize();
     $('#treediv').height(window.innerHeight * .4);
     $('#tree-view').height(window.innerHeight * .4);
 };
-
 
 /** open_gist(gistid)
  *  loads a project from a gist
@@ -135,9 +91,6 @@ var open_gist = function(gistid) {
         }
     });
 };
-// Handle clicks on files in list:
-
-
 
 var buildParser = function() {
     try {
@@ -163,6 +116,7 @@ var buildParser = function() {
         editor.getSession().setAnnotations(editor.getSession().$annotations);
     } // catch(exn)
 };
+
 var traverse = function(ast) {
   if (ast.token === "number") {
     return ast.name;
@@ -176,6 +130,7 @@ var traverse = function(ast) {
    }
   }
  };
+
 var doParse = function(e) {
     // If a parser hasn't been built, build one:
     if (!parser) {
@@ -381,3 +336,55 @@ var createButtonEvents = function() {
         doParse();
     });
 };
+
+var initPegEditor =  function() {
+    editor = ace.edit("editor");
+    editor.setTheme(globalAceTheme);
+    editor.getSession().setMode("ace/mode/javascript");
+
+    // No static JS analysis
+    editor.setOption("useWorker", false);
+
+    // Personal preferences:
+    editor.setOption("tabSize", 2);
+    editor.setOption('scrollPastEnd', '40');
+
+    // Store retrieve text
+    editor.setValue(localStorage["grammar"]);
+    if (editor.getValue !== "") {
+        buildParser();
+
+    }
+
+    editor.getSession().on("change", function() {
+        localStorage.setItem("grammar", editor.getValue());
+        if ($('#auto-build').prop('checked')) {
+            buildParser();
+        }
+    });
+}
+
+var initSourceEditor = function() {
+    output = ace.edit("output");
+    output.setTheme(globalAceTheme);
+    output.setOption("useWorker", false);
+    output.setValue(localStorage["source"]);
+    output.getSession().on('change', function() {
+        localStorage.setItem("source", output.getValue());
+        doParse();
+    });
+
+    resizeElements();
+    Mousetrap.bind('v 1', function() { alert('cool'); });
+    Mousetrap.bind('v 2', function() { $('#treediv').addClass('active'); });
+    Mousetrap.bind('v 3', function() { alert('cool'); });
+
+    createButtonEvents();
+
+   
+    $(output).focus(function() {
+        if (editor.getValue()) {
+            buildParser();
+        }
+    });
+}
