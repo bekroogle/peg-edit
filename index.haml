@@ -1,3 +1,4 @@
+
 !!! 5
 %html.no-js(lang="en")
   %head
@@ -22,9 +23,14 @@
         %section.top-bar-section
           -# right nav section
           %ul.right
-            %li#user-account
-              %a#login-btn{:href => "#", "data-reveal-id" => "token-prompt"} Login
-              %a#github-id{:href => "#", "style" => "display: none;"}
+            %li#login-btn
+              %a{:href => "#", "data-reveal-id" => "token-prompt"} Login
+            %li#user-account.has-dropdown.gone
+              %a#github-id{:href => "#"}
+              %ul.dropdown
+                %li
+                  %a#logout-btn{:href => "#"} Logout
+
 
             %li
               %a#help-btn{:href => "#"} Help

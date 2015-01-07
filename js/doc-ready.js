@@ -27,6 +27,8 @@ $('document').ready(function() {
 
     if (localStorage.getItem('github_access_token')) {
         setToken();   
+    } else {
+        logout();
     }
     
     startRide();
@@ -178,18 +180,18 @@ var setToken = function(showAlert) {
 
     // On success:
     }).done( function(data) {
-        // Update the state of the loggin-in flag:
+        // Update the state of the logged_in flag:
         logged_in = true;
-        $('#user-account').addClass('has-dropdown');
-        $('#user-account').append('<ul class="dropdown"><li><a href="#">First Link</a></li></ul>');
+        $('#login-btn').toggleClass('gone');
+//        $('#user-account').addClass('has-dropdown');
+//        $('#user-account').append('<ul class="dropdown"><li><a href="#">First Link</a></li></ul>');
         // If the token isn't in storage yet, put it there.
         localStorage["github_access_token"] = $('#access-token').val() || localStorage["github_access_token"];
         
         // Get rid of the login button:
-        $('#login-btn').css('display', 'none');
+        $('#user-account').toggleClass('gone');
         
         // Show the user's GitHub name and avatar:
-        $('#github-id').css('display', 'block');
         $('#github-id').html(data.login + ' ');
         $('#github-id').append('<img src="' + data.avatar_url + '" class="thumbnail"/>');
 
@@ -252,11 +254,12 @@ var createButtonEvents = function() {
     $('#login-btn').click( function(e) {
         e.preventDefault();
     });
-    
-    $('#peg_editor a').click(function(e) {
+
+    $('#logout-btn').click( function(e) {
         e.preventDefault();
+        logout();
     });
-   
+    
     $('#open_gist_btn').click( function(e) {
         e.preventDefault();
         global_gist_data =  open_gist($('#gist-id').val());
@@ -268,6 +271,10 @@ var createButtonEvents = function() {
         global_gist_data = open_gist('cb3f08209da9b0f8da82');
     });
 
+    $('#peg_editor a').click(function(e) {
+        e.preventDefault();
+    });
+   
     $('#parse-btn').click(function(e) {
         e.preventDefault();
         doParse(e);
@@ -373,4 +380,19 @@ var initSourceEditor = function() {
             buildParser();
         }
     });
+};
+
+var logout = function() {
+    if (logged_in) {
+        logged_in = false;
+        localStorage.removeItem('github_access_token');
+        $('#access-token').attr('placeholder', 'token');
+        $(document).foundation('reveal', 'reflow');
+        $('#login-btn').toggleClass('gone');
+       
+        $('#user-account').toggleClass('gone');
+        
+
+        $(document).foundation('reflow');
+    }
 };
