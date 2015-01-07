@@ -9,15 +9,27 @@
     %script(src="bower_components/modernizr/modernizr.js")
   %body
     #top-row.row
-      .small-2.columns
-      .small-7.columns
-        .center
-          %h4 PEGedit &raquo; a web-based PEG.js design tool.
-      .small-3.columns
-        .right
-          %a#help-btn{:href => "#"} Help
-          %a#login-btn{:href => "#", "data-reveal-id" => "token-prompt"} Login
-          
+      %nav.top-bar{"data-topbar" => "", "role" => "navigation"}
+        %ul.title-area
+          %li.name
+            %h1
+              %a{:href => "#"} pegedit
+          %li.toggle-topbar.menu-icon
+            %a{:href => "#"}
+              %span
+        -# /ul
+
+        %section.top-bar-section
+          -# right nav section
+          %ul.right
+            %li#user-account
+              %a#login-btn{:href => "#", "data-reveal-id" => "token-prompt"} Login
+              %a#github-id{:href => "#", "style" => "display: none;"}
+
+            %li
+              %a#help-btn{:href => "#"} Help
+      -# /nav
+    -# /#top        
     .row
       / Left panel
       .small-6.columns.panel#left-panel

@@ -1370,6 +1370,7 @@ $info-color: #a0d3e8;
 
 // Background color for the top bar
 // $topbar-bg-color: $oil;
+// $topbar-bg-color: $oil;
 // $topbar-bg: $topbar-bg-color;
 
 // Height and margin
@@ -1380,27 +1381,17 @@ $info-color: #a0d3e8;
 // $topbar-title-weight: $font-weight-normal;
 // $topbar-title-font-size: rem-calc(17);
 
-// Style the top bar dropdown elements
-// $topbar-dropdown-bg: $oil;
-// $topbar-dropdown-link-color: $white;
-// $topbar-dropdown-link-bg: $oil;
-// $topbar-dropdown-link-bg-hover: $oil;
-// $topbar-dropdown-link-weight: $font-weight-normal;
-// $topbar-dropdown-toggle-size: 5px;
-// $topbar-dropdown-toggle-color: $white;
-// $topbar-dropdown-toggle-alpha: 0.4;
-
 // Set the link colors and styles for top-level nav
-// $topbar-link-color: $white;
-// $topbar-link-color-hover: $white;
-// $topbar-link-color-active: $white;
-// $topbar-link-color-active-hover: $white;
+// $topbar-link-color: $charcoal;
+// $topbar-link-color-hover: $charcoal;
+// $topbar-link-color-active: $charcoal;
+// $topbar-link-color-active-hover: $charcoal;
 // $topbar-link-weight: $font-weight-normal;
 // $topbar-link-font-size: rem-calc(13);
 // $topbar-link-hover-lightness: -10%; // Darken by 10%
 // $topbar-link-bg: $topbar-bg;
-// $topbar-link-bg-color-hover: $charcoal;
-// $topbar-link-bg-hover: $oil;
+// $topbar-link-bg-color-hover: $topbar-bg-color;
+   $topbar-link-bg-hover: $charcoal;
 // $topbar-link-bg-active: $primary-color;
 // $topbar-link-bg-active-hover: scale-color($primary-color, $lightness: -14%);
 // $topbar-link-font-family: $body-font-family;
@@ -1408,6 +1399,18 @@ $info-color: #a0d3e8;
 // $topbar-link-padding: ($topbar-height / 3);
 // $topbar-back-link-size: $h5-font-size;
 // $topbar-link-dropdown-padding: 20px;
+
+// Style the top bar dropdown elements
+// $topbar-dropdown-bg: $oil;
+// $topbar-dropdown-bg: $topbar-bg-color;
+// $topbar-dropdown-link-color: $topbar-link-color;
+// $topbar-dropdown-link-bg: $topbar-bg-color;
+// $topbar-dropdown-link-bg-hover: $oil;
+// $topbar-dropdown-link-weight: $font-weight-normal;
+// $topbar-dropdown-toggle-size: 5px;
+// $topbar-dropdown-toggle-color: $charcoal;
+// $topbar-dropdown-toggle-alpha: 0.4;
+
 
 // $topbar-button-font-size: 0.75rem;
 // $topbar-button-top: 7px;

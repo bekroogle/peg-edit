@@ -352,9 +352,14 @@ $('#set-token-btn').click( function(e) {
         // Get rid of the login button:
         $('#login-btn').css('display', 'none');
         
-        // Show the user's GitHub avatar:
-        $('#top-row .small-3 .right').append('Logged in as: '+ data.login + '<img id="avatar" src="'+ data.avatar_url  +'" height="45px"/>');
-        $('#avatar').height('45px');
+        // Show the user's GitHub name and avatar:
+        $('#github-id').css('display', 'block');
+        $('#github-id').html(data.login + ' ');
+        $('#github-id').append('<img src="' + data.avatar_url + '" class="thumbnail"/>');
+
+
+        
+        // $('#avatar').height('44px');
         
         // Close the prompt:
         $('#token-prompt').foundation('reveal', 'close');
