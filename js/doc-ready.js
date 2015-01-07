@@ -9,7 +9,7 @@ $('document').ready(function() {
     $(document).foundation();
     
     // Create the PEG editor
-    initPegEditor();        
+    initPegEditor();
 
     // Create parse string editor
     initSourceEditor();
@@ -18,12 +18,11 @@ $('document').ready(function() {
     $('.ace_print-margin').attr('id', 'firstStop');
     $('#output > .ace_scroller').attr('id', 'stopTwo');
      
-    // If there's a GitHub access token in local storage, make it the default value for the
-    // login prompt:
+    // If there's a GitHub access token in local storage, validate it:
     $('#access-token').attr('placeholder', localStorage.getItem('github_access_token'));
 
     if (localStorage.getItem('github_access_token')) {
-        // $('#access-token').val(localStorage.getItem('github_access_token') || '');
+        setToken();   
     }
     
     startRide();
@@ -169,8 +168,7 @@ var setSize = function(target, size) {
     target.setOption('fontSize', size);
 };
 
-var setToken = function(e) {
-    e.preventDefault();
+var setToken = function(showAlert) {
     $.ajax({
         url: "https://api.github.com/user?access_token="+ ($('#access-token').val() || localStorage.getItem('github_access_token')),
         type: "GET"
@@ -204,9 +202,11 @@ var setToken = function(e) {
         // Update the state of the loggin-in flag:
         logged_in = false;
 
-        // Notify the user with an alert-box:
-        createAlert('alert', 'Unable to login with that token.', '#status');
-        $('#token-prompt').foundation('reveal','close');
+        if (showAlert) {
+            // Notify the user with an alert-box:
+            createAlert('alert', 'Unable to login with that token.', '#status');
+            $('#token-prompt').foundation('reveal','close');
+        }
     });  
 };
 
@@ -308,7 +308,8 @@ var createButtonEvents = function() {
     });
     
     $('#set-token-btn').click(  function(e) {
-        setToken(e);
+        e.preventDefault();
+        setToken(true);
     });
     
     $('#source_editor_settings').click(function(e) {
