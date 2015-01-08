@@ -141,38 +141,63 @@
           .large-12.columns#bottom-right
             %p
             %dl.tabs{"data-tab" => ""}
-              %dd.active
+              %dd#parser-output-tab.active
                 %a{:href => "#parser-output"} Parser Output
-              %dd
+              %dd#tree-view-tab
                 %a{:href => "#treediv"} Tree View
-              %dd
+              %dd#console-view-tab
                 %a{:href => "#console-view"} Console View
             .tabs-content
               #parser-output.content.active
               #treediv.content
               #console-view.content
-            #treediv
+            
     .row
       #status.small-12-columns
 
     %ol.joyride-list{"data-joyride" => ""}
+      
       %li{"data-options" => "prev_button: false; postRideCallback: function(){alert('test');}"}
-        %h4 Welcome to PEGedit
+        %h4 Welcome to pegedit
         %p Click next for an extremely brief tour.
-        %p You can watch see this again by clicking "Help" at the top of the screen.
-
+        %p You can watch see this again at any time by clicking "Help" at the top of the screen.
+      
+      -# PEG editor:
       %li{"data-id" => "editor", "data-options" => "tip_location: right; prev_button: false"}
-        %h4 Build a parser...
-        %p To start, you enter your PEGjs grammar here.
+        %h4 Make your parser...
+        %p To start, you enter your PEG.js grammar here.
 
-      %li{"data-id" => "stopTwo", "data-options" => "tip_location: left"}
+      -# Source editor:
+      %li#source-editor-tip{"data-id" => "stopTwo", "data-options" => "tip_location: left"}
         %h4 Parse Something!
-        %p  The text that your PEGjs grammar will be parsing goes here.
+        %p  The text that your PEG.js grammar will be parsing goes here.
+      
+      -# Build Parser
+      %li{"data-id" => "build-parser-btn", "data-options" => "tip_location: right;", "data-button" => "Okay..."}
+        %h4 If you build it, they will come.
+        %p Here's where you click to build your parser.
+      -# Output panel:      
+      %li{"data-id" => "bottom-right", "data-button" => "Okay..."}
+        %h4 3 Ways to See the Results!
+        %p Select one of the three tabs below to inspect your parser's results.
 
-      %li{"data-id" => "treediv", "data-options" => "tip_location: top"}
-        %h4 And see your parse tree!
-        %p You can use the mouse, scroll wheel and gestures to pan or zoom the tree.
+      -# Parser Output
+      %li{"data-id" => "parser-output-tab", "data-options" => "tip_location: top"}
+        %h4 Parser output
+        %p This is where you can see the JSON representation of the parse tree produced by your PEG.
 
+      -# Tree View
+      %li{"data-id" => "tree-view-tab", "data-options" => "tip_location: top"}
+        %h4 What a pretty tree!
+        %p Thanks to the library, d3.js, you don't need an imagination to visualize your parse tree!
+
+      -# Console View
+      %li{"data-id" => "console-view-tab", "data-options" => "tip_location: top"}
+        %h4 Console View
+        %p This tab shows the results of traversing your parse tree...
+        %p Essentially, it's what you'd see if your program ran in a console.
+      
+      
       %li{"data-id" => "samples", "data-button" => "Got it!"}
         %h4 Try a sample to start!
         %p Click here to pick one of the sample grammars.
