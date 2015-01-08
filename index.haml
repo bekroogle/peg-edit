@@ -6,7 +6,7 @@
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
     %title PEGedit
     %link(rel="stylesheet" href="stylesheets/app.css")
-    %link{"rel" => "stylesheet", "href"=>"./bower_components/foundation-icons/foundation_icons_general/stylesheets/general_foundicons.css"}
+    %link{"rel" => "stylesheet", "href" => "./bower_components/fontawesome/css/font-awesome.css"}
     %script(src="bower_components/modernizr/modernizr.js")
   %body
     #top-row.row
@@ -24,7 +24,9 @@
           -# right nav section
           %ul.right
             %li#login-btn
-              %a{:href => "#", "data-reveal-id" => "token-prompt"} Login
+              %a{:href => "#", "data-reveal-id" => "token-prompt"} 
+                %i.fa.fa-github
+                Login
             %li#user-account.has-dropdown.gone
               %a#github-id{:href => "#"}
               %ul.dropdown
@@ -56,29 +58,40 @@
                   %label Actions:
                 %li#build-parser-btn
                   %a{:href => "#"}
-                    %i.foundicon-website
+                    %i.fa.fa-cubes
                       Build Parser
+                %li#save-changes-btn
+                  %a{:href => "#"}
+                    %i.fa.fa-cloud-upload
+                      Commit Changes to Gist
                 %li
                   %label Open Grammar:
+                %li#offcanvas-load-user-gists.gone
+                  %a{:href => "#"}
+                    %i.fa.fa-github
                 %li
-                  %a#open-gist-btn{:href => "#", "data-reveal-id" => "gist-prompt"} By Gist ID
+                  %a#open-gist-btn{:href => "#", "data-reveal-id" => "gist-prompt"}
+                    %i.fa.fa-github-alt
+                    By Gist ID
                 %li
-                  %a#open-samples-btn{:href => "#"} Samples
+                  %a#open-samples-btn{:href => "#"}
+                    %i.fa.fa-file
+                    Samples
                 %li#files-in-gist
                   %label Gists:
                 %li
                   %label Settings
                 %li
                   %a#peg-zoom-in-btn{:href => "#"}
-                    %i.foundicon-plus
+                    %i.fa.fa-search-plus
                       Increase Font Size
                 %li
                   %a#peg-zoom-out-btn{:href => "#"}
-                    %i.foundicon-minus
+                    %i.fa.fa-search-minus
                       Decrease Font Size
                 %li
                   %a#peg-editor-settings-btn{:href => "#"}
-                    %i.foundicon-settings
+                    %i.fa.fa-cog
                       Advanced Settings
             %a.exit-off-canvas{:href => "#"}
 
