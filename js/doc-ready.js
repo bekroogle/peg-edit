@@ -41,10 +41,44 @@ $('document').ready(function() {
         $(this).scrollTop(0);
     });
 
+    initMouseTrap();
     startRide();
     $(document).foundation('reflow');
 
 });
+
+var bindKeys = function(target) {
+    target.commands.addCommands([{
+            name: 'buildParser',
+            bindKey: {win: 'Ctrl-B',  mac: 'Command-B'},
+            exec: function(editor) {
+                buildParser();
+            },
+            readOnly: true // false if this command should not apply in readOnly mode
+        },{
+            name: 'doParse',
+            bindKey: {win: 'Ctrl-P',  mac: 'Command-P'},
+            exec: function(editor) {
+                doParse();
+            },
+            readOnly: true // false if this command should not apply in readOnly mode
+        },{
+            name: 'zoomIn',
+            bindKey: {win: 'Ctrl-Shift-=',  mac: 'Command-Shift-+'},
+            exec: function(e) {
+                changeSize(target, 2);
+            },
+            readOnly: true // false if this command should not apply in readOnly mode
+        },{
+            name: 'zoomOut',
+            bindKey: {win: 'Ctrl-Shift--',  mac: 'Command-Shift--'},
+            exec: function(e) {
+                changeSize(target, -2);
+            },
+            readOnly: true // false if this command should not apply in readOnly mode
+        },
+        ]);
+};
 
 var changeSize = function(target, delta) {
     target.setOption('fontSize', target.getOption('fontSize') + delta);
@@ -65,7 +99,6 @@ var commitChanges = function() {
     }).done( function( data ) {
         console.dir(data);
     });
-
 };
 
 var createAlert = function(classes, text, parent) {
@@ -76,7 +109,6 @@ var createAlert = function(classes, text, parent) {
     $('.alert-box').css("margin-top", $('.alert-box').height() * -1);
     $(document).foundation('reflow');
 };
-
 
 var createButtonEvents = function() {
     
@@ -185,6 +217,7 @@ var buildParser = function() {
         editor.getSession().clearAnnotations();
         parser = PEG.buildParser(editor.getValue());
         $('.alert-warning').remove();
+        console.log("Parser built!")
     } catch (exn) {
         $('#parser-output').html('<div class="alert alert-warning" role="alert">Grammar Error: ' + exn.message + '</div>');
         // console.log(exn);
@@ -202,6 +235,8 @@ var buildParser = function() {
 
         editor.getSession().$annotations.push(myAnno);
         editor.getSession().setAnnotations(editor.getSession().$annotations);
+
+        console.err("Parser wasn't built!")
     } // catch(exn)
 };
 
@@ -249,6 +284,47 @@ var getGistList = function(gist) {
     return rtn_str;
 };
 
+var initMouseTrap = function() {
+    // Build parser
+    Mousetrap.bind('ctrl+b', function() { buildParser(); });
+    
+    // Do parse
+    Mousetrap.bind('ctrl+p', function(e) {
+        e.preventDefault();
+        doParse(); 
+    });
+
+    // Increase font size for both editors:
+    Mousetrap.bind('ctrl+shift+=', function(e) {
+        e.preventDefault();
+        changeSize(editor, 2);
+        changeSize(output, 2);
+    });
+    
+    // Decrease font size for both editors:
+    Mousetrap.bind('ctrl+shift+-', function(e) {
+        e.preventDefault();
+        changeSize(editor, -2);
+        changeSize(output, -2);
+    });
+
+    Mousetrap.bind('ctrl+shift+1', function(e) {
+        e.preventDefault();
+        $('#parser-output').addClass('active');
+    });
+
+    Mousetrap.bind('ctrl+shift+2', function(e) {
+        e.preventDefault();
+        $('#treediv').addClass('active');
+    });
+
+    Mousetrap.bind('ctrl+shift+3', function(e) {
+        e.preventDefault();
+        $('#console-view').addClass('active');
+    });
+
+};
+
 var initPegEditor =  function() {
     editor = ace.edit("editor");
     editor.setTheme(globalAceTheme);
@@ -278,6 +354,9 @@ var initPegEditor =  function() {
             buildParser();
         }
     });
+
+    // Key bindings:
+    bindKeys(editor);
 };
 
 var initSourceEditor = function() {
@@ -291,19 +370,20 @@ var initSourceEditor = function() {
     });
 
     resizeElements();
-    Mousetrap.bind('ctrl+b', function() { buildParser(); });
+
     Mousetrap.bind('v 2', function() { $('#treediv').addClass('active'); });
     Mousetrap.bind('v 3', function() { $('#console-view').addClass('active'); });
     
 
     createButtonEvents();
 
-   
-    $(output).focus(function() {
-        if (editor.getValue()) {
-            buildParser();
-        }
-    });
+    bindKeys(output);
+    // Build parser when focus goes to source editor:   
+    // $(output).focus(function() {
+    //     if (editor.getValue()) {
+    //         buildParser();
+    //     }
+    // });
 };
 
 var logout = function() {
@@ -502,8 +582,7 @@ var setToken = function(showAlert) {
  *  It then marks them down as ridden . . . no longer a virgin.
  */
 var startRide = function() {
-    if (!localStorage.getItem('joyride')) {
-        $('#sample_one').click();
+   if (!localStorage.getItem('joyride')) {
         $(document).foundation('joyride', 'start');
     }
     localStorage.setItem('joyride', 'true');
