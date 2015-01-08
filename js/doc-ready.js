@@ -285,22 +285,23 @@ var getGistList = function(gist) {
 };
 
 var initMouseTrap = function() {
-    // Build parser
-    Mousetrap.bind('ctrl+b', function() { buildParser(); });
     
+    // ACTIONS:
+    // Build parser
+    Mousetrap.bind('ctrl+b', function() { buildParser(); });  
     // Do parse
     Mousetrap.bind('ctrl+p', function(e) {
         e.preventDefault();
         doParse(); 
     });
 
+    // SETTINGS:
     // Increase font size for both editors:
     Mousetrap.bind('ctrl+shift+=', function(e) {
         e.preventDefault();
         changeSize(editor, 2);
         changeSize(output, 2);
     });
-    
     // Decrease font size for both editors:
     Mousetrap.bind('ctrl+shift+-', function(e) {
         e.preventDefault();
@@ -308,19 +309,21 @@ var initMouseTrap = function() {
         changeSize(output, -2);
     });
 
+    // NAVIGATION:
+    // Tab #1
     Mousetrap.bind('ctrl+shift+1', function(e) {
         e.preventDefault();
-        $('#parser-output').addClass('active');
+        $('#parser-output-tab a').click();
     });
-
+    // Tab #2
     Mousetrap.bind('ctrl+shift+2', function(e) {
         e.preventDefault();
-        $('#treediv').addClass('active');
+        $('#tree-view-tab a').click();
     });
-
+    // Tab #3
     Mousetrap.bind('ctrl+shift+3', function(e) {
         e.preventDefault();
-        $('#console-view').addClass('active');
+        $('#console-view-tab a').click();
     });
 
 };
