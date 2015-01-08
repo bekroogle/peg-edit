@@ -51,7 +51,7 @@
                 %a.left-off-canvas-toggle.menu-icon{:href => "#"}
                   %span
               %section.middle.tab-bar-section
-                %h4#peg-editor-title.title.clickable{"data-reveal-id" => "change-filename-prompt"} PEG.js Editor
+                %h4#peg-editor-title.title PEG.js Editor
             %aside.left-off-canvas-menu
               %ul.off-canvas-list
                 %li
@@ -180,21 +180,8 @@
           .small-8.columns
             %input#gist-id{"type" => "text"}
           .small-2.columns
-            %a#open_gist_btn.button{:href => "#"} Go!
+            %a#open_gist_btn.button{:href => "#", "data-reveal-id" => "gist-file-picker"} Go!
       %a.close-reveal-modal &#215;
-
-    #change-filename-prompt.reveal-modal.tiny{"data-reveal" => ""}
-      %h4 Change file name:
-      %form
-        %row
-          .small-3.columns
-            %label.right.inline{"for" => "file-name-input"}
-              Filename:
-          .small-6.columns
-            %input#file-name-input{"type" => "text"}
-          .small-3.columns
-            %a#set-filename-btn.button.small{:href => "#"} Do it.
-      %a.close-reveal-modal{:href => "#"} &#215;
 
     #token-prompt.reveal-modal.tiny{"data-reveal" => ""}
       %h4 Enter a GitHub personal access token:

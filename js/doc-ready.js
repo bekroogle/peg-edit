@@ -78,23 +78,13 @@ var createAlert = function(classes, text, parent) {
 };
 
 
-var registerEventListeners = function() {
+var createButtonEvents = function() {
     
     $('#build-parser-btn').click(function(e) {
         e.preventDefault();
         buildParser();
     });
       
-    $('.button').click( function(e) { e.preventDefault(); });
-
-    $('#change-filename-prompt form').submit( function(e) {
-        $('#peg-editor-title').html($('#file-name-input').val());
-        localStorage.setItem('filename', $('#file-name-input').val());
-        $('.reveal-modal').foundation('reveal', 'close');
-        return false;
-    });
-
-
     $('#help-btn').click(function(e) {
         e.preventDefault();
         $(document).foundation('joyride', 'start');
@@ -119,12 +109,12 @@ var registerEventListeners = function() {
         openUserGists();
     });
     
-    $('#gist-prompt form').submit( function(e) {
+    $('#open_gist_btn').click( function(e) {
+        e.preventDefault();
         global_gist_data =  open_gist($('#gist-id').val());
         $('#gist-prompt').foundation('reveal', 'close');
-        return false;
     });
-
+    
     $('#open-samples-btn').click( function(e) {
         e.preventDefault();
         global_gist_data = open_gist('cb3f08209da9b0f8da82');
@@ -311,7 +301,7 @@ var initSourceEditor = function() {
     Mousetrap.bind('v 3', function() { $('#console-view').addClass('active'); });
     
 
-    registerEventListeners();
+    createButtonEvents();
 
    
     $(output).focus(function() {
