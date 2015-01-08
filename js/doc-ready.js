@@ -512,17 +512,3 @@ var startRide = function() {
     }
     localStorage.setItem('joyride', 'true');
 };
-
-var traverse = function(ast) {
-  if (ast.token === "number") {
-    return ast.name;
-  }
-  if (ast.token === "oper") {
-   switch (ast.name) {
-    case "+": return traverse(ast.children[0]) + traverse(ast.children[1]);
-    case "*": return traverse(ast.children[0]) * traverse(ast.children[1]);
-    case "/": return traverse(ast.children[0]) / traverse(ast.children[1]);
-   }
-  }
- };
-
