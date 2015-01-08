@@ -410,7 +410,9 @@ var openUserGists = function() {
                             "file-name": data.files[filename].filename
                             }));
                     $('#peg-editor-title').html(filename);
+                    
                     editor.setValue(data.files[filename].content);
+                    editor.scrollToLine(0);
                     buildParser();
                 });
         });
