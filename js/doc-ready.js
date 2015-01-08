@@ -509,6 +509,8 @@ var openUserGists = function() {
 var resizeElements = function() {
     // Resize peg editor:
     $('#editor').height(window.innerHeight * 0.8);
+    $('#editor').height(window.innerHeight * 0.8);
+    
     editor.resize();
 
     $('#right-panel').height($('#left-panel').height());
@@ -516,8 +518,14 @@ var resizeElements = function() {
     // Resize source editor:
     $('#output').height(window.innerHeight * 0.3);
     output.resize();
+    $('#parser-output').height(window.innerHeight * 0.4);
     $('#treediv').height(window.innerHeight * 0.4);
-    $('#tree-view').height(window.innerHeight * 0.4);
+    $('#console-view').height(window.innerHeight * 0.4);
+    $('#parser-output').css('overflow-y', 'scroll');
+    // $('#bottom-right').height(window.innerHeight * 0.4);
+    
+    
+
 };
 
 var setSize = function(target, size) {

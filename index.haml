@@ -43,66 +43,68 @@
     -# /#top        
     .row
       / Left panel
-      .small-6.columns.panel#left-panel
-        #peg-editor-menu.off-canvas-wrap{"data-offcanvas" => ""}
-          .inner-wrap
-            %nav.tab-bar
-              %section.left-small
-                %a.left-off-canvas-toggle.menu-icon{:href => "#"}
-                  %span
-              %section.middle.tab-bar-section
-                %h4#peg-editor-title.title PEG.js Editor
-            %aside.left-off-canvas-menu
-              %ul.off-canvas-list
-                %li
-                  %label Actions:
-                %li#build-parser-btn
-                  %a{:href => "#"}
-                    %i.fa.fa-cubes
-                      Build Parser
-                %li#save-changes-btn
-                  %a{:href => "#"}
-                    %i.fa.fa-cloud-upload
-                      Commit Changes to Gist
-                %li
-                  %label Open Grammar:
-                %li#offcanvas-load-user-gists.gone.has-submenu
-                  %a{:href => "#"}
-                    %i.fa.fa-github
-                    -# So-and-so's Gists >>
-                  %ul#gist-list.left-submenu
-                    %li.back
-                      %a{:href => "#"} Back
+      .small-6.columns.panel
+        .row
+          .small-12-columns#left-panel
+            #peg-editor-menu.off-canvas-wrap{"data-offcanvas" => ""}
+              .inner-wrap
+                %nav.tab-bar
+                  %section.left-small
+                    %a.left-off-canvas-toggle.menu-icon{:href => "#"}
+                      %span
+                  %section.middle.tab-bar-section
+                    %h4#peg-editor-title.title PEG.js Editor
+                %aside.left-off-canvas-menu
+                  %ul.off-canvas-list
                     %li
-                      %label#users-gists-label
-                        -# So-and-so's Gists:
-                %li
-                  %a#open-gist-btn{:href => "#", "data-reveal-id" => "gist-prompt"}
-                    %i.fa.fa-github-alt
-                    By Gist ID
-                %li
-                  %a#open-samples-btn{:href => "#"}
-                    %i.fa.fa-file
-                    Samples
-                %li#files-in-gist
-                  %label Gists:
-                %li
-                  %label Settings
-                %li
-                  %a#peg-zoom-in-btn{:href => "#"}
-                    %i.fa.fa-search-plus
-                      Increase Font Size
-                %li
-                  %a#peg-zoom-out-btn{:href => "#"}
-                    %i.fa.fa-search-minus
-                      Decrease Font Size
-                %li
-                  %a#peg-editor-settings-btn{:href => "#"}
-                    %i.fa.fa-cog
-                      Advanced Settings
-            %a.exit-off-canvas{:href => "#"}
+                      %label Actions:
+                    %li#build-parser-btn
+                      %a{:href => "#"}
+                        %i.fa.fa-cubes
+                          Build Parser
+                    %li#save-changes-btn
+                      %a{:href => "#"}
+                        %i.fa.fa-cloud-upload
+                          Commit Changes to Gist
+                    %li
+                      %label Open Grammar:
+                    %li#offcanvas-load-user-gists.gone.has-submenu
+                      %a{:href => "#"}
+                        %i.fa.fa-github
+                        -# So-and-so's Gists >>
+                      %ul#gist-list.left-submenu
+                        %li.back
+                          %a{:href => "#"} Back
+                        %li
+                          %label#users-gists-label
+                            -# So-and-so's Gists:
+                    %li
+                      %a#open-gist-btn{:href => "#", "data-reveal-id" => "gist-prompt"}
+                        %i.fa.fa-github-alt
+                        By Gist ID
+                    %li
+                      %a#open-samples-btn{:href => "#"}
+                        %i.fa.fa-file
+                        Samples
+                    %li#files-in-gist
+                      %label Gists:
+                    %li
+                      %label Settings
+                    %li
+                      %a#peg-zoom-in-btn{:href => "#"}
+                        %i.fa.fa-search-plus
+                          Increase Font Size
+                    %li
+                      %a#peg-zoom-out-btn{:href => "#"}
+                        %i.fa.fa-search-minus
+                          Decrease Font Size
+                    %li
+                      %a#peg-editor-settings-btn{:href => "#"}
+                        %i.fa.fa-cog
+                          Advanced Settings
+                %a.exit-off-canvas{:href => "#"}
 
-            #editor
+                #editor
 
 
       -#
@@ -112,7 +114,7 @@
 
         -# Top right
         .row
-          .large-12.columns#top-right
+          .small-12.columns#top-right
             %nav.top-bar(data-topbar role="navigation")
               %ul.title-area
                 %li.name
@@ -138,7 +140,7 @@
 
         -# Bottom right
         .row
-          .large-12.columns#bottom-right
+          .small-12.columns#bottom-right
             %p
             %dl.tabs{"data-tab" => ""}
               %dd#parser-output-tab.active
@@ -151,7 +153,7 @@
               #parser-output.content.active
               #treediv.content
               #console-view.content
-            
+            #treediv
     .row
       #status.small-12-columns
 
