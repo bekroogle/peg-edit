@@ -34,7 +34,7 @@ body {
   width: 100%;
 }
 #treediv {
-  background-color: white;
+  background-color: scale-color($white, $lightness: -5%);
 }
 svg {
     pointer-events: all;

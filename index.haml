@@ -66,9 +66,16 @@
                       Commit Changes to Gist
                 %li
                   %label Open Grammar:
-                %li#offcanvas-load-user-gists.gone
+                %li#offcanvas-load-user-gists.gone.has-submenu
                   %a{:href => "#"}
                     %i.fa.fa-github
+                    -# So-and-so's Gists >>
+                  %ul#gist-list.left-submenu
+                    %li.back
+                      %a{:href => "#"} Back
+                    %li
+                      %label#users-gists-label
+                        -# So-and-so's Gists:
                 %li
                   %a#open-gist-btn{:href => "#", "data-reveal-id" => "gist-prompt"}
                     %i.fa.fa-github-alt
@@ -202,6 +209,7 @@
               \.
           .small-2.columns
 
+    -# Script imports:
     %script(src="./bower_components/jquery/dist/jquery.min.js")
     %script(src="./bower_components/foundation/js/foundation.min.js")
     %script(src="./bower_components/foundation/js/foundation/foundation.joyride.js")

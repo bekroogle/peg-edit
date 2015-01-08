@@ -103,11 +103,6 @@ var createButtonEvents = function() {
         e.preventDefault();
         logout();
     });
-
-    $('#offcanvas-load-user-gists a').click( function(e) {
-        e.preventDefault();
-        openUserGists();
-    });
     
     $('#open_gist_btn').click( function(e) {
         e.preventDefault();
@@ -388,7 +383,7 @@ var openUserGists = function() {
 
         // Build list of files in the current gist:
         for (var gist in gist_data.data) {
-            $('#files-in-gist').append(
+            $('#gist-list').append(
                 '<li class="has-submenu">'+
                     '<a class="file-name"'+ 'gist-id="'+ gist_data.data[gist].id +'" href="#">'+
                          gist_data.data[gist].description +
@@ -469,20 +464,21 @@ var setToken = function(showAlert) {
 
         // Insert user login into offcanvas menu:
         $('#offcanvas-load-user-gists a').append(localStorage.getItem('github-login')+"'s Gists");
+        $('#users-gists-label').append(localStorage.getItem('github-login')+"'s Gists");
         // If the token isn't in storage yet, put it there.
         localStorage["github_access_token"] = $('#access-token').val() || localStorage["github_access_token"];
-        
 
-        
-        
         // Show the user's GitHub name and avatar:
         $('#github-id').html(localStorage.getItem('github-login') + ' ');
         $('#github-id').append('<img src="' + data.avatar_url + '" class="thumbnail"/>');
 
+        // Now load their gists:
+        openUserGists();
+        
         $(document).foundation('reflow');
         
         // $('#avatar').height('44px');
-        
+
         // Close the prompt:
         $('#token-prompt').foundation('reveal', 'close');
     
