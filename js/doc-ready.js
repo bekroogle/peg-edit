@@ -43,6 +43,7 @@ $('document').ready(function() {
 
     startRide();
     $(document).foundation('reflow');
+
 });
 
 var changeSize = function(target, delta) {
@@ -265,13 +266,17 @@ var initPegEditor =  function() {
     editor.setOption("tabSize", 2);
     editor.setOption('scrollPastEnd', '40');
 
-    // Store retrieve text
+    // Retrieve stored text:
     editor.setValue(localStorage.getItem('grammar'));
+    
+    // Retrieve stored filename:
+    $('#peg-editor-title').html(localStorage.getItem('filename'));
+
     if (editor.getValue !== "") {
         buildParser();
-
     }
 
+    // On changes, save the new text to localStorage:
     editor.getSession().on("change", function() {
         localStorage.setItem("grammar", editor.getValue());
         if ($('#auto-build').prop('checked')) {
@@ -410,9 +415,15 @@ var openUserGists = function() {
                             "file-name": data.files[filename].filename
                             }));
                     $('#peg-editor-title').html(filename);
+
+                    // Save the filename in localStorage for reloads:
+                    localStorage.setItem('filename', filename);
                     
+                    // Load file content into editor:
                     editor.setValue(data.files[filename].content);
                     editor.scrollToLine(0);
+                    
+                    // Build the parser:
                     buildParser();
                 });
         });

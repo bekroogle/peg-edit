@@ -8,9 +8,6 @@ function doTree() {
       bottom: 20,
       left: 120
     };
-  console.log("height: "+ $('#treediv').height());
-  console.log("width: "+ $('#treediv').width());
-  
   var width = $('#treediv').width() - margin.right - margin.left,
       height = $('#treediv').height() - margin.top - margin.bottom;
 
