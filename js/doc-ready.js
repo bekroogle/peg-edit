@@ -76,7 +76,32 @@ var bindKeys = function(target) {
                 changeSize(target, -2);
             },
             readOnly: true // false if this command should not apply in readOnly mode
+        },{
+            name: 'tabOne',
+            bindKey: {win: 'Ctrl-Shift-1',  mac: 'Command-Shift-1'},
+            exec: function(e) {
+                $('#parser-output-tab a').click();
+            },
+            readOnly: true // false if this command should not apply in readOnly mode
+        },{
+            name: 'tabTwo',
+            bindKey: {win: 'Ctrl-Shift-2',  mac: 'Command-Shift-2'},
+            exec: function(e) {
+                $('#tree-view-tab a').click();
+            },
+            readOnly: true // false if this command should not apply in readOnly mode
+        },{
+            name: 'tabThree',
+            bindKey: {win: 'Ctrl-Shift-3',  mac: 'Command-Shift-3'},
+            exec: function(e) {
+                $('#console-view-tab a').click();
+            },
+            readOnly: true // false if this command should not apply in readOnly mode
         },
+
+
+
+
         ]);
 };
 
