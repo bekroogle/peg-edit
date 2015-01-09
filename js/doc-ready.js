@@ -216,14 +216,14 @@ var buildParser = function() {
     try {
         editor.getSession().clearAnnotations();
         parser = PEG.buildParser(editor.getValue());
-        $('.alert-warning').remove();
+        $('.grammar-error').remove();
         console.log("Parser built!")
     } catch (exn) {
-        $('#parser-output').html('<div class="alert alert-warning" role="alert">Grammar Error: ' + exn.message + '</div>');
-        // console.log(exn);
-        //if (!editor.getSession().$annotations) {
+        $('.tabs-content div').html('<div data-alert class="alert-box alert grammar-error">Grammar Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
+  
+        if (!editor.getSession().$annotations) {
         editor.getSession().$annotations = [];
-        //}
+        }
 
         var myAnno = {
             "column": exn.column,
@@ -236,7 +236,6 @@ var buildParser = function() {
         editor.getSession().$annotations.push(myAnno);
         editor.getSession().setAnnotations(editor.getSession().$annotations);
 
-        console.err("Parser wasn't built!")
     } // catch(exn)
 };
 
@@ -259,15 +258,15 @@ var doParse = function() {
         $('#parser-output').html('<pre>'+ formatted_result +'</pre>');
 
         doTree();
-
+        $('.parse-error').remove();
         $('#console-view').html('<pre>'+ (traverse(result) || 'Must have a global function: traverse(tree)!') +'</pre>');
 
         $(document).foundation();
         $(document).foundation('tab','reflow');
     // Log any parse errors in the console:
-    } catch (e) {
-        $('parser-output').html('<div class="alert alert-danger" role="alert">Parse Error: ' + e.message + '</div>');
-        console.error(e);
+    } catch (exn) {
+        $('.tabs-content div').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
+        console.error(exn);
     }
 };
 
