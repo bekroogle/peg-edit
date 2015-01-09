@@ -93,8 +93,8 @@ $row-width: 100%;
 // $font-family-monospace: Consolas, "Liberation Mono", Courier, monospace;
 
 // We use these to define default font weights
-// $font-weight-normal: normal !default;
-// $font-weight-bold: bold !default;
+$font-weight-normal: normal !default;
+$font-weight-bold: bold !default;
 
  $white       : #FFFFFF;
  $ghost       : #FAFAFA;
@@ -126,10 +126,10 @@ $info-color: #a0d3e8;
 
 // We use these to control various global styles
 // $body-bg: $white;
-// $body-font-color: $jet;
-// $body-font-family: $font-family-sans-serif;
-// $body-font-weight: $font-weight-normal;
-// $body-font-style: normal;
+ // $body-font-color: $jet;
+ // $body-font-family: $font-family-sans-serif;
+ // $body-font-weight: $font-weight-normal;
+ // $body-font-style: normal;
 
 // We use this to control font-smoothing
 // $font-smoothing: antialiased;
@@ -807,9 +807,11 @@ $info-color: #a0d3e8;
 // $include-html-off-canvas-classes: $include-html-classes;
 
 // $tabbar-bg: $oil;
-// $tabbar-height: rem-calc(45);
-// $tabbar-icon-width: $tabbar-height;
-// $tabbar-line-height: $tabbar-height;
+   $tabbar-height: rem-calc(25);
+   $tabbar-icon-width: $tabbar-height * 70%;
+  $tabbar-line-height: $tabbar-height * 70%;
+   $tabbar-icon-width: $tabbar-height;
+   $tabbar-line-height: $tabbar-height;
 // $tabbar-color: $white;
 // $tabbar-middle-padding: 0 rem-calc(10);
 
@@ -819,17 +821,17 @@ $info-color: #a0d3e8;
 
 // Off Canvas Tab Bar Headers
 // $tabbar-header-color: $white;
-// $tabbar-header-weight: $font-weight-bold;
-// $tabbar-header-line-height: $tabbar-height;
+$tabbar-header-weight: $font-weight-normal;
+$tabbar-header-line-height: $tabbar-height;
 // $tabbar-header-margin: 0;
 
 // Off Canvas Menu Variables
-// $off-canvas-width: rem-calc(250);
+$off-canvas-width: rem-calc(200);
 // $off-canvas-bg: $oil;
 // $off-canvas-bg-hover: scale-color($tabbar-bg, $lightness: -30%);
 
 // Off Canvas Menu List Variables
-// $off-canvas-label-padding: 0.3rem rem-calc(15);
+$off-canvas-label-padding: 0.3rem rem-calc(10);
 // $off-canvas-label-color: $aluminum;
 // $off-canvas-label-text-transform: uppercase;
 // $off-canvas-label-font-size: rem-calc(12);
@@ -838,7 +840,7 @@ $info-color: #a0d3e8;
 // $off-canvas-label-border-top: 1px solid scale-color($tuatara, $lightness: 14%);
 // $off-canvas-label-border-bottom: none;
 // $off-canvas-label-margin:0;
-// $off-canvas-link-padding: rem-calc(10, 15);
+$off-canvas-link-padding: rem-calc(5, 10);
 // $off-canvas-link-color: rgba($white, 0.7);
 // $off-canvas-link-border-bottom: 1px solid scale-color($off-canvas-bg, $lightness: -25%);
 // $off-canvas-back-bg: $tuatara;
@@ -853,15 +855,15 @@ $info-color: #a0d3e8;
 // $tabbar-menu-icon-hover: scale-color($tabbar-menu-icon-color, $lightness: -30%);
 
 // $tabbar-menu-icon-text-indent: rem-calc(35);
-// $tabbar-menu-icon-width: $tabbar-height;
-// $tabbar-menu-icon-height: $tabbar-height;
+$tabbar-menu-icon-width: $tabbar-height;
+$tabbar-menu-icon-height: $tabbar-height;
 // $tabbar-menu-icon-padding: 0;
 
-// $tabbar-hamburger-icon-width: rem-calc(16);
+$tabbar-hamburger-icon-width: rem-calc(12);
 // $tabbar-hamburger-icon-left: false;
 // $tabbar-hamburger-icon-top: false;
 // $tabbar-hamburger-icon-thickness: 1px;
-// $tabbar-hamburger-icon-gap: 6px;
+$tabbar-hamburger-icon-gap: 5px;
 
 // Off Canvas Back-Link Overlay
 // $off-canvas-overlay-transition: background 300ms ease;
@@ -1369,12 +1371,12 @@ $info-color: #a0d3e8;
 // $include-html-top-bar-classes: $include-html-classes;
 
 // Background color for the top bar
-// $topbar-bg-color: $oil;
+// $topbar-bg-color: $base;
 // $topbar-bg-color: $oil;
 // $topbar-bg: $topbar-bg-color;
 
 // Height and margin
-// $topbar-height: rem-calc(45);
+$topbar-height: rem-calc(25);
 // $topbar-margin-bottom: 0;
 
 // Controlling the styles for the title in the top bar
@@ -1405,10 +1407,10 @@ $info-color: #a0d3e8;
 // $topbar-dropdown-bg: $topbar-bg-color;
 // $topbar-dropdown-link-color: $topbar-link-color;
 // $topbar-dropdown-link-bg: $topbar-bg-color;
-// $topbar-dropdown-link-bg-hover: $oil;
+$topbar-dropdown-link-bg-hover: $topbar-link-bg-hover;
 // $topbar-dropdown-link-weight: $font-weight-normal;
 // $topbar-dropdown-toggle-size: 5px;
-// $topbar-dropdown-toggle-color: $charcoal;
+$topbar-dropdown-toggle-color: $charcoal;
 // $topbar-dropdown-toggle-alpha: 0.4;
 
 
