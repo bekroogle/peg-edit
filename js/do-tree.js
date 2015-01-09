@@ -8,6 +8,7 @@ function doTree() {
       bottom: 20,
       left: 120
     };
+
   var width = $('#treediv').width() - margin.right - margin.left,
       height = $('#treediv').height() - margin.top - margin.bottom;
 
@@ -18,14 +19,14 @@ function doTree() {
 
   var diagonal = d3.svg.diagonal()
     .projection(function(d) {
-      return [d.x, d.y];
+      return [d.x * 2, d.y];
     });
 
   var svg = d3.select("#treediv").append("svg")
       .attr("width", width + margin.right + margin.left)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")  
-      .attr("transform", "translate(" + width/2 + "," + margin.top + ")")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
       .call(d3.behavior.zoom().scaleExtent([0.5, 3]).on("zoom", zoom))
     .append("g");
   
@@ -47,7 +48,7 @@ function doTree() {
 
       // Normalize for fixed-depth.
       nodes.forEach(function(d) {
-        d.y = d.depth * 50;
+        d.y = d.depth * 100;
       });
 
       // Declare the nodesâ€¦
@@ -60,7 +61,7 @@ function doTree() {
       var nodeEnter = node.enter().append("g")
         .attr("class", "node")
         .attr("transform", function(d) {
-          return "translate(" + d.x + "," + d.y + ")";
+          return "translate(" + d.x * 2 + "," + d.y + ")";
         });
 
       // nodeEnter.append("circle")
