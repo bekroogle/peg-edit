@@ -44,7 +44,12 @@ $('document').ready(function() {
     initMouseTrap();
     startRide();
     $(document).foundation('reflow');
-
+    
+    // Save user preferences for the Ace editors:
+    $(window).unload(function() {
+        localStorage.setItem('peg-editor-settings', JSON.stringify(editor.getOptions()));
+        localStorage.setItem('source-editor-settings', JSON.stringify(output.getOptions())); 
+    });
 });
 
 var bindKeys = function(target) {
@@ -354,15 +359,22 @@ var initMouseTrap = function() {
 
 var initPegEditor =  function() {
     editor = ace.edit("editor");
+
     editor.setTheme(globalAceTheme);
     editor.getSession().setMode("ace/mode/javascript");
 
-    // No static JS analysis
-    editor.setOption("useWorker", false);
+    // If the user has saved options:
+    if (localStorage.getItem('peg-editor-settings')) {
+        editor.setOptions(JSON.parse(localStorage.getItem('peg-editor-settings')));
+    // Otherwise, load the defaults:
+    } else {
+        // No static JS analysis
+        editor.setOption("useWorker", false);
 
-    // Personal preferences:
-    editor.setOption("tabSize", 2);
-    editor.setOption('scrollPastEnd', '40');
+        // Personal preferences:
+        editor.setOption("tabSize", 2);
+        editor.setOption('scrollPastEnd', '40');
+    }        
 
     // Retrieve stored text:
     editor.setValue(localStorage.getItem('grammar'));
@@ -388,9 +400,23 @@ var initPegEditor =  function() {
 
 var initSourceEditor = function() {
     output = ace.edit("output");
-    output.setTheme(globalAceTheme);
-    output.setOption("useWorker", false);
+
+    // If the user has saved options:
+    if (localStorage.getItem('source-editor-settings')) {
+        output.setOptions(JSON.parse(localStorage.getItem('source-editor-settings')));
+    // Otherwise, load the defaults:
+    } else {
+        // No static JS analysis
+        output.setOption("useWorker", false);
+
+        output.setTheme(globalAceTheme);
+        // Personal preferences:
+        editor.setOption("tabSize", 2);
+        editor.setOption('scrollPastEnd', '40');
+    }       
+    
     output.setValue(localStorage.getItem('source'));
+    
     output.getSession().on('change', function() {
         localStorage.setItem("source", output.getValue());
         doParse();
@@ -550,9 +576,6 @@ var resizeElements = function() {
     $('#console-view').height(window.innerHeight * 0.4);
     $('#parser-output').css('overflow-y', 'scroll');
     // $('#bottom-right').height(window.innerHeight * 0.4);
-    
-    
-
 };
 
 var setSize = function(target, size) {
