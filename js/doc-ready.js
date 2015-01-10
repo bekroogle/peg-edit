@@ -24,25 +24,36 @@ $('document').ready(function() {
     // Create parse string editor
     initSourceEditor();
 
-
+    // Apply #'s to be used with Joyride
     $('.ace_print-margin').attr('id', 'firstStop');
     $('#output > .ace_scroller').attr('id', 'stopTwo');
      
-    // If there's a GitHub access token in local storage, validate it:
+    // If there's a GitHub access token in local storage, set it as a placeholder in the 
+    // login modal...
     $('#access-token').attr('placeholder', localStorage.getItem('github_access_token'));
 
+    // ...and go ahead and log in with it. (Does that make the above step redundant?)
     if (localStorage.getItem('github_access_token')) {
         setToken();   
+    
+    // I'm not sure why this is here . . . maybe it's needed to toggle visibility of certain
+    // elements:
     } else {
         logout();
     }
     
+    // Make sure that submenus appear from the very top, even if triggered by items that were
+    // deep in the previous menu:
     $('aside').click( function(e) {
         $(this).scrollTop(0);
     });
 
+    // Set up non-ace keybindings:
     initMouseTrap();
+
+    // Run joyride (for virgins):
     startRide();
+
     $(document).foundation('reflow');
     
     // Save user preferences for the Ace editors:
@@ -216,7 +227,7 @@ var createButtonEvents = function() {
         setToken(true);
     });
     
-    $('#source_editor_settings').click(function(e) {
+    $('#source-editor-settings-btn').click(function(e) {
         e.preventDefault();
         output.execCommand('showSettingsMenu');
     });
@@ -226,12 +237,12 @@ var createButtonEvents = function() {
         setSize(output, 14);
     });
 
-    $('#source-zoom-in').click(function(e) {
+    $('#source-zoom-in-btn').click(function(e) {
         e.preventDefault();
         changeSize(output, 2);
     });
     
-    $('#source-zoom-out').click(function(e) {
+    $('#source-zoom-out-btn').click(function(e) {
         e.preventDefault();
         changeSize(output, -2);
     });
@@ -249,6 +260,7 @@ var buildParser = function() {
         $('.grammar-error').remove();
         console.log("Parser built!")
     } catch (exn) {
+        console.log(exn);
         $('.tabs-content div').html('<div data-alert class="alert-box alert grammar-error">Grammar Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
   
         if (!editor.getSession().$annotations) {

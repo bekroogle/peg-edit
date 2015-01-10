@@ -44,6 +44,7 @@
                   %a{:href => "https://github.com/bekroogle/pegedit/wiki", "target" => "_blank"} Wiki
       -# /nav
     -# /#top        
+    %p
     .row
       / Left panel
       .small-6.columns
@@ -106,23 +107,47 @@
                         %i.fa.fa-cog
                           Advanced Settings
                 %a.exit-off-canvas{:href => "#"}
-
                 #editor
-
-
       -#
       -# Right panel
       -#
       .small-6.columns#right-panel
-
         -# Top right
         .row
           .small-12.columns#top-right
-            %nav.tab-bar(data-topbar role="navigation")
-              %section.middle.tab-bar-section
-                %span
-                  Parse string editor            
-            #output
+            #source-editor-menu.off-canvas-wrap{"data-offcanvas" => ""}
+              .inner-wrap
+                %nav.tab-bar(data-topbar role="navigation")
+                  %section.right-small
+                    %a.right-off-canvas-toggle.menu-icon{:href => "#"}
+                      %span
+                  %section.middle.tab-bar-section
+                    %span
+                      %span#source-editor-title Parse string editor            
+                %aside.right-off-canvas-menu
+                  %ul.off-canvas-list
+                    %li
+                      %label Actions
+                    %li
+                      %a#parse-btn{:href => "#"}
+                        %i.fa.fa-bolt
+                        Parse
+                    %li
+                      %label Settings
+                    %li
+                      %a#source-zoom-in-btn{:href => "#"}
+                        %i.fa.fa-search-plus
+                          Increase Font Size
+                    %li
+                      %a#source-zoom-out-btn{:href => "#"}
+                        %i.fa.fa-search-minus
+                          Decrease Font Size
+                    %li
+                      %a#source-editor-settings-btn{:href => "#"}
+                        %i.fa.fa-cog
+                          Advanced Settings
+                %a.exit-off-canvas{:href => "#"}
+                #output
 
         -# Bottom right
         .row
@@ -130,16 +155,21 @@
             %p
             %dl.tabs{"data-tab" => ""}
               %dd#parser-output-tab.active
-                %a{:href => "#parser-output"} Parser Output
+                %a{:href => "#parser-output"}
+                  %i.fa.fa-code
+                  Parser Output
               %dd#tree-view-tab
-                %a{:href => "#treediv"} Tree View
+                %a{:href => "#treediv"} 
+                  %i.fa.fa-sitemap
+                  Tree View
               %dd#console-view-tab
-                %a{:href => "#console-view"} Console View
+                %a{:href => "#console-view"}
+                  %i.fa.fa-terminal
+                  Console View
             .tabs-content
               #parser-output.content.active
               #treediv.content
               #console-view.content
-            #treediv
     .row
       #status.small-12-columns
 
