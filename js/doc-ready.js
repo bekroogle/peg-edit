@@ -313,10 +313,8 @@ var doParse = function() {
             $('#console-view').html('<pre>'+ traverse(result) +'</pre>');    
         }
 
-        if ($('#symbol-toble-view-toggle input').prop("checked")) {
-            $('#symbol-table-view').html('<pre>'+
-                JSON.stringify((symbol_table || symbolTable), null, 2) +
-                '</pre>');
+        if ($('#symbol-table-view-toggle input').prop("checked")) {
+            $('#symbol-table-view').html('<pre>'+ JSON.stringify((symbol_table), null, 2) + '</pre>');
         }   
         
         $(document).foundation();
