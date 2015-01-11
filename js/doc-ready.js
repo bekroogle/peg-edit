@@ -300,9 +300,15 @@ var doParse = function() {
         $('#parser-output').html('<pre>'+ formatted_result +'</pre>');
 
         doTree();
-        $('.parse-error').remove();
-        $('#console-view').html('<pre>'+ (traverse(result) || 'Must have a global function: traverse(tree)!') +'</pre>');
 
+        $('.parse-error').remove();
+
+        if (traverse) {
+            $('#console-view').html('<pre>'+ traverse(result) +'</pre>');
+        } else {
+            $('#console-view').html("Must have a global function: traverse(tree)!");
+        }
+        
         $(document).foundation();
         $(document).foundation('tab','reflow');
     // Log any parse errors in the console:
