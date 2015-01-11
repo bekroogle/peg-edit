@@ -113,11 +113,14 @@ var bindKeys = function(target) {
                 $('#console-view-tab a').click();
             },
             readOnly: true // false if this command should not apply in readOnly mode
-        },
-
-
-
-
+        },{
+            name: 'tabfour',
+            bindKey: {win: 'Ctrl-Shift-4',  mac: 'Command-Shift-4'},
+            exec: function(e) {
+                $('#symbol-table-view-tab a').click();
+            },
+            readOnly: true // false if this command should not apply in readOnly mode
+        }
         ]);
 };
 
