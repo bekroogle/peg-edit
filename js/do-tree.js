@@ -83,7 +83,6 @@ function doTree() {
         })
         .style("fill-opacity", 1)
 
-
       // Declare the linksâ€¦
       var link = svg.selectAll("path.link")
         .data(links, function(d) {
@@ -95,12 +94,12 @@ function doTree() {
         .attr("class", "link")
         .attr("d", diagonal);
 
-$('.node :first-child').each( function( index ) {
-  var textWidth =  $(this).next().width() + 1;
-  var shapeWidth = $(this).attr("rx");
-  var newWidth = shapeWidth > textWidth ? shapeWidth : textWidth;
-  $(this).attr("rx", newWidth); 
-}); 
+      $('.node :first-child').each( function( index ) {
+        var textWidth =  $(this).next().width() + 1;
+        var shapeWidth = $(this).attr("rx");
+        var newWidth = shapeWidth > textWidth ? shapeWidth : textWidth;
+        $(this).attr("rx", newWidth); 
+      }); 
 
 /*      $('.node:first-child').attr("width",
                                   $('.node:nth-child(2)').attr("width") + "1em");
