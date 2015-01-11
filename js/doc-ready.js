@@ -14,7 +14,7 @@ $('document').ready(function() {
     $(document).foundation({
         offcanvas : {
             open_method: 'move',
-            close_on_click: true
+            close_on_click: false
         }
     });
     
@@ -289,31 +289,33 @@ var doParse = function() {
 
     // Now parse!
     try {
-
+        $('.parse-error').remove();
         // The resulting data structure:
         var result = parser.parse(output.getValue());
 
         treeData = result;
         var formatted_result = JSON.stringify(result, null, 2);
 
-        // console.log(formatted_result);
-        $('#parser-output').html('<pre>'+ formatted_result +'</pre>');
-
-        doTree();
-
-        $('.parse-error').remove();
-
-        if (traverse) {
-            $('#console-view').html('<pre>'+ traverse(result) +'</pre>');
-        } else {
-            $('#console-view').html("Must have a global function: traverse(tree)!");
+        
+        if ($('#parser-output-toggle input').prop("checked")) {
+            // console.log(formatted_result);
+            $('#parser-output').html('<pre>'+ formatted_result +'</pre>');
         }
 
-        if (symbol_table || symbolTable) {
+        if ($('#tree-view-toggle input').prop("checked")) {
+            doTree();
+        }
+
+        if ($('#console-view-toggle input').prop("checked")) {
+            $('#console-view').html('<pre>'+ traverse(result) +'</pre>');    
+        }
+
+        if ($('#symbol-toble-view-toggle input').prop("checked")) {
             $('#symbol-table-view').html('<pre>'+
                 JSON.stringify((symbol_table || symbolTable), null, 2) +
                 '</pre>');
-        }
+        }   
+        
         $(document).foundation();
         $(document).foundation('tab','reflow');
     // Log any parse errors in the console:
@@ -601,6 +603,7 @@ var resizeElements = function() {
     $('#parser-output').height(window.innerHeight * 0.4);
     $('#treediv').height(window.innerHeight * 0.4);
     $('#console-view').height(window.innerHeight * 0.4);
+    $('#symbol-table-view').height(window.innerHeight * 0.4);
     $('#parser-output').css('overflow-y', 'scroll');
     // $('#bottom-right').height(window.innerHeight * 0.4);
 };

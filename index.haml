@@ -151,28 +151,61 @@
         -# Bottom right
         .row
           .small-12.columns#bottom-right
-            %p
-            %dl.tabs{"data-tab" => ""}
-              %dd#parser-output-tab.active
-                %a{:href => "#parser-output"}
-                  %i.fa.fa-code
-                  Parser Output
-              %dd#tree-view-tab
-                %a{:href => "#treediv"} 
-                  %i.fa.fa-sitemap
-                  Tree View
-              %dd#console-view-tab
-                %a{:href => "#console-view"}
-                  %i.fa.fa-terminal
-                  Console View
-              %dd#symbol-table-view-tab
-                %a{:href => "#symbol-table-view"}
-                  Symbol Table View
-            .tabs-content
-              #parser-output.content.active
-              #treediv.content
-              #console-view.content
-              #symbol-table-view.content
+            #output-panel-menu.off-canvas-wrap{"data-offcanvas" => ""}
+              .inner-wrap
+                %nav.tab-bar(data-topbar role="navigation")
+                  %section.left-small
+                    %a.left-off-canvas-toggle.menu-icon{:href => "#"}
+                      %span
+                  %section.middle.tab-bar-section
+                    %span
+                      %span#source-editor-title Output
+                %aside.left-off-canvas-menu
+                  %ul#toggle-views.off-canvas-list
+                    %li
+                      %label Toggle Views
+                    %li
+                      %a#parser-output-toggle{:href => "#"}
+                        %input{"type" => "checkbox", "checked" => ""}
+                        Parser Output
+                    %li
+                      %a#tree-view-toggle{:href => "#"}
+                        %input{"type" => "checkbox", "checked" => ""}
+                        Tree View
+                    %li
+                      %a#console-view-toggle{:href => "#"}
+                        %input{"type" => "checkbox", "checked" => ""}
+                        Console View
+                    %li
+                      %a#symbol-table-view-toggle{:href => "#"}
+                        %input{"type" => "checkbox", "checked" => ""}
+                        Symbol Table View
+
+                %a.exit-off-canvas{:href => "#"}
+
+
+                %dl.tabs{"data-tab" => ""}
+                  %dd#parser-output-tab.active
+                    %a{:href => "#parser-output"}
+                      %i.fa.fa-code
+                      Parser Output
+                  %dd#tree-view-tab
+                    %a{:href => "#treediv"} 
+                      %i.fa.fa-sitemap
+                      Tree View
+                  %dd#console-view-tab
+                    %a{:href => "#console-view"}
+                      %i.fa.fa-terminal
+                      Console View
+                  %dd#symbol-table-view-tab
+                    %a{:href => "#symbol-table-view"}
+                      %i.fa.fa-table
+                      Symbol Table View
+                .tabs-content
+                  #parser-output.content.active
+                  #treediv.content
+                  #console-view.content
+                  #symbol-table-view.content
     .row
       #status.small-12-columns
 
