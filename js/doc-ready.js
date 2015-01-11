@@ -180,7 +180,7 @@ var createButtonEvents = function() {
         logout();
     });
     
-    $('#open_gist_btn').click( function(e) {
+    $('#open-gist-btn').click( function(e) {
         e.preventDefault();
         global_gist_data =  open_gist($('#gist-id').val());
         $('#gist-prompt').foundation('reveal', 'close');
@@ -189,10 +189,6 @@ var createButtonEvents = function() {
     $('#open-samples-btn').click( function(e) {
         e.preventDefault();
         global_gist_data = open_gist('cb3f08209da9b0f8da82');
-    });
-
-    $('#peg_editor a').click(function(e) {
-        e.preventDefault();
     });
    
     $('#parse-btn').click(function(e) {
@@ -322,7 +318,7 @@ var doParse = function() {
     // Log any parse errors in the console:
     } catch (exn) {
         $('.tabs-content div').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
-        console.error(exn);
+        console.dir(exn);
     }
 };
 
