@@ -308,7 +308,12 @@ var doParse = function() {
         } else {
             $('#console-view').html("Must have a global function: traverse(tree)!");
         }
-        
+
+        if (symbol_table || symbolTable) {
+            $('#symbol-table-view').html('<pre>'+
+                JSON.stringify((symbol_table || symbolTable), null, 2) +
+                '</pre>');
+        }
         $(document).foundation();
         $(document).foundation('tab','reflow');
     // Log any parse errors in the console:
@@ -372,7 +377,11 @@ var initMouseTrap = function() {
         e.preventDefault();
         $('#console-view-tab a').click();
     });
-
+    // Tab #4
+    Mousetrap.bind('ctrl+shift+4', function(e) {
+        e.preventDefault();
+        $('#symbol-table-view-tab a').click();
+    });
 };
 
 var initPegEditor =  function() {
