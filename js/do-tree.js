@@ -1,9 +1,9 @@
 debugData = '';
 function doTree() {
 
-  var margin = {top: 20, right: 120, bottom: 20, left: 120},
-      width = $('#treediv').width - margin.right - margin.left,
-      height = $('#treediv').height - margin.top - margin.bottom;
+  var margin = {top: 20, right: 20, bottom: 20, left: 20},
+      width = 600 - margin.right - margin.left,
+      height = 500 - margin.top - margin.bottom;
       
   var i = 0,
       duration = 750,
