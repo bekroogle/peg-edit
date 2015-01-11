@@ -4,7 +4,7 @@ var parser,
     //debugData,
     treeData,
     editor,
-    output,
+    source,
     global_gist_data,
     scrollStack = [];
 var logged_in = false;
@@ -26,7 +26,7 @@ $('document').ready(function() {
 
     // Apply #'s to be used with Joyride
     $('.ace_print-margin').attr('id', 'firstStop');
-    $('#output > .ace_scroller').attr('id', 'stopTwo');
+    $('#source > .ace_scroller').attr('id', 'stopTwo');
      
     // If there's a GitHub access token in local storage, set it as a placeholder in the 
     // login modal...
@@ -59,7 +59,7 @@ $('document').ready(function() {
     // Save user preferences for the Ace editors:
     $(window).unload(function() {
         localStorage.setItem('peg-editor-settings', JSON.stringify(editor.getOptions()));
-        localStorage.setItem('source-editor-settings', JSON.stringify(output.getOptions())); 
+        localStorage.setItem('source-editor-settings', JSON.stringify(source.getOptions())); 
     });
 });
 
@@ -232,22 +232,22 @@ var createButtonEvents = function() {
     
     $('#source-editor-settings-btn').click(function(e) {
         e.preventDefault();
-        output.execCommand('showSettingsMenu');
+        source.execCommand('showSettingsMenu');
     });
 
     $('#source-reset').click(function(e) {
         e.preventDefault();
-        setSize(output, 14);
+        setSize(source, 14);
     });
 
     $('#source-zoom-in-btn').click(function(e) {
         e.preventDefault();
-        changeSize(output, 2);
+        changeSize(source, 2);
     });
     
     $('#source-zoom-out-btn').click(function(e) {
         e.preventDefault();
-        changeSize(output, -2);
+        changeSize(source, -2);
     });
     
     $('#tree-reset').click(function(e) {
@@ -294,7 +294,7 @@ var doParse = function() {
     try {
         $('.parse-error').remove();
         // The resulting data structure:
-        var result = parser.parse(output.getValue());
+        var result = parser.parse(source.getValue());
 
         treeData = result;
         var formatted_result = JSON.stringify(result, null, 2);
@@ -355,13 +355,13 @@ var initMouseTrap = function() {
     Mousetrap.bind('ctrl+shift+=', function(e) {
         e.preventDefault();
         changeSize(editor, 2);
-        changeSize(output, 2);
+        changeSize(source, 2);
     });
     // Decrease font size for both editors:
     Mousetrap.bind('ctrl+shift+-', function(e) {
         e.preventDefault();
         changeSize(editor, -2);
-        changeSize(output, -2);
+        changeSize(source, -2);
     });
 
     // NAVIGATION:
@@ -429,26 +429,26 @@ var initPegEditor =  function() {
 };
 
 var initSourceEditor = function() {
-    output = ace.edit("output");
+    source = ace.edit("source");
 
     // If the user has saved options:
     if (localStorage.getItem('source-editor-settings')) {
-        output.setOptions(JSON.parse(localStorage.getItem('source-editor-settings')));
+        source.setOptions(JSON.parse(localStorage.getItem('source-editor-settings')));
     // Otherwise, load the defaults:
     } else {
         // No static JS analysis
-        output.setOption("useWorker", false);
+        source.setOption("useWorker", false);
 
-        output.setTheme(globalAceTheme);
+        source.setTheme(globalAceTheme);
         // Personal preferences:
-        editor.setOption("tabSize", 2);
-        editor.setOption('scrollPastEnd', '40');
+        source.setOption("tabSize", 2);
+        source.setOption('scrollPastEnd', '40');
     }       
     
-    output.setValue(localStorage.getItem('source'));
+    source.setValue(localStorage.getItem('source'));
     
-    output.getSession().on('change', function() {
-        localStorage.setItem("source", output.getValue());
+    source.getSession().on('change', function() {
+        localStorage.setItem("source", source.getValue());
         doParse();
     });
 
@@ -460,9 +460,9 @@ var initSourceEditor = function() {
 
     createButtonEvents();
 
-    bindKeys(output);
+    bindKeys(source);
     // Build parser when focus goes to source editor:   
-    // $(output).focus(function() {
+    // $(source).focus(function() {
     //     if (editor.getValue()) {
     //         buildParser();
     //     }
@@ -599,8 +599,8 @@ var resizeElements = function() {
     $('#right-panel').height($('#left-panel').height());
 
     // Resize source editor:
-    $('#output').height(window.innerHeight * 0.3);
-    output.resize();
+    $('#source').height(window.innerHeight * 0.3);
+    source.resize();
     $('#parser-output').height(window.innerHeight * 0.4);
     $('#treediv').height(window.innerHeight * 0.4);
     $('#console-view').height(window.innerHeight * 0.4);
