@@ -44,7 +44,6 @@
                   %a{:href => "https://github.com/bekroogle/pegedit/wiki", "target" => "_blank"} Wiki
       -# /nav
     -# /#top        
-    %p
     .row
       / Left panel
       .small-6.columns
@@ -118,13 +117,13 @@
             #source-editor-menu.off-canvas-wrap{"data-offcanvas" => ""}
               .inner-wrap
                 %nav.tab-bar(data-topbar role="navigation")
-                  %section.right-small
-                    %a.right-off-canvas-toggle.menu-icon{:href => "#"}
+                  %section.left-small
+                    %a.left-off-canvas-toggle.menu-icon{:href => "#"}
                       %span
                   %section.middle.tab-bar-section
                     %span
                       %span#source-editor-title Parse string editor            
-                %aside.right-off-canvas-menu
+                %aside.left-off-canvas-menu
                   %ul.off-canvas-list
                     %li
                       %label Actions
