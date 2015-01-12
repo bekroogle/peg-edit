@@ -548,7 +548,7 @@ var openFileFromGist = function(gistid, fileindex) {
         editor.setValue(file.content,-1);
         $('#peg-editor-file-list a').click( function(e) {
             $('#peg-editor-title .title-text').html(e.target.text);
-            console.log(e);
+            editor.setValue(gist_data.files[e.target.text].content, -1);
         });
         $(document).foundation('reflow');
     }).fail( function (data ) {
