@@ -6,6 +6,7 @@ var parser,
     editor,
     source,
     global_gist_data,
+    pegedit_opts = {},
     scrollStack = [];
 var logged_in = false;
 var globalAceTheme = "ace/theme/solarized_dark";
@@ -281,6 +282,8 @@ var buildParser = function() {
 };
 
 var doParse = function() {
+    
+
     // If a parser hasn't been built, build one:
     if (!parser) {
         buildParser();
@@ -305,6 +308,9 @@ var doParse = function() {
         $('#parser-output').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
         console.dir(exn);
     } try {
+        
+        doTree = pegedit_opts.treenav === "collapse" ? doCollapsibleTree() : doZoomableTree();
+        
         doTree();
     } catch(exn) {
         $('#tree-view').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
