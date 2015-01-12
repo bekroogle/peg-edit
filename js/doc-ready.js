@@ -12,6 +12,13 @@ var logged_in = false;
 var globalAceTheme = "ace/theme/solarized_dark";
 
 $('document').ready(function() {
+    
+    // If the user doesn't have any previous data in localStorage, 
+    // Load the samples gist.
+
+
+
+    
     $(document).foundation({
         offcanvas : {
             open_method: 'move',
@@ -197,7 +204,7 @@ var createButtonEvents = function() {
     
     $('#open-samples-btn').click( function(e) {
         e.preventDefault();
-        global_gist_data = open_gist('cb3f08209da9b0f8da82');
+        document.location = document.location.origin + document.location.pathname + '?' + 'cb3f08209da9b0f8da82';
     });
    
     $('#parse-btn').click(function(e) {
@@ -504,9 +511,7 @@ var loadGistFromURL = function() {
     
     // If there's a gist id in the url, grab it.
     if (document.location.search) {
-        var url_gist_id = document.location.search.substr(1);
-        localStorage.setItem('url_gist_id', url_gist_id);
-        openFileFromGist(url_gist_id, 0);
+        openFileFromGist(document.location.search.substr(1));
     }    
 };
 
@@ -525,7 +530,7 @@ var logout = function() {
     }
 };
 
-var openFileFromGist = function(gistid, fileindex) {
+var openFileFromGist = function(gistid) {
     $.get('https://api.github.com/gists/' + gistid, function(gist_data) {
         var files = [],
             file;
@@ -728,8 +733,12 @@ var setToken = function(showAlert) {
  *  It then marks them down as ridden . . . no longer a virgin.
  */
 var startRide = function() {
-   if (!localStorage.getItem('joyride')) {
+    if (!localStorage.getItem('visited')) {
+        localStorage.setItem('visited', 'true');    
+        document.location = document.location.origin + document.location.pathname + '?cb3f08209da9b0f8da82'        
+    } else if (!localStorage.getItem('joyridden')) {
+        localStorage.setItem('joyridden', 'true');
         $(document).foundation('joyride', 'start');
     }
-    localStorage.setItem('joyride', 'true');
+    
 };
