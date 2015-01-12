@@ -185,7 +185,10 @@ var createButtonEvents = function() {
         e.preventDefault();
         logout();
     });
-    
+    $('#gist-prompt').on('submit', function(e) {
+        e.preventDefault();
+        document.location = document.location.origin + document.location.pathname + '?' + $('#gist-id').val()
+    })
     $('#open-gist-btn').click( function(e) {
         e.preventDefault();
         global_gist_data =  open_gist($('#gist-id').val());
