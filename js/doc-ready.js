@@ -430,7 +430,7 @@ var initPegEditor =  function() {
     }        
 
     // Retrieve stored text:
-    editor.setValue(localStorage.getItem('grammar'));
+    editor.setValue(localStorage.getItem('grammar'), -1);
     
     // Retrieve stored filename:
     $('#peg-editor-title').html(localStorage.getItem('filename'));
@@ -468,7 +468,7 @@ var initSourceEditor = function() {
         source.setOption('scrollPastEnd', '40');
     }       
     
-    source.setValue(localStorage.getItem('source'));
+    source.setValue(localStorage.getItem('source'), -1);
     
     source.getSession().on('change', function() {
         localStorage.setItem("source", source.getValue());
@@ -601,7 +601,7 @@ var openUserGists = function() {
                     localStorage.setItem('filename', filename);
                     
                     // Load file content into editor:
-                    editor.setValue(data.files[filename].content);
+                    editor.setValue(data.files[filename].content, -1);
                     editor.scrollToLine(0);
                     
                     // Build the parser:
