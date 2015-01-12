@@ -288,6 +288,7 @@ var doParse = function() {
 
     // Now parse!
     try {
+        source.getSession().clearAnnotations();
         $('.parse-error').remove();
         // The resulting data structure:
         var result = parser.parse(source.getValue());
@@ -303,6 +304,21 @@ var doParse = function() {
 
     } catch (exn) {
         $('#parser-output').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
+        if (!source.getSession().$annotations) {
+        source.getSession().$annotations = [];
+        }
+
+        var myAnno = {
+            "column": exn.column,
+            "row": exn.line - 1,
+            "type": "error",
+            "raw": exn.message,
+            "text": exn.message
+        };
+
+        source.getSession().$annotations.push(myAnno);
+        source.getSession().setAnnotations(source.getSession().$annotations);
+
         console.dir(exn);
     } try {
         doTree();
