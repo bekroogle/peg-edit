@@ -87,7 +87,7 @@
                           %label#users-gists-label
                             -# So-and-so's Gists:
                     %li
-                      %a#open-gist-btn{:href => "#", "data-reveal-id" => "gist-prompt"}
+                      %a#open-gist-prompt-btn{:href => "#", "data-reveal-id" => "gist-prompt"}
                         %i.fa.fa-github-alt
                         By Gist ID
                     %li
@@ -212,6 +212,44 @@
     .row
       #status.small-12-columns
 
+
+
+
+    -# Load Gist by ID Prompt
+    #gist-prompt.reveal-modal.tiny{"data-reveal" => ""}
+      %h4 Load file by Gist ID
+      %form
+        %row
+          .small-2.columns
+            %label.right.inline{"for" => "gist-id"}
+              Gist ID:
+          .small-8.columns
+            %input#gist-id{"type" => "text"}
+          .small-2.columns
+            %a#open-gist-btn.button{:href => "#"} Go!
+      %a.close-reveal-modal &#215;
+
+    -# GitHub Token Prompt
+    #token-prompt.reveal-modal.tiny{"data-reveal" => ""}
+      %h4 Enter a GitHub personal access token:
+      %form
+        %row
+          .small-1.columns
+            %label.right.inline{"for" => "#access-token"}
+          .small-8.columns
+            %input#access-token{"type" => "text"}
+          .small-3.columns
+            %a#set-token-btn.button.small{:href => "#", "type" => "submit"} Set token
+        %row
+          .small-2.columns
+          .small-8.columns
+            %p 
+              To generate a GitHub personal access token, go 
+              %a{:href => "https://github.com/settings/applications"} here
+              \.
+          .small-2.columns
+
+    -# Joyride
     %ol.joyride-list{"data-joyride" => ""}
       
       %li{"data-options" => "prev_button: false; postRideCallback: function(){alert('test');}"}
@@ -263,39 +301,6 @@
       %li{"data-id" => "samples", "data-button" => "Got it!"}
         %h4 Try a sample to start!
         %p Click here to pick one of the sample grammars.
-
-    #gist-prompt.reveal-modal.tiny{"data-reveal" => ""}
-      %h4 Load file by Gist ID
-      %form
-        %row
-          .small-2.columns
-            %label.right.inline{"for" => "gist-id"}
-              Gist ID:
-          .small-8.columns
-            %input#gist-id{"type" => "text"}
-          .small-2.columns
-            %a#open-gist-btn.button{:href => "#", "data-reveal-id" => "gist-file-picker"} Go!
-      %a.close-reveal-modal &#215;
-
-    #token-prompt.reveal-modal.tiny{"data-reveal" => ""}
-      %h4 Enter a GitHub personal access token:
-      %form
-        %row
-          .small-1.columns
-            %label.right.inline{"for" => "#access-token"}
-          .small-8.columns
-            %input#access-token{"type" => "text"}
-          .small-3.columns
-            %a#set-token-btn.button.small{:href => "#"} Set token
-        %row
-          .small-2.columns
-          .small-8.columns
-            %p 
-              To generate a GitHub personal access token, go 
-              %a{:href => "https://github.com/settings/applications"} here
-              \.
-          .small-2.columns
-
     -# Script imports:
     %script(src="./bower_components/jquery/dist/jquery.min.js")
     %script(src="./bower_components/foundation/js/foundation.min.js")

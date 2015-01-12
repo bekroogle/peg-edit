@@ -198,10 +198,11 @@ var createButtonEvents = function() {
     })
     $('#open-gist-btn').click( function(e) {
         e.preventDefault();
-        global_gist_data =  open_gist($('#gist-id').val());
-        $('#gist-prompt').foundation('reveal', 'close');
+        $('#gist-prompt').submit();
     });
     
+
+
     $('#open-samples-btn').click( function(e) {
         e.preventDefault();
         document.location = document.location.origin + document.location.pathname + '?' + 'cb3f08209da9b0f8da82';
@@ -239,7 +240,7 @@ var createButtonEvents = function() {
 
     $('#set-token-btn').click(  function(e) {
         e.preventDefault();
-        setToken(true);
+        $('#token-prompt form').submit();
     });
     
     $('#source-editor-settings-btn').click(function(e) {
@@ -261,7 +262,10 @@ var createButtonEvents = function() {
         e.preventDefault();
         changeSize(source, -2);
     });
-    
+    $('#token-prompt').on('submit', function(e) {
+        e.preventDefault();
+        setToken(true);
+    });
     $('#tree-reset').click(function(e) {
         e.preventDefault();
         doParse();
