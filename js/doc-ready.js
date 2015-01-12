@@ -301,25 +301,29 @@ var doParse = function() {
             $('#parser-output').html('<pre>'+ formatted_result +'</pre>');
         }
 
-        if ($('#tree-view-toggle input').prop("checked")) {
-            doTree();
-        }
+    } catch (exn) {
+        $('#parser-output').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
+        console.dir(exn);
+    } try {
+        doTree();
+    } catch(exn) {
+        $('#tree-view').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
+        console.dir(exn);
+    } try {
+        $('#console-view').html('<pre>'+ traverse(result) +'</pre>');    
+    } catch(exn) {
+        $('#console-view').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
+        console.dir(exn);
+    } try {
+        $('#symbol-table-view').html('<pre>'+ JSON.stringify((symbol_table), null, 2) + '</pre>');    
+    } catch(exn) {
+        $('#symbol-table-view').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
+        console.dir(exn);
+    }
 
-        if ($('#console-view-toggle input').prop("checked")) {
-            $('#console-view').html('<pre>'+ traverse(result) +'</pre>');    
-        }
-
-        if ($('#symbol-table-view-toggle input').prop("checked")) {
-            $('#symbol-table-view').html('<pre>'+ JSON.stringify((symbol_table), null, 2) + '</pre>');
-        }   
-        
         $(document).foundation();
         $(document).foundation('tab','reflow');
     // Log any parse errors in the console:
-    } catch (exn) {
-        $('.tabs-content div').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
-        console.dir(exn);
-    }
 };
 
 var getGistList = function(gist) {
