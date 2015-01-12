@@ -112,16 +112,16 @@ var doZoomableTree  = function() {
 
 var doCollapsibleTree = function() {
   $('#treediv').html('');
-  var margin = {top: 20, right: 20, bottom: 20, left: 20},
-      width = 600 - margin.right - margin.left,
-      height = 500 - margin.top - margin.bottom;
+  var margin = {top: 10, right: 20, bottom: 60, left: 20},
+      width = $('#treediv').width() - margin.right - margin.left,
+      height = $('.tabs-content').height() - margin.top - margin.bottom;
       
   var i = 0,
       duration = 750,
       root;
 
   var tree = d3.layout.tree()
-      .size([height, width]);
+      .size([width, height]);
 
   var diagonal = d3.svg.diagonal()
       .projection(function(d) { return [d.x, d.y]; });
@@ -134,7 +134,7 @@ var doCollapsibleTree = function() {
 
     flare = treeData;
     root = flare;
-    root.x0 = height / 2;
+    root.x0 = width / 2;
     root.y0 = 0;
 
     function collapse(d) {
@@ -149,7 +149,7 @@ var doCollapsibleTree = function() {
     update(root);
   
 
-  d3.select(self.frameElement).style("height", "800px");
+  
 
   function update(source) {
 
@@ -189,7 +189,7 @@ var doCollapsibleTree = function() {
         .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
     nodeUpdate.select("circle")
-        .attr("r", 4.5)
+        .attr("r", 7)
         .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
     nodeUpdate.select("text")
