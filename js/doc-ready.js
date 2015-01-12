@@ -298,13 +298,8 @@ var doParse = function() {
 
         treeData = result;
         var formatted_result = JSON.stringify(result, null, 2);
-
-        
-        if ($('#parser-output-toggle input').prop("checked")) {
-            // console.log(formatted_result);
-            $('#parser-output').html('<pre>'+ formatted_result +'</pre>');
-        }
-
+        // console.log(formatted_result);
+        $('#parser-output').html('<pre>'+ formatted_result +'</pre>');
     } catch (exn) {
         $('#parser-output').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
         if (!source.getSession().$annotations) {
@@ -325,9 +320,15 @@ var doParse = function() {
         console.dir(exn);
     } try {
         
-        doTree = pegedit_opts.treenav === "collapse" ? doCollapsibleTree() : doZoomableTree();
-        
-        doTree();
+        switch(pegedit_opts.treenav) {
+            case "collapse":     doCollapsibleTree();
+                                 break;
+            case "zoom":         doZoomableTree();
+                                 break;
+            case "cluster":      doClusterTree();
+                                 break;
+            default:             doZoomableTree();
+        }
     } catch(exn) {
         $('#tree-view').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
         console.dir(exn);
