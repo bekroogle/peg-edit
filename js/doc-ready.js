@@ -162,7 +162,11 @@ var createButtonEvents = function() {
         e.preventDefault();
         buildParser();
     });
-      
+    
+    $('.gist-file-name').click( function(e) {
+        alert(e);
+        console.log(e);
+    });
     $('#help-btn').click(function(e) {
         e.preventDefault();
         $(document).foundation('joyride', 'start');
@@ -430,11 +434,11 @@ var initPegEditor =  function() {
         editor.setOption('scrollPastEnd', '40');
     }        
 
-    // Retrieve stored text:
-    editor.setValue(localStorage.getItem('grammar'), -1);
-    
-    // Retrieve stored filename:
-    $('#peg-editor-title').html(localStorage.getItem('filename'));
+    // Retrieve stored text/titlename if gist wasn't provided in url:
+    if (!document.location.search) {
+        editor.setValue(localStorage.getItem('grammar'), -1);
+        $('#peg-editor-title').html(localStorage.getItem('filename'));
+    }    
 
     if (editor.getValue !== "") {
         buildParser();
@@ -499,10 +503,8 @@ var loadGistFromURL = function() {
     if (document.location.search) {
         var url_gist_id = document.location.search.substr(1);
         localStorage.setItem('url_gist_id', url_gist_id);
-        console.log("gist_data.data.files: " + openFileFromGist(url_gist_id, 0));
+        openFileFromGist(url_gist_id, 0);
     }    
-
-
 };
 
 var logout = function() {
@@ -524,13 +526,31 @@ var openFileFromGist = function(gistid, fileindex) {
     $.get('https://api.github.com/gists/' + gistid, function(gist_data) {
         var files = [],
             file;
+         
+        // Build an array of files in the gist            
         for (var f in gist_data.files) {
             files.push(gist_data.files[f]);
         }
+
+        $('#peg-editor-title .title-text').html(files[0].filename + '&nbsp');
+        // If there's more than one file:
+        if (files.length > 1) {
+            console.log(files);
+            // $('#peg-editor-title .title-text').append('<i class="fa fa-caret-down"></i>');
+            $('#peg-editor-title i').toggleClass('gone');
+            console.log();
+            // console.log(getGistList(gist_data.data.id));
+            $('#peg-editor-file-list').append(getGistList(gist_data));
+            
+        }
         file = files[0];
-        console.log(files[0]);
-        $('#peg-editor-title').html(file.filename);
+        
         editor.setValue(file.content,-1);
+        $('#peg-editor-file-list a').click( function(e) {
+            $('#peg-editor-title .title-text').html(e.target.text);
+            console.log(e);
+        });
+        $(document).foundation('reflow');
     }).fail( function (data ) {
         alert("failed");
     });

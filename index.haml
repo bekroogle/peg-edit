@@ -56,7 +56,12 @@
                     %a.left-off-canvas-toggle.menu-icon{:href => "#"}
                       %span
                   %section.middle.tab-bar-section
-                    %span#peg-editor-title PEG.js Editor
+                    %a#peg-editor-title{"aria-controls" => "peg-editor-file-list", "aria-expanded" => "false", "data-dropdown" => "peg-editor-file-list"} 
+                      %span.title-text PEG.js Editor &nbsp;
+                      %i.fa.fa-caret-down.gone
+                      %ul#peg-editor-file-list.f-dropdown{"aria-hidden" => "true", "data-dropdown-content" => "", :tabindex => "-1"}
+                        
+
                 %aside.left-off-canvas-menu
                   %ul.off-canvas-list
                     %li
