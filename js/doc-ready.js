@@ -25,14 +25,13 @@ $('document').ready(function() {
     // Create parse string editor
     initSourceEditor();
 
-    // Apply #'s to be used with Joyride
-    $('.ace_print-margin').attr('id', 'firstStop');
-    $('#source > .ace_scroller').attr('id', 'stopTwo');
-     
+    // If the user included a gist id in the URL, load the first file:
+    loadGistFromURL();
+
     // If there's a GitHub access token in local storage, set it as a placeholder in the 
     // login modal...
     $('#access-token').attr('placeholder', localStorage.getItem('github_access_token'));
-
+    
     // ...and go ahead and log in with it. (Does that make the above step redundant?)
     if (localStorage.getItem('github_access_token')) {
         setToken();   
@@ -52,7 +51,9 @@ $('document').ready(function() {
     // Set up non-ace keybindings:
     initMouseTrap();
 
-    // Run joyride (for virgins):
+    // Joyride housekeeping:
+    $('.ace_print-margin').attr('id', 'firstStop');
+    $('#source > .ace_scroller').attr('id', 'stopTwo');
     startRide();
 
     $(document).foundation('reflow');
@@ -492,6 +493,18 @@ var initSourceEditor = function() {
     // });
 };
 
+var loadGistFromURL = function() {
+    
+    // If there's a gist id in the url, grab it.
+    if (document.location.search) {
+        var url_gist_id = document.location.search.substr(1);
+        localStorage.setItem('url_gist_id', url_gist_id);
+        console.log("gist_data.data.files: " + openFileFromGist(url_gist_id, 0));
+    }    
+
+
+};
+
 var logout = function() {
     if (logged_in) {
         logged_in = false;
@@ -507,6 +520,21 @@ var logout = function() {
     }
 };
 
+var openFileFromGist = function(gistid, fileindex) {
+    $.get('https://api.github.com/gists/' + gistid, function(gist_data) {
+        var files = [],
+            file;
+        for (var f in gist_data.files) {
+            files.push(gist_data.files[f]);
+        }
+        file = files[0];
+        console.log(files[0]);
+        $('#peg-editor-title').html(file.filename);
+        editor.setValue(file.content,-1);
+    }).fail( function (data ) {
+        alert("failed");
+    });
+};
 /** open_gist(gistid)
  *  loads a project from a gist
  *  @param gistid The id of the gist (the last segment of the url)
@@ -517,25 +545,8 @@ var open_gist = function(gistid) {
         type: 'GET',
         dataType: 'jsonp',
         success: function(gist_data) {
-
-            // To be used for creating a list of recent gist ids:
-            var gist_history =
-                JSON.parse(localStorage.getItem('gist_history')) || [];
-            gist_history.push(gistid);
-            localStorage.setItem('gist_history', JSON.stringify(gist_history));
-            global_gist_data = gist_data;
-
-
             localStorage.setItem('gist_data', JSON.stringify(gist_data));
 
-            // Clear list of files from previously loaded gist:
-            $('.file-name').remove();
-
-            // Build list of files in the current gist:
-            for (var file in gist_data.data.files) {
-                $('#files-in-gist').append('<li><a class="file-name" href="#">'+ file +'</a></li>');
-                // console.log('<li><a href="#">'+ file +'</a></li>');
-            }
             return gist_data;
         }
     });
