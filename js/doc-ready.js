@@ -533,7 +533,7 @@ var logout = function() {
         $('#login-btn').toggleClass('gone');
         $('#offcanvas-load-user-gists').toggleClass('gone');
         $('#user-account').toggleClass('gone');
-        
+        $('#save-changes-btn').toggleClass('gone');
 
         $(document).foundation('reflow');
     }
@@ -701,6 +701,7 @@ var setToken = function(showAlert) {
         $('#login-btn').toggleClass('gone');
         $('#offcanvas-load-user-gists').toggleClass('gone')
         $('#user-account').toggleClass('gone');
+        $('#save-changes-btn').toggleClass('gone');
 
         // Insert user login into offcanvas menu:
         $('#offcanvas-load-user-gists a').append(localStorage.getItem('github-login')+"'s Gists");
