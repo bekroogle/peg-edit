@@ -196,67 +196,76 @@ var createButtonEvents = function() {
         e.preventDefault();
         $('#gist-prompt').submit();
     });
-    
-
-
     $('#open-samples-btn').click( function(e) {
         e.preventDefault();
         document.location = document.location.origin + document.location.pathname + '?' + 'cb3f08209da9b0f8da82';
-    });
-   
+    }); 
     $('#parse-btn').click(function(e) {
         e.preventDefault();
         doParse(e);
     });
-
     $('#peg-editor-settings-btn').click(function(e) {
         e.preventDefault();
         editor.execCommand('showSettingsMenu');
     });
-
     $('#peg-reset').click(function(e) {
         e.preventDefault();
         setSize(editor, 14);
     });
-
     $('#peg-zoom-in-btn').click(function(e) {
         e.preventDefault();
         changeSize(editor, 2);
     });
-
     $('#peg-zoom-out-btn').click(function(e) {
         e.preventDefault();
         changeSize(editor, -2);
     });
-
     $('#save-changes-btn a').click(function(e) {
         e.preventDefault();
         commitChanges();
     });
-
+    $('#peg-editor-title').dblclick( function (e) {
+        console.log("e.target: " + e.target);
+        $('#rename-prompt').foundation('reveal', 'open');
+    });
+     $('#rename-prompt form').submit( function(e) {
+        e.preventDefault();
+        //renameFile() Implement this.
+        $('#peg-editor-title .title-text').html($('#new-filename').val());
+        console.log($('#new-filename').val());
+        $('#rename-prompt').foundation('reveal', 'close');
+     });
+    $('#rename-submit-btn').click( function(e) {
+        e.preventDefault();
+        $('#rename-prompt form').submit();
+    });
     $('#set-token-btn').click(  function(e) {
         e.preventDefault();
         $('#token-prompt form').submit();
     });
-    
     $('#source-editor-settings-btn').click(function(e) {
         e.preventDefault();
         source.execCommand('showSettingsMenu');
     });
-
     $('#source-reset').click(function(e) {
         e.preventDefault();
         setSize(source, 14);
     });
-
     $('#source-zoom-in-btn').click(function(e) {
         e.preventDefault();
         changeSize(source, 2);
     });
-    
     $('#source-zoom-out-btn').click(function(e) {
         e.preventDefault();
         changeSize(source, -2);
+    });
+    $('#topbar-build-parser-btn').click(function(e) {
+        e.preventDefault();
+        buildParser();
+    });
+    $('#topbar-parse-btn').click(function(e) {
+        e.preventDefault();
+        doParse();
     });
     $('#token-prompt').on('submit', function(e) {
         e.preventDefault();

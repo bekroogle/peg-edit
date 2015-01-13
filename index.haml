@@ -22,7 +22,17 @@
 
         %section.top-bar-section
           -# right nav section
-          
+          %ul
+            %li.divider
+            %li#topbar-build-parser-btn
+              %a{:href => "#"} 
+                %i.fa.fa-cubes
+                Build Parser
+            %li.divider
+            %li#topbar-parse-btn
+              %a{:href => "#"} 
+                %i.fa.fa-play
+                Parse
           %ul.right
             %li#login-btn
               %a{:href => "#", "data-reveal-id" => "token-prompt"} 
@@ -33,15 +43,24 @@
               %ul.dropdown 
                 %li
                   %a#logout-btn{:href => "#"} Logout
+            %li.divider
             %li#help-dropdown.has-dropdown
-              %a{:href => "#"} Help
+              %a{:href => "#"}
+                %i.fa.fa-question
+                Help
               %ul.dropdown
                 %li
-                  %a{:href => "#"} Keybindings
+                  %a{:href => "https://github.com/bekroogle/pegedit/wiki/Keybindings", "target" => "_blank"}
+                    %i.fa.fa-keyboard-o
+                    &nbsp; Keybindings
                 %li
-                  %a#help-btn{:href => "#"} Intro walkthrough
+                  %a#help-btn{:href => "#"}
+                    %i.fa.fa-graduation-cap
+                    &nbsp; Welcome tutorial
                 %li
-                  %a{:href => "https://github.com/bekroogle/pegedit/wiki", "target" => "_blank"} Wiki
+                  %a{:href => "https://github.com/bekroogle/pegedit/wiki", "target" => "_blank"} 
+                    %i.fa.fa-book
+                    &nbsp; Wiki
       -# /nav
     -# /#top        
     .row
@@ -92,7 +111,7 @@
                         By Gist ID
                     %li
                       %a#open-samples-btn{:href => "#"}
-                        %i.fa.fa-file
+                        %i.fa.fa-file-code-o
                         Samples
                     %li
                       %label Settings
@@ -132,7 +151,7 @@
                       %label Actions
                     %li
                       %a#parse-btn{:href => "#"}
-                        %i.fa.fa-bolt
+                        %i.fa.fa-play
                         Parse
                     %li
                       %label Settings
