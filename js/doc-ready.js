@@ -625,7 +625,6 @@ var openFileFromGist = function(gistid) {
             // Set the contents
             source.setValue(gist_data.files[params.source_filename].content, -1);
         };
-        $(document).foundation('reflow');
     }).fail( function (data ) {
         alert("failed");
     });
@@ -701,7 +700,7 @@ var openUserGists = function() {
                             "gist-id": data.id,
                             "file-name": data.files[filename].filename
                             }));
-                    $('#peg-editor-title').html(filename);
+                    $('#peg-editor-title .title-text').html(filename);
 
                     // Save the filename in localStorage for reloads:
                     localStorage.setItem('filename', filename);
