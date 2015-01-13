@@ -33,7 +33,7 @@ $('document').ready(function() {
     initSourceEditor();
 
     // If the user included a gist id in the URL, load the first file:
-    applyParams(params);
+    applyParams();
 
     // If there's a GitHub access token in local storage, set it as a placeholder in the 
     // login modal...
@@ -61,7 +61,11 @@ $('document').ready(function() {
     // Joyride housekeeping:
     $('.ace_print-margin').attr('id', 'firstStop');
     $('#source > .ace_scroller').attr('id', 'stopTwo');
-    startRide();
+
+    // If the user isn't in a hurry for a specific PEG, take her for a ride.
+    if (!params.gistid) {
+        startRide();
+    }
 
     $(document).foundation('reflow');
     
@@ -802,7 +806,7 @@ var setToken = function(showAlert) {
 var startRide = function() {
     if (!localStorage.getItem('visited')) {
         localStorage.setItem('visited', 'true');    
-        document.location = document.location.origin + document.location.pathname + '?cb3f08209da9b0f8da82'        
+        document.location = document.location.origin + document.location.pathname + '?705fdf83758491bbd5c5'        
     } else if (!localStorage.getItem('joyridden')) {
         localStorage.setItem('joyridden', 'true');
         $(document).foundation('joyride', 'start');
