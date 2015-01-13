@@ -169,7 +169,6 @@ var createButtonEvents = function() {
         e.preventDefault();
         buildParser();
     });
-    
     $('.gist-file-name').click( function(e) {
         alert(e);
         console.log(e);
@@ -178,16 +177,13 @@ var createButtonEvents = function() {
         e.preventDefault();
         $(document).foundation('joyride', 'start');
     });
-
     $('#load-user-gists').click( function(e) {
         e.preventDefault();
         openUserGists();
     });
-
     $('#login-btn').click( function(e) {
         e.preventDefault();
     });
-
     $('#logout-btn').click( function(e) {
         e.preventDefault();
         logout();
@@ -526,7 +522,7 @@ var logout = function() {
         $('#access-token').attr('placeholder', 'token');
         $(document).foundation('reveal', 'reflow');
         $('#login-btn').toggleClass('gone');
-       
+        $('#offcanvas-load-user-gists').toggleClass('gone');
         $('#user-account').toggleClass('gone');
         
 
