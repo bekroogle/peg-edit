@@ -241,7 +241,7 @@ var createButtonEvents = function() {
     });
     $('#open-samples-btn').click( function(e) {
         e.preventDefault();
-        document.location = document.location.origin + document.location.pathname + '?' + 'cb3f08209da9b0f8da82';
+        document.location = document.location.origin + document.location.pathname + '?gistid=705fdf83758491bbd5c5';
     }); 
     $('#parse-btn').click(function(e) {
         e.preventDefault();
