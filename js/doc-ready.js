@@ -7,8 +7,9 @@ var parser,
     source,
     global_gist_data,
     pegedit_opts = {},
-    scrollStack = [];
-var logged_in = false;
+    scrollStack = [],
+    parserIsBuilt = false,
+    logged_in = false;
 var globalAceTheme = "ace/theme/solarized_dark";
 
 $('document').ready(function() {
@@ -17,8 +18,6 @@ $('document').ready(function() {
     // Load the samples gist.
 
 
-
-    
     $(document).foundation({
         offcanvas : {
             open_method: 'move',
@@ -169,6 +168,15 @@ var createButtonEvents = function() {
         e.preventDefault();
         buildParser();
     });
+    $('#download-prompt form').submit( function(e) {
+        downloadParser($('#parser-variable-name').val() || $('#parser-variable-name').attr('placeholder'));
+    });
+    $('#download-prompt-btn').click(function(e) {
+        e.preventDefault();
+        $('#download-prompt form').submit();
+        $('#download-prompt').foundation('reveal', 'close');
+    });
+
     $('.gist-file-name').click( function(e) {
         alert(e);
         console.log(e);
@@ -277,12 +285,21 @@ var createButtonEvents = function() {
     });
 };
 
+var downloadParser = function(varname) {
+        // This is the snippet to be used for exporting the peg parser.
+    var fileString = varname +" = "+ PEG.buildParser(editor.getValue(), {output: "source"});
+    var newWindow = window.open();    
+    var newDoc = newWindow.document;
+    newDoc.write(fileString);
+    newDoc.close();
+ };
+
 var buildParser = function() {
     try {
         editor.getSession().clearAnnotations();
         parser = PEG.buildParser(editor.getValue());
         $('.grammar-error').remove();
-        console.log("Parser built!")
+        parserIsBuilt = true;
     } catch (exn) {
         console.log(exn);
         $('.tabs-content div').html('<div data-alert class="alert-box alert grammar-error">Grammar Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
@@ -301,7 +318,7 @@ var buildParser = function() {
 
         editor.getSession().$annotations.push(myAnno);
         editor.getSession().setAnnotations(editor.getSession().$annotations);
-
+        parserIsBuilt = false;
     } // catch(exn)
 };
 

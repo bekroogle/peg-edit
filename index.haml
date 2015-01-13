@@ -88,11 +88,16 @@
                     %li#build-parser-btn
                       %a{:href => "#"}
                         %i.fa.fa-cubes
-                          Build Parser
+                          Build parser
                     %li#save-changes-btn.gone
                       %a{:href => "#"}
                         %i.fa.fa-cloud-upload
-                          Commit Changes to Gist
+                          Commit changes to Gist
+                    %li.divider
+                    %li
+                      %a#open-export-menu{:href => "#", "data-reveal-id" => "download-prompt"}
+                        %i.fa.fa-download
+                        Download your parser
                     %li
                       %label Open Grammar:
                     %li#offcanvas-load-user-gists.gone.has-submenu
@@ -118,15 +123,15 @@
                     %li
                       %a#peg-zoom-in-btn{:href => "#"}
                         %i.fa.fa-search-plus
-                          Increase Font Size
+                          Increase font size
                     %li
                       %a#peg-zoom-out-btn{:href => "#"}
                         %i.fa.fa-search-minus
-                          Decrease Font Size
+                          Decrease font size
                     %li
                       %a#peg-editor-settings-btn{:href => "#"}
                         %i.fa.fa-cog
-                          Advanced Settings
+                          Advanced settings
                 %a.exit-off-canvas{:href => "#"}
                 #editor
       -#
@@ -158,15 +163,15 @@
                     %li
                       %a#source-zoom-in-btn{:href => "#"}
                         %i.fa.fa-search-plus
-                          Increase Font Size
+                          Increase font size
                     %li
                       %a#source-zoom-out-btn{:href => "#"}
                         %i.fa.fa-search-minus
-                          Decrease Font Size
+                          Decrease font size
                     %li
                       %a#source-editor-settings-btn{:href => "#"}
                         %i.fa.fa-cog
-                          Advanced Settings
+                          Advanced settings
                 %a.exit-off-canvas{:href => "#"}
                 #source
 
@@ -185,23 +190,23 @@
                 %aside.left-off-canvas-menu
                   %ul#toggle-views.off-canvas-list
                     %li
-                      %label Toggle Views
+                      %label Toggle views
                     %li
                       %a#parser-output-toggle{:href => "#"}
                         %input{"type" => "checkbox", "checked" => ""}
-                        Parser Output
+                        Parser output
                     %li
                       %a#tree-view-toggle{:href => "#"}
                         %input{"type" => "checkbox", "checked" => ""}
-                        Tree View
+                        Tree view
                     %li
                       %a#console-view-toggle{:href => "#"}
                         %input{"type" => "checkbox", "checked" => ""}
-                        Console View
+                        Console view
                     %li
                       %a#symbol-table-view-toggle{:href => "#"}
                         %input{"type" => "checkbox", "checked" => ""}
-                        Symbol Table View
+                        Symbol table view
 
                 %a.exit-off-canvas{:href => "#"}
 
@@ -210,19 +215,19 @@
                   %dd#parser-output-tab.active
                     %a{:href => "#parser-output"}
                       %i.fa.fa-code
-                      Parser Output
+                      Parser output
                   %dd#tree-view-tab
                     %a{:href => "#treediv"} 
                       %i.fa.fa-sitemap
-                      Tree View
+                      Tree view
                   %dd#console-view-tab
                     %a{:href => "#console-view"}
                       %i.fa.fa-terminal
-                      Console View
+                      Console view
                   %dd#symbol-table-view-tab
                     %a{:href => "#symbol-table-view"}
                       %i.fa.fa-table
-                      Symbol Table View
+                      Symbol table view
                 .tabs-content
                   #parser-output.content.active
                   #treediv.content
@@ -248,6 +253,26 @@
             %a#open-gist-btn.button{:href => "#"} Go!
       %a.close-reveal-modal &#215;
 
+    -# Download Parser Prompt
+    #download-prompt.reveal-modal.small{"data-reveal" => ""}
+      %h4 Download your parser.
+      %form
+        %row
+          .small-4.columns
+            %label.right.inline{"for" => "parser-variable-name"}
+              Parser variable name:
+          .small-5.columns
+            %input#parser-variable-name{"type" => "text", "placeholder" => "module.exports"}
+          .small-3.columns
+            %a#download-prompt-btn.button{:href => "#"} Snag it!
+        %row
+          .small-2.columns
+          .small-8.columns
+            %p (The raw source code will appear in an untitled pop-up.)
+          .small-2.columns
+      %a.close-reveal-modal &#215;
+
+
     -# GitHub Token Prompt
     #token-prompt.reveal-modal.tiny{"data-reveal" => ""}
       %h4 Enter a GitHub personal access token:
@@ -267,6 +292,7 @@
               %a{:href => "https://github.com/settings/applications"} here
               \.
           .small-2.columns
+      %a.close-reveal-modal &#215
 
     -# Joyride
     %ol.joyride-list{"data-joyride" => ""}
