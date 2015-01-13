@@ -5,9 +5,8 @@ var parser,
     treeData,
     editor,
     source,
-    global_gist_data,
     pegedit_opts = {},
-    scrollStack = [],
+    params = {},
     parserIsBuilt = false,
     logged_in = false;
 var globalAceTheme = "ace/theme/solarized_dark";
@@ -17,6 +16,8 @@ $('document').ready(function() {
     // If the user doesn't have any previous data in localStorage, 
     // Load the samples gist.
 
+    extractParams();
+    
 
     $(document).foundation({
         offcanvas : {
@@ -32,7 +33,7 @@ $('document').ready(function() {
     initSourceEditor();
 
     // If the user included a gist id in the URL, load the first file:
-    loadGistFromURL();
+    applyParams(params);
 
     // If there's a GitHub access token in local storage, set it as a placeholder in the 
     // login modal...
@@ -70,6 +71,12 @@ $('document').ready(function() {
         localStorage.setItem('source-editor-settings', JSON.stringify(source.getOptions())); 
     });
 });
+
+var applyParams = function() {
+    if (params.gistid) {
+        openFileFromGist(params.gistid);
+    }
+};
 
 var bindKeys = function(target) {
     target.commands.addCommands([{
@@ -130,6 +137,34 @@ var bindKeys = function(target) {
             readOnly: true // false if this command should not apply in readOnly mode
         }
         ]);
+};
+
+var buildParser = function() {
+    try {
+        editor.getSession().clearAnnotations();
+        parser = PEG.buildParser(editor.getValue());
+        $('.grammar-error').remove();
+        parserIsBuilt = true;
+    } catch (exn) {
+        console.log(exn);
+        $('.tabs-content div').html('<div data-alert class="alert-box alert grammar-error">Grammar Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
+  
+        if (!editor.getSession().$annotations) {
+        editor.getSession().$annotations = [];
+        }
+
+        var myAnno = {
+            "column": exn.column,
+            "row": exn.line - 1,
+            "type": "error",
+            "raw": exn.message,
+            "text": exn.message
+        };
+
+        editor.getSession().$annotations.push(myAnno);
+        editor.getSession().setAnnotations(editor.getSession().$annotations);
+        parserIsBuilt = false;
+    } // catch(exn)
 };
 
 var changeSize = function(target, delta) {
@@ -285,43 +320,6 @@ var createButtonEvents = function() {
     });
 };
 
-var downloadParser = function(varname) {
-        // This is the snippet to be used for exporting the peg parser.
-    var fileString = varname +" = "+ PEG.buildParser(editor.getValue(), {output: "source"});
-    var newWindow = window.open();    
-    var newDoc = newWindow.document;
-    newDoc.write(fileString);
-    newDoc.close();
- };
-
-var buildParser = function() {
-    try {
-        editor.getSession().clearAnnotations();
-        parser = PEG.buildParser(editor.getValue());
-        $('.grammar-error').remove();
-        parserIsBuilt = true;
-    } catch (exn) {
-        console.log(exn);
-        $('.tabs-content div').html('<div data-alert class="alert-box alert grammar-error">Grammar Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
-  
-        if (!editor.getSession().$annotations) {
-        editor.getSession().$annotations = [];
-        }
-
-        var myAnno = {
-            "column": exn.column,
-            "row": exn.line - 1,
-            "type": "error",
-            "raw": exn.message,
-            "text": exn.message
-        };
-
-        editor.getSession().$annotations.push(myAnno);
-        editor.getSession().setAnnotations(editor.getSession().$annotations);
-        parserIsBuilt = false;
-    } // catch(exn)
-};
-
 var doParse = function() {
     
 
@@ -385,10 +383,40 @@ var doParse = function() {
         console.dir(exn);
     }
 
-        $(document).foundation();
-        $(document).foundation('tab','reflow');
+    $(document).foundation();
+ 
+    if (params.active_tab) {
+        switch (params.active_tab) {
+            case "treeview": $('#tree-view-tab a').click(); break;
+            case "consoleview": $('#console-view-tab a').click(); break;
+            case "symboltableview": $('#symbol-table-view-tab a').click(); break;
+            default: break;
+        }
+    }
+    $(document).foundation('tab','reflow');
     // Log any parse errors in the console:
 };
+
+var downloadParser = function(varname) {
+  
+    // This is the snippet to be used for exporting the peg parser.
+    var fileString = varname +" = "+ PEG.buildParser(editor.getValue(), {output: "source"});
+    var newWindow = window.open();    
+    var newDoc = newWindow.document;
+    newDoc.write(fileString);
+    newDoc.close();
+
+ };
+
+var extractParams = function() {
+    var search = document.location.search.substr(1);
+    var param_pairs = search.split('&');
+
+    for (var i = 0; i < param_pairs.length; i++) {
+        var param_pair = param_pairs[i].split('=');
+        params[param_pair[0]] = param_pair[1];
+    };
+}
 
 var getGistList = function(gist) {
     var rtn_str = ""
@@ -533,14 +561,6 @@ var initSourceEditor = function() {
     // });
 };
 
-var loadGistFromURL = function() {
-    
-    // If there's a gist id in the url, grab it.
-    if (document.location.search) {
-        openFileFromGist(document.location.search.substr(1));
-    }    
-};
-
 var logout = function() {
     if (logged_in) {
         logged_in = false;
@@ -559,31 +579,52 @@ var logout = function() {
 var openFileFromGist = function(gistid) {
     $.get('https://api.github.com/gists/' + gistid, function(gist_data) {
         var files = [],
-            file;
-         
+            file,
+            peg_filename,
+            peg_content;
+         debugData = gist_data;
         // Build an array of files in the gist            
         for (var f in gist_data.files) {
             files.push(gist_data.files[f]);
         }
 
-        $('#peg-editor-title .title-text').html(files[0].filename + '&nbsp');
+        // If the url specifies a file for the peg which is in the gist, use it:
+        if (params.peg_filename && gist_data.files[params.peg_filename]) {
+            peg_filename = params.peg_filename;
+            peg_content = gist_data.files[peg_filename].content;
+        // Otherwise, get the first file:
+        } else {
+            peg_filename = files[0].filename;
+            peg_content = files[0].content;
+        }
+
+        // Apply the filename to the editor title:
+        $('#peg-editor-title .title-text').html(peg_filename + '&nbsp');
+        
         // If there's more than one file:
         if (files.length > 1) {
-            console.log(files);
-            // $('#peg-editor-title .title-text').append('<i class="fa fa-caret-down"></i>');
+            // Show the drop-down caret
             $('#peg-editor-title i').toggleClass('gone');
-            console.log();
-            // console.log(getGistList(gist_data.data.id));
+            // Build the drop-down file list:
             $('#peg-editor-file-list').append(getGistList(gist_data));
-            
         }
-        file = files[0];
-        
-        editor.setValue(file.content,-1);
+
+        // Apply the file contents to the editor:
+        editor.setValue(peg_content, -1);
+
+        // Listen for clicks on the dropdown file-list to open those files:
         $('#peg-editor-file-list a').click( function(e) {
             $('#peg-editor-title .title-text').html(e.target.text);
             editor.setValue(gist_data.files[e.target.text].content, -1);
-        });
+        });    
+
+        // If the url specifies a file for the peg which is in the gist, use it:
+        if (params.source_filename && gist_data.files[params.source_filename]) {
+            // Set the title:
+            $('#source-editor-title').text(params.source_filename);
+            // Set the contents
+            source.setValue(gist_data.files[params.source_filename].content, -1);
+        };
         $(document).foundation('reflow');
     }).fail( function (data ) {
         alert("failed");
@@ -622,7 +663,7 @@ var openUserGists = function() {
 
         // To be used for creating a list of recent gist ids:
     
-        global_gist_data = gist_data;
+        
 
 
         localStorage.setItem('gist_data', JSON.stringify(gist_data));
