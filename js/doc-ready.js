@@ -239,7 +239,7 @@ var createButtonEvents = function() {
     });
     $('#gist-prompt').on('submit', function(e) {
         e.preventDefault();
-        document.location = document.location.origin + document.location.pathname + '?' + $('#gist-id').val()
+        document.location = document.location.origin + document.location.pathname + '?gistid=' + $('#gist-id').val()
     })
     $('#open-gist-btn').click( function(e) {
         e.preventDefault();
