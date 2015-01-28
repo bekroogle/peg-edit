@@ -1,14 +1,16 @@
-"use strict";
+// "use strict";
 
 var parser,
     //debugData,
-    treeData,
     editor,
-    source,
-    pegedit_opts = {},
+    logged_in = false,
     params = {},
     parserIsBuilt = false,
-    logged_in = false;
+    pegedit_opts = {},
+    source,
+    symbol_table,
+    traverse,
+    treeData;
 var globalAceTheme = "ace/theme/solarized_dark";
 
 $('document').ready(function() {
