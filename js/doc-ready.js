@@ -362,7 +362,7 @@ var doParse = function() {
         source.getSession().$annotations.push(myAnno);
         source.getSession().setAnnotations(source.getSession().$annotations);
 
-        console.dir(exn);
+        console.log(exn);
     } try {
         
         switch(pegedit_opts.treenav) {
@@ -376,17 +376,21 @@ var doParse = function() {
         }
     } catch(exn) {
         $('#tree-view').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
-        console.dir(exn);
+        console.log(exn);
     } try {
-        $('#console-view').html('<pre>'+ traverse(result) +'</pre>');    
+        if (traverse) {
+            $('#console-view').html('<pre>'+ traverse(result) +'</pre>');    
+        }
     } catch(exn) {
         $('#console-view').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
-        console.dir(exn);
+        console.log(exn);
     } try {
-        $('#symbol-table-view').html('<pre>'+ JSON.stringify((symbol_table), null, 2) + '</pre>');    
+        if (symbol_table) {
+            $('#symbol-table-view').html('<pre>'+ JSON.stringify((symbol_table), null, 2) + '</pre>');    
+        }
     } catch(exn) {
         $('#symbol-table-view').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
-        console.dir(exn);
+        console.log(exn);
     }
 
     $(document).foundation();
