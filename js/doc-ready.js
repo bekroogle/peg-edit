@@ -810,12 +810,12 @@ var setToken = function(showAlert) {
  *  It then marks them down as ridden . . . no longer a virgin.
  */
 var startRide = function() {
-    if (!localStorage.getItem('visited')) {
-        localStorage.setItem('visited', 'true');    
-        document.location = document.location.origin + document.location.pathname + '?705fdf83758491bbd5c5'        
-    } else if (!localStorage.getItem('joyridden')) {
-        localStorage.setItem('joyridden', 'true');
-        $(document).foundation('joyride', 'start');
-    }
+    // if (!localStorage.getItem('visited')) {
+    //     localStorage.setItem('visited', 'true');    
+    //     document.location = document.location.origin + document.location.pathname + '?705fdf83758491bbd5c5'        
+    // } else if (!localStorage.getItem('joyridden')) {
+    //     localStorage.setItem('joyridden', 'true');
+    //     $(document).foundation('joyride', 'start');
+    // }
     
 };
