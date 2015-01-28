@@ -551,7 +551,7 @@ var initSourceEditor = function() {
     
     source.getSession().on('change', function() {
         localStorage.setItem("source", source.getValue());
-        doParse();
+        // doParse();
     });
 
     resizeElements();
