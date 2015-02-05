@@ -70,7 +70,7 @@ $('document').ready(function() {
     }
 
     $(document).foundation('reflow');
-    $('#forkme-img').css('height', window.innerHeight - $('#right-panel').height() - 30);
+    $('#forkme-img').css('height', window.innerHeight - $('#right-panel').height() - 60);
     // Save user preferences for the Ace editors:
     $(window).unload(function() {
         localStorage.setItem('peg-editor-settings', JSON.stringify(editor.getOptions()));
@@ -743,6 +743,7 @@ var resizeElements = function() {
     $('#treediv').height(window.innerHeight * 0.4);
     $('#console-view').height(window.innerHeight * 0.4);
     $('#symbol-table-view').height(window.innerHeight * 0.4);
+    $('#symbol-table-view').css('overflow-y', 'scroll');
     $('#parser-output').css('overflow-y', 'scroll');
     // $('#bottom-right').height(window.innerHeight * 0.4);
 };

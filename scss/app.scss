@@ -27,6 +27,7 @@
 #treediv {
   white-space: pre-wrap;
   padding-left: 0;
+  vertical-align: bottom;
 }
 
 .test-shape {
@@ -47,6 +48,7 @@ body {
 }
 #treediv {
   background-color: scale-color($white, $lightness: -5%);
+  padding-bottom: rem-calc(30);
 }
 svg {
     pointer-events: all;

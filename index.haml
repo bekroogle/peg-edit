@@ -232,18 +232,16 @@
                   #treediv.content
                   #console-view.content
                   #symbol-table-view.content
-    .row
-      #status.small-8.columns
-        %small
-          MIT License (MIT) &copy; 2014-2015 Benjamin J. Kruger.
-          %a{:href => "mailto://bekroogle@gmail.com"}bekroogle@gmail.com
-      #fork-col.small-4.columns
-        .right
-          %a{:href => "https://github.com/bekroogle/pegedit"}
-            %img#forkme-img{:src => "./forkme.png"}
-
-
-
+    -#
+      .row
+        #status.small-8.columns
+          %small
+            MIT License (MIT) &copy; 2014-2015 Benjamin J. Kruger.
+            %a{:href => "mailto://bekroogle@gmail.com"}bekroogle@gmail.com
+        #fork-col.small-4.columns
+          .right
+            %a{:href => "https://github.com/bekroogle/pegedit"}
+              %img#forkme-img{:src => "./forkme.png"}
 
     -# Load Gist by ID Prompt
     #gist-prompt.reveal-modal.tiny{"data-reveal" => ""}
@@ -277,7 +275,6 @@
             %p (The raw source code will appear in an untitled pop-up.)
           .small-2.columns
       %a.close-reveal-modal &#215;
-
 
     -# GitHub Token Prompt
     #token-prompt.reveal-modal.tiny{"data-reveal" => ""}
