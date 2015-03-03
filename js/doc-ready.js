@@ -1,7 +1,7 @@
 // "use strict";
 
 var parser,
-    //debugData,
+    debugData,
     editor,
     logged_in = false,
     params = {},
@@ -145,32 +145,12 @@ var bindKeys = function(target) {
         ]);
 };
 
+// Get the latest c.run grammar definition from github
 var buildParser = function() {
-    try {
-        editor.getSession().clearAnnotations();
-        parser = PEG.buildParser(editor.getValue());
-        $('.grammar-error').remove();
-        parserIsBuilt = true;
-    } catch (exn) {
-        console.log(exn);
-        $('.tabs-content div').html('<div data-alert class="alert-box alert grammar-error">Grammar Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
-  
-        if (!editor.getSession().$annotations) {
-        editor.getSession().$annotations = [];
-        }
-
-        var myAnno = {
-            "column": exn.column,
-            "row": exn.line - 1,
-            "type": "error",
-            "raw": exn.message,
-            "text": exn.message
-        };
-
-        editor.getSession().$annotations.push(myAnno);
-        editor.getSession().setAnnotations(editor.getSession().$annotations);
-        parserIsBuilt = false;
-    } // catch(exn)
+    var contents_uri = 'https://api.github.com/repos/bekroogle/cspotrun/contents/cspotrun.pegjs';
+    $.get(contents_uri, function(repo) {
+        parser = PEG.buildParser(atob(repo.content));
+    });
 };
 
 var changeSize = function(target, delta) {
@@ -670,14 +650,10 @@ var open_gist = function(gistid) {
 
 var openUserGists = function() {
     $.ajax({
-        url: 'https://api.github.com/users/' + 
-            localStorage.getItem('github-login') +
-            '/gists?access_token=' +
-            localStorage.getItem('github_access_token'),
-        // 'https://api.github.com/users/'+ 
-        //     localStorage.getItem('github-login') +
-        //     'gists/?access_token=' +
-        //     localStorage.getItem('github_access_token') ,
+        url: 'https://api.github.com/users/' +             // /users/
+            localStorage.getItem('github-login') +         // :owner
+            '/gists?access_token=' +                       // authorization type
+            localStorage.getItem('github_access_token'),   // :token
         type: 'GET',
         dataType: 'jsonp',
     }).done( function(gist_data) {
