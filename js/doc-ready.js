@@ -253,6 +253,12 @@ var createButtonEvents = function() {
         e.preventDefault();
         doParse(e);
     });
+    $('#peg-editor-fullscreen-btn').click( function(e) {
+        e.preventDefault();
+        if (screenfull.enabled) {
+            screenfull.request(document.getElementById("editor"));
+        }
+    });
     $('#peg-editor-settings-btn').click(function(e) {
         e.preventDefault();
         editor.execCommand('showSettingsMenu');
@@ -291,6 +297,12 @@ var createButtonEvents = function() {
     $('#set-token-btn').click(  function(e) {
         e.preventDefault();
         $('#token-prompt form').submit();
+    });
+    $('#source-editor-fullscreen-btn').click( function(e) {
+        e.preventDefault();
+        if (screenfull.enabled) {
+            screenfull.request(document.getElementById("source"));
+        }
     });
     $('#source-editor-settings-btn').click(function(e) {
         e.preventDefault();
@@ -729,8 +741,8 @@ var openUserGists = function() {
 
 var resizeElements = function() {
     // Resize peg editor:
-    $('#editor').height(window.innerHeight * 0.8);
-    $('#editor').height(window.innerHeight * 0.8);
+    $('#editor').height(window.innerHeight * 0.9);
+    $('#editor').height(window.innerHeight * 0.9);
     
     editor.resize();
 

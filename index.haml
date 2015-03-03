@@ -131,6 +131,11 @@
                       %a#peg-editor-settings-btn{:href => "#"}
                         %i.fa.fa-cog
                           Advanced settings
+                    %li.divider
+                    %li
+                      %a#peg-editor-fullscreen-btn{:href => "#"}
+                        %i.fa.fa-expand
+                          Full Screen
                 %a.exit-off-canvas{:href => "#"}
                 #editor
       -#
@@ -171,6 +176,11 @@
                       %a#source-editor-settings-btn{:href => "#"}
                         %i.fa.fa-cog
                           Advanced settings
+                    %li.divider
+                    %li
+                      %a#source-editor-fullscreen-btn{:href => "#"}
+                        %i.fa.fa-expand
+                          Full Screen
                 %a.exit-off-canvas{:href => "#"}
                 #source
 
@@ -361,6 +371,7 @@
     %script(src="./bower_components/pegjs/peg-0.8.0.min.js")
     %script(src="./bower_components/d3/d3.min.js")
     %script(src="./bower_components/mousetrap/mousetrap.js")
+    %script(src="./bower_components/screenfull/dist/screenfull.js")
     %script(src="./js/do-tree.js")
     %script(src="./js/doc-ready.js")
     %script(src="./js/app.js")
