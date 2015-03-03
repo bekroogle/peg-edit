@@ -340,7 +340,7 @@ var doParse = function() {
     } catch (exn) {
         $('#parser-output').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
         if (!source.getSession().$annotations) {
-        source.getSession().$annotations = [];
+            source.getSession().$annotations = [];
         }
 
         var myAnno = {
@@ -721,7 +721,7 @@ var resizeElements = function() {
     // $('#editor').height(window.innerHeight * 0.9);
     
     // editor.resize();
-
+    $('.inner-wrap p').height(window.innerHeight * 0.9);
     $('#right-panel').height($('#left-panel').height());
 
     // Resize source editor:
