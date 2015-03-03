@@ -29,7 +29,7 @@ $('document').ready(function() {
     });
     
     // Create the PEG editor
-    initPegEditor();
+    // initPegEditor();
 
     // Create parse string editor
     initSourceEditor();
@@ -741,10 +741,10 @@ var openUserGists = function() {
 
 var resizeElements = function() {
     // Resize peg editor:
-    $('#editor').height(window.innerHeight * 0.9);
-    $('#editor').height(window.innerHeight * 0.9);
+    // $('#editor').height(window.innerHeight * 0.9);
+    // $('#editor').height(window.innerHeight * 0.9);
     
-    editor.resize();
+    // editor.resize();
 
     $('#right-panel').height($('#left-panel').height());
 
