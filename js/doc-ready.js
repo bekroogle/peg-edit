@@ -333,12 +333,13 @@ var doParse = function() {
         source.getSession().clearAnnotations();
         $('.parse-error').remove();
         // The resulting data structure:
-        var result = parser.parse(source.getValue());
+        result = parser.parse(source.getValue());
 
         treeData = result;
-        var formatted_result = JSON.stringify(result, null, 2);
+        
+        // var cleaned_result = JSON.stringify(result,null,2);
         // console.log(formatted_result);
-        $('#parser-output').html('<pre>'+ formatted_result +'</pre>');
+        $('#parser-output').html('<pre>'+ JSON.stringify(result,null,2) +'</pre>');
     } catch (exn) {
         $('#parser-output').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
         if (!source.getSession().$annotations) {
@@ -718,24 +719,20 @@ var openUserGists = function() {
 };
 
 var resizeElements = function() {
-    // Resize peg editor:
-    // $('#editor').height(window.innerHeight * 0.9);
-    // $('#editor').height(window.innerHeight * 0.9);
-    
-    // editor.resize();
+    // Coloring inside the lines:
     $('.inner-wrap p').height(window.innerHeight * 0.9);
+    
+    // Can't have one leg longer than the other!
     $('#right-panel').height($('#left-panel').height());
 
     // Resize source editor:
-    $('#source').height(window.innerHeight * 0.3);
+    $('#source').height(window.innerHeight * 0.7);
     source.resize();
-    $('#parser-output').height(window.innerHeight * 0.4);
-    $('#treediv').height(window.innerHeight * 0.4);
-    $('#console-view').height(window.innerHeight * 0.4);
-    $('#symbol-table-view').height(window.innerHeight * 0.4);
-    $('#symbol-table-view').css('overflow-y', 'scroll');
-    $('#parser-output').css('overflow-y', 'scroll');
-    // $('#bottom-right').height(window.innerHeight * 0.4);
+    
+    // Resize console output:
+    $('#console-view').height(window.innerHeight * 0.2);
+    
+    
 };
 
 var setSize = function(target, size) {
