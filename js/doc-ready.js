@@ -149,11 +149,10 @@ var bindKeys = function(target) {
 
 // Get the latest c.run grammar definition from github
 var buildParser = function() {
-    var local_uri = 'http://localhost/projects/cspotrun/cspotrun.pegjs';
-//    var contents_uri = 'https://api.github.com/repos/bekroogle/cspotrun/contents/cspotrun.pegjs';
-    $.get(local_uri, function(repo) {
-        parser = PEG.buildParser(repo);
-    });
+  var contents_uri = 'https://api.github.com/repos/bekroogle/cspotrun/contents/cspotrun.pegjs';
+  $.get(contents_uri, function(repo) {
+    parser = PEG.buildParser(atob(repo.content));
+  });
 };
 
 var changeSize = function(target, delta) {
