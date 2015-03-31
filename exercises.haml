@@ -64,16 +64,19 @@
       .small-12.large-6.columns
         .row
           %h2#page-title Exercises:
-          .small-5.large-2.columns#exercise-list
+          .small-5.large-4.columns#exercise-list
             %ul.side-nav
               %li
-                %a{:href => "#"}Exercise 1
+                %a{:href => "exercises.html"} Exercises Home
+              %li.divider
               %li
-                %a{:href => "#"}Exercise 2
+                %a{:href => "?exercise=01"}Exercise 1
               %li
-                %a{:href => "#"}Exercise 3
+                %a{:href => "?exercise=02"}Exercise 2
+              %li
+                %a{:href => "?exercise=03"}Exercise 3
 
-          .small-7.large-10.columns#page-copy
+          .small-7.large-8.columns#page-copy
             .panel.callout
             
               This is a pre-alpha version of c.run. In other words, it isn't done. It's not ready to be used as a tool for teaching students. For self-study, be aware that features remain unimplemented and the c.run language still undergoes breaking changes often (we're still changing our minds on how it goes).
@@ -91,9 +94,9 @@
                 %a{:href => "#"} Exercise 1
                 from the list on the left.
 
-            .progress.success.radius{"style" => "border: 0;"}
-              Progress
-              %span.meter
+          .progress.success.radius{"style" => "border: 0;"}
+            Progress
+            %span.meter
 
                 
       -#

@@ -80,11 +80,23 @@ $('document').ready(function() {
 });
 
 var applyParams = function() {
+    if (params.exercise) {
+      loadExercise(params.exercise);
+    } else {
+      loadExercise(-1);    // Loads the welcome blurb.
+    }
     if (params.gistid) {
         openFileFromGist(params.gistid);
     }
 };
 
+var loadExercise = function(egNum) {
+  if (egNum == -1) {
+    alert("Welcome!");
+  } else {
+    alert(egNum);
+  }
+};
 var bindKeys = function(target) {
     target.commands.addCommands([{
             name: 'buildParser',
@@ -674,7 +686,7 @@ var resizeElements = function() {
     $('.inner-wrap p').height(window.innerHeight * 0.9);
     
     // Can't have one leg longer than the other!
-    $('#right-panel').height($('#left-panel').height());
+    // $('#right-panel').height($('#left-panel').height());
 
     // Resize source editor:
     $('#source').height(window.innerHeight * 0.7);
