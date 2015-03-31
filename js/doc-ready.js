@@ -75,7 +75,6 @@ $('document').ready(function() {
     $('#forkme-img').css('height', window.innerHeight - $('#right-panel').height() - 60);
     // Save user preferences for the Ace editors:
     $(window).unload(function() {
-        localStorage.setItem('peg-editor-settings', JSON.stringify(editor.getOptions()));
         localStorage.setItem('source-editor-settings', JSON.stringify(source.getOptions())); 
     });
 });
@@ -485,87 +484,39 @@ var initMouseTrap = function() {
 };
 
 var initPegEditor =  function() {
-    editor = ace.edit("editor");
-
-    editor.setTheme(globalAceTheme);
-    editor.getSession().setMode("ace/mode/javascript");
-
-    // If the user has saved options:
-    if (localStorage.getItem('peg-editor-settings')) {
-        editor.setOptions(JSON.parse(localStorage.getItem('peg-editor-settings')));
-    // Otherwise, load the defaults:
-    } else {
-        // No static JS analysis
-        editor.setOption("useWorker", false);
-
-        // Personal preferences:
-        editor.setOption("tabSize", 2);
-        editor.setOption('scrollPastEnd', '40');
-    }        
-
-    // Retrieve stored text/titlename if gist wasn't provided in url:
-    if (!document.location.search) {
-        editor.setValue(localStorage.getItem('grammar'), -1);
-        $('#peg-editor-title').html(localStorage.getItem('filename'));
-    }    
-
-    if (editor.getValue !== "") {
-        buildParser();
-    }
-
-    // On changes, save the new text to localStorage:
-    editor.getSession().on("change", function() {
-        localStorage.setItem("grammar", editor.getValue());
-        if ($('#auto-build').prop('checked')) {
-            buildParser();
-        }
-    });
-
-    // Key bindings:
-    bindKeys(editor);
+  // no such thing.
 };
 
 var initSourceEditor = function() {
     source = ace.edit("source");
-
-    // If the user has saved options:
+    
+    // Load the default options, regardless: the user may have corrupted options in localStorage:
+    source.setOptions(JSON.parse('{"selectionStyle":"line","highlightActiveLine":true,"highlightSelectedWord":true,"readOnly":false,"cursorStyle":"ace","mergeUndoDeltas":true,"behavioursEnabled":true,"wrapBehavioursEnabled":false,"hScrollBarAlwaysVisible":false,"vScrollBarAlwaysVisible":false,"highlightGutterLine":true,"animatedScroll":false,"showInvisibles":false,"showPrintMargin":true,"printMarginColumn":80,"printMargin":80,"fadeFoldWidgets":true,"showFoldWidgets":true,"showLineNumbers":true,"showGutter":true,"displayIndentGuides":true,"fontSize":12,"scrollPastEnd":40,"theme":"ace/theme/chrome","scrollSpeed":2,"dragDelay":0,"dragEnabled":true,"focusTimout":0,"tooltipFollowsMouse":true,"firstLineNumber":1,"overwrite":false,"newLineMode":"auto","useWorker":false,"useSoftTabs":true,"tabSize":2,"wrap":"off","mode":"ace/mode/python","enableMultiselect":true}'));
+    
+    // If the user has saved options, load them.:
     if (localStorage.getItem('source-editor-settings')) {
         source.setOptions(JSON.parse(localStorage.getItem('source-editor-settings')));
-    // Otherwise, load the defaults:
-    } else {
-        // No static JS analysis
-        source.setOption("useWorker", false);
-
-        source.setTheme(globalAceTheme);
-        // Personal preferences:
-        source.setOption("tabSize", 2);
-        source.setOption('scrollPastEnd', '40');
     }       
     
+    // Open last document:
     source.setValue(localStorage.getItem('source'), -1);
     
+    // Save on every change:
     source.getSession().on('change', function() {
         localStorage.setItem("source", source.getValue());
-        // doParse();
     });
 
+    // Calculate the size of editor:
     resizeElements();
 
-    Mousetrap.bind('v 2', function() { $('#treediv').addClass('active'); });
-    Mousetrap.bind('v 3', function() { $('#console-view').addClass('active'); });
-    
-
+    // Handle UX:
     createButtonEvents();
-
     bindKeys(source);
-    // Build parser when focus goes to source editor:   
-    // $(source).focus(function() {
-    //     if (editor.getValue()) {
-    //         buildParser();
-    //     }
-    // });
 };
 
+
+// Log out of the GitHub account for Gist Access
+// (Deletes token from localStorage)
 var logout = function() {
     if (logged_in) {
         logged_in = false;
