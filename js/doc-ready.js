@@ -88,6 +88,7 @@ var applyParams = function() {
     if (params.gistid) {
         openFileFromGist(params.gistid);
     }
+    $(document).foundation('tooltip', 'reflow');
 };
 
 var loadExercise = function(egNum) {
