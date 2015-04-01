@@ -92,9 +92,15 @@ var applyParams = function() {
 
 var loadExercise = function(egNum) {
   if (egNum == -1) {
-    alert("Welcome!");
+    $.get("fragments/exercise-welcome.html", function (data) {
+      $('#page-copy').html(data);
+      
+    });
   } else {
-    alert(egNum);
+    $.get("fragments/" + egNum + ".html", function (data) {
+      $('#page-copy').html(data);
+      
+    });
   }
 };
 var bindKeys = function(target) {
