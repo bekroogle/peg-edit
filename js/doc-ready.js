@@ -359,6 +359,7 @@ var doParse = function() {
         $('#parser-output').html('<pre>'+ formatted_result +'</pre>');
     } catch (exn) {
         $('#parser-output').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
+
         if (!source.getSession().$annotations) {
         source.getSession().$annotations = [];
         }
@@ -396,6 +397,28 @@ var doParse = function() {
     } catch(exn) {
         $('#console-view').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
         console.log(exn);
+        if (!source.getSession().$annotations) {
+            source.getSession().$annotations = [];
+        }
+
+        var myAnno = {
+            "column": exn.column,
+            "row": exn.line - 1,
+            "type": exn.name === "SyntaxError" ? "error" : "warning",
+            "raw": exn.message,
+            "text": exn.message
+        };
+
+        if (exn.name === "SyntaxWarning") {
+            myAnno.type = "warning";
+        } else if (exn.name === "SyntaxError") {
+            myAnno.type = "error";
+        }
+
+
+        source.getSession().$annotations.push(myAnno);
+        source.getSession().setAnnotations(source.getSession().$annotations);
+
     } try {
         if (symbol_table) {
             $('#symbol-table-view').html('<pre>'+ JSON.stringify((symbol_table), null, 2) + '</pre>');    
