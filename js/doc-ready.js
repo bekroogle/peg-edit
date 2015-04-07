@@ -409,13 +409,6 @@ var doParse = function() {
             "text": exn.message
         };
 
-        if (exn.name === "SyntaxWarning") {
-            myAnno.type = "warning";
-        } else if (exn.name === "SyntaxError") {
-            myAnno.type = "error";
-        }
-
-
         source.getSession().$annotations.push(myAnno);
         source.getSession().setAnnotations(source.getSession().$annotations);
 
