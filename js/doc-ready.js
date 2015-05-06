@@ -148,9 +148,10 @@ var bindKeys = function(target) {
 var buildParser = function() {
     try {
         editor.getSession().clearAnnotations();
-        parser = PEG.buildParser(editor.getValue());
+        parser = PEG.buildParser(editor.getSession().getValue());
         $('.grammar-error').remove();
         parserIsBuilt = true;
+        return parser;
     } catch (exn) {
         console.log(exn);
         $('.tabs-content div').html('<div data-alert class="alert-box alert grammar-error">Grammar Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
@@ -171,6 +172,7 @@ var buildParser = function() {
         editor.getSession().setAnnotations(editor.getSession().$annotations);
         parserIsBuilt = false;
     } // catch(exn)
+    return parserIsBuilt;
 };
 
 var changeSize = function(target, delta) {
@@ -342,8 +344,8 @@ var doParse = function() {
     
 
     // If a parser hasn't been built, build one:
-    if (!parser) {
-        buildParser();
+    if (!parserIsBuilt && !buildParser()) {
+        return;
     }
 
     // Now parse!
@@ -548,6 +550,7 @@ var initPegEditor =  function() {
 
     // On changes, save the new text to localStorage:
     editor.getSession().on("change", function() {
+        parserIsBuilt = false;
         localStorage.setItem("grammar", editor.getValue());
         if ($('#auto-build').prop('checked')) {
             buildParser();
