@@ -76,6 +76,9 @@ $('document').ready(function() {
         localStorage.setItem('peg-editor-settings', JSON.stringify(editor.getOptions()));
         localStorage.setItem('source-editor-settings', JSON.stringify(source.getOptions())); 
     });
+
+    // Make sure everything resizes as needed when the window changes:
+    window.onresize = resizeElements;
 });
 
 var applyParams = function() {
