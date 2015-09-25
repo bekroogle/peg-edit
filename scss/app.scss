@@ -2,9 +2,9 @@
 @import "foundation";
 
 
-// .tabs-content .content{
-//   padding-left: rem-calc(15);
-// }
+ .tabs-content .content{
+   padding-left: rem-calc(15);
+ }
 .tab-bar-section a {
   color: $tabbar-header-link-color;
 }
@@ -77,7 +77,7 @@ svg {
   circle { @include nodeshape(); }
   rect { @include nodeshape(); }
   ellipse { @include nodeshape(); }
-  } 
+  }
 
 
 .node text { font: 12px sans-serif; }
