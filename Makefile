@@ -1,4 +1,4 @@
-chrome: index css
+chrome: index css bower
 	chromium-browser index.html
 
 ff: index
@@ -9,3 +9,6 @@ index: index.haml
 
 css:
 	bundle exec compass compile
+
+bower:
+	bower install
