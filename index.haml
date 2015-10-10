@@ -25,22 +25,22 @@
           %ul
             %li.divider
             %li#topbar-build-parser-btn
-              %a{:href => "#"} 
+              %a{:href => "#"}
                 %i.fa.fa-cubes
                 Build Parser
             %li.divider
             %li#topbar-parse-btn
-              %a{:href => "#"} 
+              %a{:href => "#"}
                 %i.fa.fa-play
                 Parse
           %ul.right
             %li#login-btn
-              %a{:href => "#", "data-reveal-id" => "token-prompt"} 
+              %a{:href => "#", "data-reveal-id" => "token-prompt"}
                 %i.fa.fa-github
                 Login
             %li#user-account.has-dropdown.gone
               %a#github-id{:href => "#"}
-              %ul.dropdown 
+              %ul.dropdown
                 %li
                   %a#logout-btn{:href => "#"} Logout
             %li.divider
@@ -58,7 +58,7 @@
                     %i.fa.fa-graduation-cap
                     &nbsp; Welcome tutorial
                 %li
-                  %a{:href => "https://github.com/bekroogle/pegedit/wiki", "target" => "_blank"} 
+                  %a{:href => "https://github.com/bekroogle/pegedit/wiki", "target" => "_blank"}
                     %i.fa.fa-book
                     &nbsp; Wiki
     -# main content row
@@ -74,11 +74,11 @@
                     %a.left-off-canvas-toggle.menu-icon{:href => "#"}
                       %span
                   %section.middle.tab-bar-section
-                    %a#peg-editor-title{"aria-controls" => "peg-editor-file-list", "aria-expanded" => "false", "data-dropdown" => "peg-editor-file-list"} 
+                    %a#peg-editor-title{"aria-controls" => "peg-editor-file-list", "aria-expanded" => "false", "data-dropdown" => "peg-editor-file-list"}
                       %span.title-text PEG.js Editor &nbsp;
                       %i.fa.fa-caret-down.gone
                       %ul#peg-editor-file-list.f-dropdown{"aria-hidden" => "true", "data-dropdown-content" => "", :tabindex => "-1"}
-                        
+
 
                 %aside.left-off-canvas-menu
                   %ul.off-canvas-list
@@ -118,6 +118,10 @@
                         %i.fa.fa-file-code-o
                         Samples
                     %li
+                      %a#open-cspotrun-btn{:href => "#"}
+                        %i.fa.fa-file-code-0
+                        C Spot Run
+                    %li
                       %label Settings
                     %li
                       %a#peg-zoom-in-btn{:href => "#"}
@@ -153,7 +157,7 @@
                       %span
                   %section.middle.tab-bar-section
                     %span
-                      %span#source-editor-title Parse string editor            
+                      %span#source-editor-title Parse string editor
                 %aside.left-off-canvas-menu
                   %ul.off-canvas-list
                     %li
@@ -226,7 +230,7 @@
                       %i.fa.fa-code
                       Parser output
                   %dd#tree-view-tab
-                    %a{:href => "#treediv"} 
+                    %a{:href => "#treediv"}
                       %i.fa.fa-sitemap
                       Tree view
                   %dd#console-view-tab
@@ -300,8 +304,8 @@
         %row
           .small-2.columns
           .small-8.columns
-            %p 
-              To generate a GitHub personal access token, go 
+            %p
+              To generate a GitHub personal access token, go
               %a{:href => "https://github.com/settings/applications"} here
               \.
           .small-2.columns
@@ -309,17 +313,17 @@
 
     -# Joyride
     %ol.joyride-list{"data-joyride" => ""}
-      
+
       %li{"data-options" => "prev_button: false; postRideCallback: function(){alert('test');}"}
         %h4 Welcome to pegedit
-        %p 
+        %p
           %em
             Please note that this site is an alpha-stage prototype under rapid development.
             It is likely to change often and, at times, some features may be broken or only
             partially implemented.
         %p Click next for an extremely brief tour.
         %p You can watch see this again at any time by clicking "Help" at the top of the screen.
-      
+
       -# PEG editor:
       %li{"data-id" => "editor", "data-options" => "tip_location: right; prev_button: false"}
         %h4 Make your parser...
@@ -329,12 +333,12 @@
       %li#source-editor-tip{"data-id" => "stopTwo", "data-options" => "tip_location: left"}
         %h4 Parse Something!
         %p  The text that your PEG.js grammar will be parsing goes here.
-      
+
       -# Build Parser
       %li{"data-id" => "build-parser-btn", "data-options" => "tip_location: right;", "data-button" => "Okay..."}
         %h4 If you build it, they will come.
         %p Here's where you click to build your parser.
-      -# Output panel:      
+      -# Output panel:
       %li{"data-id" => "bottom-right", "data-button" => "Okay..."}
         %h4 3 Ways to See the Results!
         %p Select one of the three tabs below to inspect your parser's results.
@@ -354,8 +358,8 @@
         %h4 Console View
         %p This tab shows the results of traversing your parse tree...
         %p Essentially, it's what you'd see if your program ran in a console.
-      
-      
+
+
       %li{"data-id" => "samples", "data-button" => "Got it!"}
         %h4 Try a sample to start!
         %p Click here to pick one of the sample grammars.
@@ -375,4 +379,3 @@
     %script(src="./js/do-tree.js")
     %script(src="./js/doc-ready.js")
     %script(src="./js/app.js")
-    

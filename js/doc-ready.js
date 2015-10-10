@@ -14,12 +14,12 @@ var parser,
 var globalAceTheme = "ace/theme/solarized_dark";
 
 $('document').ready(function() {
-    
-    // If the user doesn't have any previous data in localStorage, 
+
+    // If the user doesn't have any previous data in localStorage,
     // Load the samples gist.
 
     extractParams();
-    
+
 
     $(document).foundation({
         offcanvas : {
@@ -27,7 +27,7 @@ $('document').ready(function() {
             close_on_click: false
         }
     });
-    
+
     // Create the PEG editor
     initPegEditor();
 
@@ -37,20 +37,20 @@ $('document').ready(function() {
     // If the user included a gist id in the URL, load the first file:
     applyParams();
 
-    // If there's a GitHub access token in local storage, set it as a placeholder in the 
+    // If there's a GitHub access token in local storage, set it as a placeholder in the
     // login modal...
     $('#access-token').attr('placeholder', localStorage.getItem('github_access_token'));
-    
+
     // ...and go ahead and log in with it. (Does that make the above step redundant?)
     if (localStorage.getItem('github_access_token')) {
-        setToken();   
-    
+        setToken();
+
     // I'm not sure why this is here . . . maybe it's needed to toggle visibility of certain
     // elements:
     } else {
         logout();
     }
-    
+
     // Make sure that submenus appear from the very top, even if triggered by items that were
     // deep in the previous menu:
     $('aside').click( function(e) {
@@ -74,7 +74,7 @@ $('document').ready(function() {
     // Save user preferences for the Ace editors:
     $(window).unload(function() {
         localStorage.setItem('peg-editor-settings', JSON.stringify(editor.getOptions()));
-        localStorage.setItem('source-editor-settings', JSON.stringify(source.getOptions())); 
+        localStorage.setItem('source-editor-settings', JSON.stringify(source.getOptions()));
     });
 
     // Make sure everything resizes as needed when the window changes:
@@ -158,7 +158,7 @@ var buildParser = function() {
     } catch (exn) {
         console.log(exn);
         $('.tabs-content div').html('<div data-alert class="alert-box alert grammar-error">Grammar Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
-  
+
         if (!editor.getSession().$annotations) {
         editor.getSession().$annotations = [];
         }
@@ -189,8 +189,8 @@ var commitChanges = function() {
     var data_string = JSON.stringify(mygist);
     $.ajax({
         type: "PATCH",
-        url: "https://api.github.com/gists/" + 
-            JSON.parse(localStorage.getItem('current-gist')).id + 
+        url: "https://api.github.com/gists/" +
+            JSON.parse(localStorage.getItem('current-gist')).id +
             "?access_token=" +
             localStorage.getItem('github_access_token'),
         data: data_string
@@ -202,21 +202,23 @@ var commitChanges = function() {
 var createAlert = function(classes, text, parent) {
     parent = parent || 'body';
     var classlist = "alert-box " + classes;
-    var alertMarkup = '<div data-alert class="'+ classlist + '">' + text + '<a href="#" class="close">&times;</a>';         
+    var alertMarkup = '<div data-alert class="'+ classlist + '">' + text + '<a href="#" class="close">&times;</a>';
     $(parent).append(alertMarkup);
     $('.alert-box').css("margin-top", $('.alert-box').height() * -1);
     $(document).foundation('reflow');
 };
 
 var createButtonEvents = function() {
-    
+
     $('#build-parser-btn').click(function(e) {
         e.preventDefault();
         buildParser();
     });
+
     $('#download-prompt form').submit( function(e) {
         downloadParser($('#parser-variable-name').val() || $('#parser-variable-name').attr('placeholder'));
     });
+
     $('#download-prompt-btn').click(function(e) {
         e.preventDefault();
         $('#download-prompt form').submit();
@@ -227,116 +229,150 @@ var createButtonEvents = function() {
         alert(e);
         console.log(e);
     });
+
     $('#help-btn').click(function(e) {
         e.preventDefault();
         $(document).foundation('joyride', 'start');
     });
+
     $('#load-user-gists').click( function(e) {
         e.preventDefault();
         openUserGists();
     });
+
     $('#login-btn').click( function(e) {
         e.preventDefault();
     });
+
     $('#logout-btn').click( function(e) {
         e.preventDefault();
         logout();
     });
+
     $('#gist-prompt').on('submit', function(e) {
         e.preventDefault();
         document.location = document.location.origin + document.location.pathname + '?gistid=' + $('#gist-id').val()
-    })
+    });
+    $('#open-cspotrun-btn').click( function(e) {
+    // Get the latest c.run grammar definition from github
+      var contents_uri = 'https://api.github.com/repos/bekroogle/cspotrun-grammar/contents/cspotrun.pegjs';
+      $.get(contents_uri, function(repo) {
+        editor.setValue(atob(repo.content), -1);
+        buildParser();
+      });
+    });
     $('#open-gist-btn').click( function(e) {
         e.preventDefault();
         $('#gist-prompt').submit();
     });
+
     $('#open-samples-btn').click( function(e) {
         e.preventDefault();
         document.location = document.location.origin + document.location.pathname + '?gistid=705fdf83758491bbd5c5';
-    }); 
+    });
+
     $('#parse-btn').click(function(e) {
         e.preventDefault();
         doParse(e);
     });
+
     $('#peg-editor-fullscreen-btn').click( function(e) {
         e.preventDefault();
         if (screenfull.enabled) {
             screenfull.request(document.getElementById("editor"));
         }
     });
+
     $('#peg-editor-settings-btn').click(function(e) {
         e.preventDefault();
         editor.execCommand('showSettingsMenu');
     });
+
     $('#peg-reset').click(function(e) {
         e.preventDefault();
         setSize(editor, 14);
     });
+
     $('#peg-zoom-in-btn').click(function(e) {
         e.preventDefault();
         changeSize(editor, 2);
     });
+
     $('#peg-zoom-out-btn').click(function(e) {
         e.preventDefault();
         changeSize(editor, -2);
     });
+
     $('#save-changes-btn a').click(function(e) {
         e.preventDefault();
         commitChanges();
     });
+
     $('#peg-editor-title').dblclick( function (e) {
         console.log("e.target: " + e.target);
         $('#rename-prompt').foundation('reveal', 'open');
     });
-     $('#rename-prompt form').submit( function(e) {
-        e.preventDefault();
-        //renameFile() Implement this.
-        $('#peg-editor-title .title-text').html($('#new-filename').val());
-        console.log($('#new-filename').val());
-        $('#rename-prompt').foundation('reveal', 'close');
-     });
-    $('#rename-submit-btn').click( function(e) {
-        e.preventDefault();
-        $('#rename-prompt form').submit();
+
+    $('#rename-prompt form').submit( function(e) {
+      e.preventDefault();
+      //renameFile() Implement this.
+      $('#peg-editor-title .title-text').html($('#new-filename').val());
+      console.log($('#new-filename').val());
+      $('#rename-prompt').foundation('reveal', 'close');
     });
+
+    $('#rename-submit-btn').click( function(e) {
+      e.preventDefault();
+      $('#rename-prompt form').submit();
+    });
+
     $('#set-token-btn').click(  function(e) {
         e.preventDefault();
         $('#token-prompt form').submit();
     });
+
     $('#source-editor-fullscreen-btn').click( function(e) {
         e.preventDefault();
         if (screenfull.enabled) {
             screenfull.request(document.getElementById("source"));
         }
     });
+
     $('#source-editor-settings-btn').click(function(e) {
         e.preventDefault();
         source.execCommand('showSettingsMenu');
     });
+
     $('#source-reset').click(function(e) {
         e.preventDefault();
         setSize(source, 14);
     });
+
     $('#source-zoom-in-btn').click(function(e) {
         e.preventDefault();
         changeSize(source, 2);
     });
+
     $('#source-zoom-out-btn').click(function(e) {
         e.preventDefault();
         changeSize(source, -2);
     });
+
     $('#topbar-build-parser-btn').click(function(e) {
         e.preventDefault();
         buildParser();
     });
+
     $('#topbar-parse-btn').click(function(e) {
         e.preventDefault();
         doParse();
     });
+
     $('#token-prompt').on('submit', function(e) {
         e.preventDefault();
         setToken(true);
     });
+
     $('#tree-reset').click(function(e) {
         e.preventDefault();
         doParse();
@@ -344,7 +380,7 @@ var createButtonEvents = function() {
 };
 
 var doParse = function() {
-    
+
 
     // If a parser hasn't been built, build one:
     if (!parserIsBuilt && !buildParser()) {
@@ -382,7 +418,7 @@ var doParse = function() {
 
         console.log(exn);
     } try {
-        
+
         switch(pegedit_opts.treenav) {
             case "collapse":     doCollapsibleTree();
                                  break;
@@ -397,7 +433,7 @@ var doParse = function() {
         console.log(exn);
     } try {
         if (traverse) {
-            $('#console-view').html('<pre>'+ traverse(result) +'</pre>');    
+            $('#console-view').html('<pre>'+ traverse(result) +'</pre>');
         }
     } catch(exn) {
         $('#console-view').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
@@ -419,7 +455,7 @@ var doParse = function() {
 
     } try {
         if (symbol_table) {
-            $('#symbol-table-view').html('<pre>'+ JSON.stringify((symbol_table), null, 2) + '</pre>');    
+            $('#symbol-table-view').html('<pre>'+ JSON.stringify((symbol_table), null, 2) + '</pre>');
         }
     } catch(exn) {
         $('#symbol-table-view').html('<div data-alert class="alert-box alert parse-error">Parse Error: ' + exn.message + '<a href="#" class="close">&times;</a></div>');
@@ -427,7 +463,7 @@ var doParse = function() {
     }
 
     $(document).foundation();
- 
+
     if (params.active_tab) {
         switch (params.active_tab) {
             case "treeview": $('#tree-view-tab a').click(); break;
@@ -441,10 +477,10 @@ var doParse = function() {
 };
 
 var downloadParser = function(varname) {
-  
+
     // This is the snippet to be used for exporting the peg parser.
     var fileString = varname +" = "+ PEG.buildParser(editor.getValue(), {output: "source"});
-    var newWindow = window.open();    
+    var newWindow = window.open();
     var newDoc = newWindow.document;
     newDoc.write(fileString);
     newDoc.close();
@@ -466,7 +502,7 @@ var getGistList = function(gist) {
     for (var file in gist.files) {
         rtn_str = rtn_str +
         '<li>'+
-            '<a class="gist-file-name" gistid="' + gist.id + '" href="#">'+ 
+            '<a class="gist-file-name" gistid="' + gist.id + '" href="#">'+
                 gist.files[file].filename +
             '</a>'+
         '</li>'
@@ -475,14 +511,14 @@ var getGistList = function(gist) {
 };
 
 var initMouseTrap = function() {
-    
+
     // ACTIONS:
     // Build parser
-    Mousetrap.bind('ctrl+b', function() { buildParser(); });  
+    Mousetrap.bind('ctrl+b', function() { buildParser(); });
     // Do parse
     Mousetrap.bind('ctrl+p', function(e) {
         e.preventDefault();
-        doParse(); 
+        doParse();
     });
 
     // SETTINGS:
@@ -539,13 +575,13 @@ var initPegEditor =  function() {
         // Personal preferences:
         editor.setOption("tabSize", 2);
         editor.setOption('scrollPastEnd', '40');
-    }        
+    }
 
     // Retrieve stored text/titlename if gist wasn't provided in url:
     if (!document.location.search) {
         editor.setValue(localStorage.getItem('grammar'), -1);
         $('#peg-editor-title').html(localStorage.getItem('filename'));
-    }    
+    }
 
     if (editor.getValue !== "") {
         buildParser();
@@ -579,10 +615,10 @@ var initSourceEditor = function() {
         // Personal preferences:
         source.setOption("tabSize", 2);
         source.setOption('scrollPastEnd', '40');
-    }       
-    
+    }
+
     source.setValue(localStorage.getItem('source'), -1);
-    
+
     source.getSession().on('change', function() {
         localStorage.setItem("source", source.getValue());
         // doParse();
@@ -592,12 +628,12 @@ var initSourceEditor = function() {
 
     Mousetrap.bind('v 2', function() { $('#treediv').addClass('active'); });
     Mousetrap.bind('v 3', function() { $('#console-view').addClass('active'); });
-    
+
 
     createButtonEvents();
 
     bindKeys(source);
-    // Build parser when focus goes to source editor:   
+    // Build parser when focus goes to source editor:
     // $(source).focus(function() {
     //     if (editor.getValue()) {
     //         buildParser();
@@ -627,7 +663,7 @@ var openFileFromGist = function(gistid) {
             peg_filename,
             peg_content;
          debugData = gist_data;
-        // Build an array of files in the gist            
+        // Build an array of files in the gist
         for (var f in gist_data.files) {
             files.push(gist_data.files[f]);
         }
@@ -644,7 +680,7 @@ var openFileFromGist = function(gistid) {
 
         // Apply the filename to the editor title:
         $('#peg-editor-title .title-text').html(peg_filename + '&nbsp');
-        
+
         // If there's more than one file:
         if (files.length > 1) {
             // Show the drop-down caret
@@ -660,7 +696,7 @@ var openFileFromGist = function(gistid) {
         $('#peg-editor-file-list a').click( function(e) {
             $('#peg-editor-title .title-text').html(e.target.text);
             editor.setValue(gist_data.files[e.target.text].content, -1);
-        });    
+        });
 
         // If the url specifies a file for the peg which is in the gist, use it:
         if (params.source_filename && gist_data.files[params.source_filename]) {
@@ -692,11 +728,11 @@ var open_gist = function(gistid) {
 
 var openUserGists = function() {
     $.ajax({
-        url: 'https://api.github.com/users/' + 
+        url: 'https://api.github.com/users/' +
             localStorage.getItem('github-login') +
             '/gists?access_token=' +
             localStorage.getItem('github_access_token'),
-        // 'https://api.github.com/users/'+ 
+        // 'https://api.github.com/users/'+
         //     localStorage.getItem('github-login') +
         //     'gists/?access_token=' +
         //     localStorage.getItem('github_access_token') ,
@@ -705,8 +741,8 @@ var openUserGists = function() {
     }).done( function(gist_data) {
 
         // To be used for creating a list of recent gist ids:
-    
-        
+
+
 
 
         localStorage.setItem('gist_data', JSON.stringify(gist_data));
@@ -726,12 +762,12 @@ var openUserGists = function() {
                     '<ul class="left-submenu">'+
                         '<li class="back"><a href="#">Back</a></li>'+
                         '<li><label>'+ gist_data.data[gist].description +'</label></li>'+
-                        getGistList(gist_data.data[gist]) + 
+                        getGistList(gist_data.data[gist]) +
                     '</ul>'+    // .left-submenu
                 '</li>' // .has-submenu
             );
         }
-        
+
         $('a.gist-file-name').click( function(e) {
             e.preventDefault();
             console.log('clicked');
@@ -748,11 +784,11 @@ var openUserGists = function() {
 
                     // Save the filename in localStorage for reloads:
                     localStorage.setItem('filename', filename);
-                    
+
                     // Load file content into editor:
                     editor.setValue(data.files[filename].content, -1);
                     editor.scrollToLine(0);
-                    
+
                     // Build the parser:
                     buildParser();
                 });
@@ -765,7 +801,7 @@ var resizeElements = function() {
     // Resize peg editor:
     $('#editor').height(window.innerHeight * 0.9);
     $('#editor').height(window.innerHeight * 0.9);
-    
+
     editor.resize();
 
     $('#right-panel').height($('#left-panel').height());
@@ -795,10 +831,10 @@ var setToken = function(showAlert) {
     }).done( function(data) {
         // Update the state of the logged_in flag:
         logged_in = true;
-      
+
         // Save the user's github login id:
         localStorage.setItem('github-login',data.login)
-      
+
         // Hide login stuff, reveal user stuff:
         $('#login-btn').toggleClass('gone');
         $('#offcanvas-load-user-gists').toggleClass('gone')
@@ -817,14 +853,14 @@ var setToken = function(showAlert) {
 
         // Now load their gists:
         openUserGists();
-        
+
         $(document).foundation('reflow');
-        
+
         // $('#avatar').height('44px');
 
         // Close the prompt:
         $('#token-prompt').foundation('reveal', 'close');
-    
+
     // On failure:
     }).fail( function() {
         // Update the state of the loggin-in flag:
@@ -835,7 +871,7 @@ var setToken = function(showAlert) {
             createAlert('alert', 'Unable to login with that token.', '#status');
             $('#token-prompt').foundation('reveal','close');
         }
-    });  
+    });
 };
 
 /** startRide
@@ -846,11 +882,11 @@ var setToken = function(showAlert) {
  */
 var startRide = function() {
     // if (!localStorage.getItem('visited')) {
-    //     localStorage.setItem('visited', 'true');    
-    //     document.location = document.location.origin + document.location.pathname + '?705fdf83758491bbd5c5'        
+    //     localStorage.setItem('visited', 'true');
+    //     document.location = document.location.origin + document.location.pathname + '?705fdf83758491bbd5c5'
     // } else if (!localStorage.getItem('joyridden')) {
     //     localStorage.setItem('joyridden', 'true');
     //     $(document).foundation('joyride', 'start');
     // }
-    
+
 };
