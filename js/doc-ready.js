@@ -179,7 +179,7 @@ var buildParser = function() {
 };
 
 var changeSize = function(target, delta) {
-    target.setOption('fontSize', target.getOption('fontSize') + delta);
+    target.setOption('fontSize', parseInt(target.getOption('fontSize')) + parseInt(delta));
 };
 
 var commitChanges = function() {
