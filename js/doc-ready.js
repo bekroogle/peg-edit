@@ -260,6 +260,7 @@ var createButtonEvents = function() {
         editor.setValue(atob(repo.content), -1);
         buildParser();
       });
+      $('#peg-editor-title .title-text').html('C Spot Run');
     });
     $('#open-gist-btn').click( function(e) {
         e.preventDefault();
