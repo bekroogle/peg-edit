@@ -1,0 +1,7 @@
+language: ruby
+rvm:
+- '1.9.3'
+script: ./deploy.sh
+env:
+ global:
+ - GH_REF: github.com/bekroogle/cspotrun.git
