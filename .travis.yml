@@ -1,7 +1,9 @@
 language: ruby
 rvm:
 - '1.9.3'
+before_install:
+- gem
 script: ./deploy.sh
 env:
  global:
- - GH_REF: github.com/bekroogle/cspotrun.git
+ - GH_REF: github.com/bekroogle/pegedit.git
