@@ -1,5 +1,4 @@
 #!/bin/bash
-haml index.haml index.html
 rm -rf out || exit 0;
 mkdir out;
 ( cd out
@@ -8,7 +7,6 @@ mkdir out;
   git config user.email "bekroogle@gmail.com"
   cp ../index.html ./index.html
   cp ../js ./ -r
-  cp ../images ./ -r
   cp ../stylesheets ./ -r
   cp ../CNAME ./CNAME
   cp ../bower_components ./bower_components -r
