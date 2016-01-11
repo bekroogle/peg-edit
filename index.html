@@ -1,502 +1,79 @@
 <!DOCTYPE html>
-<html class='no-js' lang='en'>
-  <head>
-    <meta charset='utf-8'>
-    <meta content='width=device-width, initial-scale=1.0' name='viewport'>
-    <title>PEGedit</title>
-    <link href='stylesheets/app.css' rel='stylesheet'>
-    <link href='./bower_components/fontawesome/css/font-awesome.css' rel='stylesheet'>
-    <script src='bower_components/modernizr/modernizr.js'></script>
-  </head>
-  <body>
-    <div class='row' id='top-row'>
-      <nav class='top-bar' data-topbar='' role='navigation'>
-        <ul class='title-area'>
-          <li class='name'>
-            <h1>
-              <a href='#'>pegedit</a>
-            </h1>
-          </li>
-          <li class='toggle-topbar menu-icon'>
-            <a href='#'>
-              <span></span>
-            </a>
-          </li>
-        </ul>
-        <section class='top-bar-section'>
-          <ul>
-            <li class='divider'></li>
-            <li id='topbar-build-parser-btn'>
-              <a href='#'>
-                <i class='fa fa-cubes'></i>
-                Build Parser
-              </a>
-            </li>
-            <li class='divider'></li>
-            <li id='topbar-parse-btn'>
-              <a href='#'>
-                <i class='fa fa-play'></i>
-                Parse
-              </a>
-            </li>
-          </ul>
-          <ul class='right'>
-            <li id='login-btn'>
-              <a data-reveal-id='token-prompt' href='#'>
-                <i class='fa fa-github'></i>
-                Login
-              </a>
-            </li>
-            <li class='has-dropdown gone' id='user-account'>
-              <a href='#' id='github-id'></a>
-              <ul class='dropdown'>
-                <li>
-                  <a href='#' id='logout-btn'>Logout</a>
-                </li>
+<html lang="en">
+<head>
+    <title>jQuery Docking Layout Sample</title>
+    <link rel="stylesheet" href="bower_components/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
+
+</head>
+<body>
+  <div id='jqxMenu'>
+      <ul>
+          <li><a href="#">Home</a></li>
+          <li>About Us
+              <ul>
+                  <li><a href="#">History</a></li>
+                  <li><a href="#">Our Vision</a></li>
               </ul>
-            </li>
-            <li class='divider'></li>
-            <li class='has-dropdown' id='help-dropdown'>
-              <a href='#'>
-                <i class='fa fa-question'></i>
-                Help
-              </a>
-              <ul class='dropdown'>
-                <li>
-                  <a href='https://github.com/bekroogle/pegedit/wiki/Keybindings' target='_blank'>
-                    <i class='fa fa-keyboard-o'></i>
-                    &nbsp; Keybindings
-                  </a>
-                </li>
-                <li>
-                  <a href='#' id='help-btn'>
-                    <i class='fa fa-graduation-cap'></i>
-                    &nbsp; Welcome tutorial
-                  </a>
-                </li>
-                <li>
-                  <a href='https://github.com/bekroogle/pegedit/wiki' target='_blank'>
-                    <i class='fa fa-book'></i>
-                    &nbsp; Wiki
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </section>
-      </nav>
-    </div>
-    <div class='row'>
-      <!-- Left panel -->
-      <div class='small-12 large-6 columns'>
-        <div class='row'>
-          <div class='small-12-columns' id='left-panel'>
-            <div class='off-canvas-wrap' data-offcanvas='' id='peg-editor-menu'>
-              <div class='inner-wrap'>
-                <nav class='tab-bar'>
-                  <section class='left-small'>
-                    <a class='left-off-canvas-toggle menu-icon' href='#'>
-                      <span></span>
-                    </a>
-                  </section>
-                  <section class='middle tab-bar-section'>
-                    <a aria-controls='peg-editor-file-list' aria-expanded='false' data-dropdown='peg-editor-file-list' id='peg-editor-title'>
-                      <span class='title-text'>PEG.js Editor &nbsp;</span>
-                      <i class='fa fa-caret-down gone'></i>
-                      <ul aria-hidden='true' class='f-dropdown' data-dropdown-content='' id='peg-editor-file-list' tabindex='-1'></ul>
-                    </a>
-                  </section>
-                </nav>
-                <aside class='left-off-canvas-menu'>
-                  <ul class='off-canvas-list'>
-                    <li>
-                      <label>Actions:</label>
-                    </li>
-                    <li id='build-parser-btn'>
-                      <a href='#'>
-                        <i class='fa fa-cubes'>
-                          Build parser
-                        </i>
-                      </a>
-                    </li>
-                    <li class='gone' id='save-changes-btn'>
-                      <a href='#'>
-                        <i class='fa fa-cloud-upload'>
-                          Commit changes to Gist
-                        </i>
-                      </a>
-                    </li>
-                    <li class='divider'></li>
-                    <li>
-                      <a data-reveal-id='download-prompt' href='#' id='open-export-menu'>
-                        <i class='fa fa-download'></i>
-                        Download your parser
-                      </a>
-                    </li>
-                    <li>
-                      <label>Open Grammar:</label>
-                    </li>
-                    <li class='gone has-submenu' id='offcanvas-load-user-gists'>
-                      <a href='#'>
-                        <i class='fa fa-github'></i>
-                      </a>
-                      <ul class='left-submenu' id='gist-list'>
-                        <li class='back'>
-                          <a href='#'>Back</a>
-                        </li>
-                        <li>
-                          <label id='users-gists-label'>
-                          </label>
-                        </li>
+          </li>
+          <li>Services
+          </li>
+          <li>Products
+              <ul>
+                  <li><a href="#">New</a>
+                      <ul>
+                          <li><a href="#">Corporate Use</a></li>
+                          <li><a href="#">Private Use</a></li>
                       </ul>
-                    </li>
-                    <li>
-                      <a data-reveal-id='gist-prompt' href='#' id='open-gist-prompt-btn'>
-                        <i class='fa fa-github-alt'></i>
-                        By Gist ID
-                      </a>
-                    </li>
-                    <li>
-                      <a href='#' id='open-samples-btn'>
-                        <i class='fa fa-file-code-o'></i>
-                        Samples
-                      </a>
-                    </li>
-                    <li>
-                      <a href='#' id='open-cspotrun-btn'>
-                        <i class='fa fa-file-code-0'></i>
-                        C Spot Run
-                      </a>
-                    </li>
-                    <li>
-                      <label>Settings</label>
-                    </li>
-                    <li>
-                      <a href='#' id='peg-zoom-in-btn'>
-                        <i class='fa fa-search-plus'>
-                          Increase font size
-                        </i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href='#' id='peg-zoom-out-btn'>
-                        <i class='fa fa-search-minus'>
-                          Decrease font size
-                        </i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href='#' id='peg-editor-settings-btn'>
-                        <i class='fa fa-cog'>
-                          Advanced settings
-                        </i>
-                      </a>
-                    </li>
-                    <li class='divider'></li>
-                    <li>
-                      <a href='#' id='peg-editor-fullscreen-btn'>
-                        <i class='fa fa-expand'>
-                          Full Screen
-                        </i>
-                      </a>
-                    </li>
-                  </ul>
-                </aside>
-                <a class='exit-off-canvas' href='#'></a>
-                <div id='editor'></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class='small-12 large-6 columns' id='right-panel'>
-        <div class='row'>
-          <div class='small-12 columns' id='top-right'>
-            <div class='off-canvas-wrap' data-offcanvas='' id='source-editor-menu'>
-              <div class='inner-wrap'>
-                <nav class='tab-bar' data-topbar role='navigation'>
-                  <section class='left-small'>
-                    <a class='left-off-canvas-toggle menu-icon' href='#'>
-                      <span></span>
-                    </a>
-                  </section>
-                  <section class='middle tab-bar-section'>
-                    <span>
-                      <span id='source-editor-title'>Parse string editor</span>
-                    </span>
-                  </section>
-                </nav>
-                <aside class='left-off-canvas-menu'>
-                  <ul class='off-canvas-list'>
-                    <li>
-                      <label>Actions</label>
-                    </li>
-                    <li>
-                      <a href='#' id='parse-btn'>
-                        <i class='fa fa-play'></i>
-                        Parse
-                      </a>
-                    </li>
-                    <li>
-                      <label>Settings</label>
-                    </li>
-                    <li>
-                      <a href='#' id='source-zoom-in-btn'>
-                        <i class='fa fa-search-plus'>
-                          Increase font size
-                        </i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href='#' id='source-zoom-out-btn'>
-                        <i class='fa fa-search-minus'>
-                          Decrease font size
-                        </i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href='#' id='source-editor-settings-btn'>
-                        <i class='fa fa-cog'>
-                          Advanced settings
-                        </i>
-                      </a>
-                    </li>
-                    <li class='divider'></li>
-                    <li>
-                      <a href='#' id='source-editor-fullscreen-btn'>
-                        <i class='fa fa-expand'>
-                          Full Screen
-                        </i>
-                      </a>
-                    </li>
-                  </ul>
-                </aside>
-                <a class='exit-off-canvas' href='#'></a>
-                <div id='source'></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class='row'>
-          <div class='small-12 columns' id='bottom-right'>
-            <div class='off-canvas-wrap' data-offcanvas='' id='output-panel-menu'>
-              <div class='inner-wrap'>
-                <nav class='tab-bar' data-topbar role='navigation'>
-                  <section class='left-small'>
-                    <a class='left-off-canvas-toggle menu-icon' href='#'>
-                      <span></span>
-                    </a>
-                  </section>
-                  <section class='middle tab-bar-section'>
-                    <span>
-                      <span id='source-editor-title'>Output</span>
-                    </span>
-                  </section>
-                </nav>
-                <aside class='left-off-canvas-menu'>
-                  <ul class='off-canvas-list' id='toggle-views'>
-                    <li>
-                      <label>Toggle views</label>
-                    </li>
-                    <li>
-                      <a href='#' id='parser-output-toggle'>
-                        <input checked='' type='checkbox'>
-                        Parser output
-                      </a>
-                    </li>
-                    <li>
-                      <a href='#' id='tree-view-toggle'>
-                        <input checked='' type='checkbox'>
-                        Tree view
-                      </a>
-                    </li>
-                    <li>
-                      <a href='#' id='console-view-toggle'>
-                        <input checked='' type='checkbox'>
-                        Console view
-                      </a>
-                    </li>
-                    <li>
-                      <a href='#' id='symbol-table-view-toggle'>
-                        <input checked='' type='checkbox'>
-                        Symbol table view
-                      </a>
-                    </li>
-                  </ul>
-                </aside>
-                <a class='exit-off-canvas' href='#'></a>
-                <dl class='tabs' data-tab=''>
-                  <dd class='active' id='parser-output-tab'>
-                    <a href='#parser-output'>
-                      <i class='fa fa-code'></i>
-                      Parser output
-                    </a>
-                  </dd>
-                  <dd id='tree-view-tab'>
-                    <a href='#treediv'>
-                      <i class='fa fa-sitemap'></i>
-                      Tree view
-                    </a>
-                  </dd>
-                  <dd id='console-view-tab'>
-                    <a href='#console-view'>
-                      <i class='fa fa-terminal'></i>
-                      Console view
-                    </a>
-                  </dd>
-                  <dd id='symbol-table-view-tab'>
-                    <a href='#symbol-table-view'>
-                      <i class='fa fa-table'></i>
-                      Symbol table view
-                    </a>
-                  </dd>
-                </dl>
-                <div class='tabs-content'>
-                  <div class='content active' id='parser-output'></div>
-                  <div class='content' id='treediv'></div>
-                  <div class='content' id='console-view'></div>
-                  <div class='content' id='symbol-table-view'></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                  </li>
+                  <li><a href="#">Used</a>
+                      <ul>
+                          <li><a href="#">Corporate Use</a></li>
+                          <li><a href="#">Private Use</a></li>
+                      </ul>
+                  </li>
+                  <li><a href="#">Featured</a></li>
+               </ul>
+          </li>
+          <li><a href="#">Gallery</a></li>
+          <li><a href="#">Events</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact Us</a></li>
+      </ul>
+  </div>
+  </div>
+
+
+    <div id="jqxDockingLayout" style="width: 100% !important">
+
+        <!--autoHideGroup-->
+        <div data-container="ToolboxPanel">
+            List of tools</div>
+        <div data-container="HelpPanel">
+            Help topics</div>
+        <!--documentGroup-->
+        <div data-container="Document1Panel">
+            Document 1 content</div>
+        <div data-container="Document2Panel">
+            Document 2 content</div>
+        <!--bottom tabbedGroup-->
+        <div data-container="ErrorListPanel">
+            List of errors</div>
+        <!--right tabbedGroup-->
+        <div data-container="SolutionExplorerPanel">
+            Solution structure</div>
+        <div data-container="PropertiesPanel">
+            List of properties</div>
+        <!--floatGroup-->
+        <div data-container="OutputPanel">
+            Output</div>
     </div>
-    <div class='reveal-modal tiny' data-reveal='' id='gist-prompt'>
-      <h4>Load file by Gist ID</h4>
-      <form>
-        <row>
-          <div class='small-2 columns'>
-            <label class='right inline' for='gist-id'>
-              Gist ID:
-            </label>
-          </div>
-          <div class='small-8 columns'>
-            <input id='gist-id' type='text'>
-          </div>
-          <div class='small-2 columns'>
-            <a class='button' href='#' id='open-gist-btn'>Go!</a>
-          </div>
-        </row>
-      </form>
-      <a class='close-reveal-modal'>&#215;</a>
-    </div>
-    <div class='reveal-modal small' data-reveal='' id='download-prompt'>
-      <h4>Download your parser.</h4>
-      <form>
-        <row>
-          <div class='small-4 columns'>
-            <label class='right inline' for='parser-variable-name'>
-              Parser variable name:
-            </label>
-          </div>
-          <div class='small-5 columns'>
-            <input id='parser-variable-name' placeholder='module.exports' type='text'>
-          </div>
-          <div class='small-3 columns'>
-            <a class='button' href='#' id='download-prompt-btn'>Snag it!</a>
-          </div>
-        </row>
-        <row>
-          <div class='small-2 columns'></div>
-          <div class='small-8 columns'>
-            <p>(The raw source code will appear in an untitled pop-up.)</p>
-          </div>
-          <div class='small-2 columns'></div>
-        </row>
-      </form>
-      <a class='close-reveal-modal'>&#215;</a>
-    </div>
-    <div class='reveal-modal tiny' data-reveal='' id='token-prompt'>
-      <h4>Enter a GitHub personal access token:</h4>
-      <form>
-        <row>
-          <div class='small-1 columns'>
-            <label class='right inline' for='#access-token'></label>
-          </div>
-          <div class='small-8 columns'>
-            <input id='access-token' type='text'>
-          </div>
-          <div class='small-3 columns'>
-            <a class='button small' href='#' id='set-token-btn' type='submit'>Set token</a>
-          </div>
-        </row>
-        <row>
-          <div class='small-2 columns'></div>
-          <div class='small-8 columns'>
-            <p>
-              To generate a GitHub personal access token, go
-              <a href='https://github.com/settings/applications'>here</a>
-              .
-            </p>
-          </div>
-          <div class='small-2 columns'></div>
-        </row>
-      </form>
-      <a class='close-reveal-modal'>&#215</a>
-    </div>
-    <ol class='joyride-list' data-joyride=''>
-      <li data-options="prev_button: false; postRideCallback: function(){alert('test');}">
-        <h4>Welcome to pegedit</h4>
-        <p>
-          <em>
-            Please note that this site is an alpha-stage prototype under rapid development.
-            It is likely to change often and, at times, some features may be broken or only
-            partially implemented.
-          </em>
-        </p>
-        <p>Click next for an extremely brief tour.</p>
-        <p>You can watch see this again at any time by clicking "Help" at the top of the screen.</p>
-      </li>
-      <li data-id='editor' data-options='tip_location: right; prev_button: false'>
-        <h4>Make your parser...</h4>
-        <p>To start, you enter your PEG.js grammar here.</p>
-      </li>
-      <li data-id='stopTwo' data-options='tip_location: left' id='source-editor-tip'>
-        <h4>Parse Something!</h4>
-        <p>The text that your PEG.js grammar will be parsing goes here.</p>
-      </li>
-      <li data-button='Okay...' data-id='build-parser-btn' data-options='tip_location: right;'>
-        <h4>If you build it, they will come.</h4>
-        <p>Here's where you click to build your parser.</p>
-      </li>
-      <li data-button='Okay...' data-id='bottom-right'>
-        <h4>3 Ways to See the Results!</h4>
-        <p>Select one of the three tabs below to inspect your parser's results.</p>
-      </li>
-      <li data-id='parser-output-tab' data-options='tip_location: top'>
-        <h4>Parser output</h4>
-        <p>This is where you can see the JSON representation of the parse tree produced by your PEG.</p>
-      </li>
-      <li data-id='tree-view-tab' data-options='tip_location: top'>
-        <h4>What a pretty tree!</h4>
-        <p>Thanks to the library, d3.js, you don't need an imagination to visualize your parse tree!</p>
-      </li>
-      <li data-id='console-view-tab' data-options='tip_location: top'>
-        <h4>Console View</h4>
-        <p>This tab shows the results of traversing your parse tree...</p>
-        <p>Essentially, it's what you'd see if your program ran in a console.</p>
-      </li>
-      <li data-button='Got it!' data-id='samples'>
-        <h4>Try a sample to start!</h4>
-        <p>Click here to pick one of the sample grammars.</p>
-      </li>
-    </ol>
-    <script src='./bower_components/jquery/dist/jquery.min.js'></script>
-    <script src='./bower_components/foundation/js/foundation.min.js'></script>
-    <script src='./bower_components/foundation/js/foundation/foundation.joyride.js'></script>
-    <script src='./bower_components/foundation/js/foundation/foundation.topbar.js'></script>
-    <script src='./bower_components/foundation/js/foundation/foundation.offcanvas.js'></script>
-    <script src='./bower_components/foundation/js/foundation/foundation.tab.js'></script>
-    <script src='./bower_components/foundation/js/foundation/foundation.alert.js'></script>
-    <script src='./bower_components/ace-builds/src-min/ace.js'></script>
-    <script src='./bower_components/pegjs/peg-0.8.0.min.js'></script>
-    <script src='./bower_components/d3/d3.min.js'></script>
-    <script src='./bower_components/mousetrap/mousetrap.js'></script>
-    <script src='./bower_components/screenfull/dist/screenfull.js'></script>
-    <script src='./js/do-tree.js'></script>
-    <script src='./js/doc-ready.js'></script>
-    <script src='./js/app.js'></script>
-  </body>
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxribbon.js"></script>
+    <script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxwindow.js"></script>
+    <script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxlayout.js"></script>
+    <script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxdockinglayout.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+</body>
 </html>

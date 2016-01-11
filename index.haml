@@ -1,381 +1,82 @@
-
-!!! 5
-%html.no-js(lang="en")
+!!!
+%html{ lang: 'en' }
   %head
-    %meta(charset="utf-8")
-    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    %title PEGedit
-    %link(rel="stylesheet" href="stylesheets/app.css")
-    %link{"rel" => "stylesheet", "href" => "./bower_components/fontawesome/css/font-awesome.css"}
-    %script(src="bower_components/modernizr/modernizr.js")
+    %title jQuery Docking Layout Sample
+    %link{ href: 'bower_components/jqwidgets/jqwidgets/styles/jqx.base.css', rel: 'stylesheet', type: 'text/css' }
+    :css
+      .jqx-layout-group-auto-hide-content-vertical
+      {
+          width: 200px;
+      }
   %body
-    #top-row.row
-      %nav.top-bar{"data-topbar" => "", "role" => "navigation"}
-        %ul.title-area
-          %li.name
-            %h1
-              %a{:href => "#"} pegedit
-          %li.toggle-topbar.menu-icon
-            %a{:href => "#"}
-              %span
-        -# /ul
-
-        %section.top-bar-section
-          -# right nav section
+    #jqxMenu
+      %ul
+        %li
+          %a{:href => "#"} Home
+        %li
+          About Us
           %ul
-            %li.divider
-            %li#topbar-build-parser-btn
-              %a{:href => "#"}
-                %i.fa.fa-cubes
-                Build Parser
-            %li.divider
-            %li#topbar-parse-btn
-              %a{:href => "#"}
-                %i.fa.fa-play
-                Parse
-          %ul.right
-            %li#login-btn
-              %a{:href => "#", "data-reveal-id" => "token-prompt"}
-                %i.fa.fa-github
-                Login
-            %li#user-account.has-dropdown.gone
-              %a#github-id{:href => "#"}
-              %ul.dropdown
+            %li
+              %a{:href => "#"} History
+            %li
+              %a{:href => "#"} Our Vision
+        %li
+          Services
+        %li
+          Products
+          %ul
+            %li
+              %a{:href => "#"} New
+              %ul
                 %li
-                  %a#logout-btn{:href => "#"} Logout
-            %li.divider
-            %li#help-dropdown.has-dropdown
-              %a{:href => "#"}
-                %i.fa.fa-question
-                Help
-              %ul.dropdown
+                  %a{:href => "#"} Corporate Use
                 %li
-                  %a{:href => "https://github.com/bekroogle/pegedit/wiki/Keybindings", "target" => "_blank"}
-                    %i.fa.fa-keyboard-o
-                    &nbsp; Keybindings
+                  %a{:href => "#"} Private Use
+            %li
+              %a{:href => "#"} Used
+              %ul
                 %li
-                  %a#help-btn{:href => "#"}
-                    %i.fa.fa-graduation-cap
-                    &nbsp; Welcome tutorial
+                  %a{:href => "#"} Corporate Use
                 %li
-                  %a{:href => "https://github.com/bekroogle/pegedit/wiki", "target" => "_blank"}
-                    %i.fa.fa-book
-                    &nbsp; Wiki
-    -# main content row
-    .row
-      / Left panel
-      .small-12.large-6.columns
-        .row
-          .small-12-columns#left-panel
-            #peg-editor-menu.off-canvas-wrap{"data-offcanvas" => ""}
-              .inner-wrap
-                %nav.tab-bar
-                  %section.left-small
-                    %a.left-off-canvas-toggle.menu-icon{:href => "#"}
-                      %span
-                  %section.middle.tab-bar-section
-                    %a#peg-editor-title{"aria-controls" => "peg-editor-file-list", "aria-expanded" => "false", "data-dropdown" => "peg-editor-file-list"}
-                      %span.title-text PEG.js Editor &nbsp;
-                      %i.fa.fa-caret-down.gone
-                      %ul#peg-editor-file-list.f-dropdown{"aria-hidden" => "true", "data-dropdown-content" => "", :tabindex => "-1"}
-
-
-                %aside.left-off-canvas-menu
-                  %ul.off-canvas-list
-                    %li
-                      %label Actions:
-                    %li#build-parser-btn
-                      %a{:href => "#"}
-                        %i.fa.fa-cubes
-                          Build parser
-                    %li#save-changes-btn.gone
-                      %a{:href => "#"}
-                        %i.fa.fa-cloud-upload
-                          Commit changes to Gist
-                    %li.divider
-                    %li
-                      %a#open-export-menu{:href => "#", "data-reveal-id" => "download-prompt"}
-                        %i.fa.fa-download
-                        Download your parser
-                    %li
-                      %label Open Grammar:
-                    %li#offcanvas-load-user-gists.gone.has-submenu
-                      %a{:href => "#"}
-                        %i.fa.fa-github
-                        -# So-and-so's Gists >>
-                      %ul#gist-list.left-submenu
-                        %li.back
-                          %a{:href => "#"} Back
-                        %li
-                          %label#users-gists-label
-                            -# So-and-so's Gists:
-                    %li
-                      %a#open-gist-prompt-btn{:href => "#", "data-reveal-id" => "gist-prompt"}
-                        %i.fa.fa-github-alt
-                        By Gist ID
-                    %li
-                      %a#open-samples-btn{:href => "#"}
-                        %i.fa.fa-file-code-o
-                        Samples
-                    %li
-                      %a#open-cspotrun-btn{:href => "#"}
-                        %i.fa.fa-file-code-0
-                        C Spot Run
-                    %li
-                      %label Settings
-                    %li
-                      %a#peg-zoom-in-btn{:href => "#"}
-                        %i.fa.fa-search-plus
-                          Increase font size
-                    %li
-                      %a#peg-zoom-out-btn{:href => "#"}
-                        %i.fa.fa-search-minus
-                          Decrease font size
-                    %li
-                      %a#peg-editor-settings-btn{:href => "#"}
-                        %i.fa.fa-cog
-                          Advanced settings
-                    %li.divider
-                    %li
-                      %a#peg-editor-fullscreen-btn{:href => "#"}
-                        %i.fa.fa-expand
-                          Full Screen
-                %a.exit-off-canvas{:href => "#"}
-                #editor
-      -#
-      -# Right panel
-      -#
-      .small-12.large-6.columns#right-panel
-        -# Top right
-        .row
-          .small-12.columns#top-right
-            #source-editor-menu.off-canvas-wrap{"data-offcanvas" => ""}
-              .inner-wrap
-                %nav.tab-bar(data-topbar role="navigation")
-                  %section.left-small
-                    %a.left-off-canvas-toggle.menu-icon{:href => "#"}
-                      %span
-                  %section.middle.tab-bar-section
-                    %span
-                      %span#source-editor-title Parse string editor
-                %aside.left-off-canvas-menu
-                  %ul.off-canvas-list
-                    %li
-                      %label Actions
-                    %li
-                      %a#parse-btn{:href => "#"}
-                        %i.fa.fa-play
-                        Parse
-                    %li
-                      %label Settings
-                    %li
-                      %a#source-zoom-in-btn{:href => "#"}
-                        %i.fa.fa-search-plus
-                          Increase font size
-                    %li
-                      %a#source-zoom-out-btn{:href => "#"}
-                        %i.fa.fa-search-minus
-                          Decrease font size
-                    %li
-                      %a#source-editor-settings-btn{:href => "#"}
-                        %i.fa.fa-cog
-                          Advanced settings
-                    %li.divider
-                    %li
-                      %a#source-editor-fullscreen-btn{:href => "#"}
-                        %i.fa.fa-expand
-                          Full Screen
-                %a.exit-off-canvas{:href => "#"}
-                #source
-
-        -# Bottom right
-        .row
-          .small-12.columns#bottom-right
-            #output-panel-menu.off-canvas-wrap{"data-offcanvas" => ""}
-              .inner-wrap
-                %nav.tab-bar(data-topbar role="navigation")
-                  %section.left-small
-                    %a.left-off-canvas-toggle.menu-icon{:href => "#"}
-                      %span
-                  %section.middle.tab-bar-section
-                    %span
-                      %span#source-editor-title Output
-                %aside.left-off-canvas-menu
-                  %ul#toggle-views.off-canvas-list
-                    %li
-                      %label Toggle views
-                    %li
-                      %a#parser-output-toggle{:href => "#"}
-                        %input{"type" => "checkbox", "checked" => ""}
-                        Parser output
-                    %li
-                      %a#tree-view-toggle{:href => "#"}
-                        %input{"type" => "checkbox", "checked" => ""}
-                        Tree view
-                    %li
-                      %a#console-view-toggle{:href => "#"}
-                        %input{"type" => "checkbox", "checked" => ""}
-                        Console view
-                    %li
-                      %a#symbol-table-view-toggle{:href => "#"}
-                        %input{"type" => "checkbox", "checked" => ""}
-                        Symbol table view
-
-                %a.exit-off-canvas{:href => "#"}
-
-
-                %dl.tabs{"data-tab" => ""}
-                  %dd#parser-output-tab.active
-                    %a{:href => "#parser-output"}
-                      %i.fa.fa-code
-                      Parser output
-                  %dd#tree-view-tab
-                    %a{:href => "#treediv"}
-                      %i.fa.fa-sitemap
-                      Tree view
-                  %dd#console-view-tab
-                    %a{:href => "#console-view"}
-                      %i.fa.fa-terminal
-                      Console view
-                  %dd#symbol-table-view-tab
-                    %a{:href => "#symbol-table-view"}
-                      %i.fa.fa-table
-                      Symbol table view
-                .tabs-content
-                  #parser-output.content.active
-                  #treediv.content
-                  #console-view.content
-                  #symbol-table-view.content
-    -#
-      .row
-        #status.small-8.columns
-          %small
-            MIT License (MIT) &copy; 2014-2015 Benjamin J. Kruger.
-            %a{:href => "mailto://bekroogle@gmail.com"}bekroogle@gmail.com
-        #fork-col.small-4.columns
-          .right
-            %a{:href => "https://github.com/bekroogle/pegedit"}
-              %img#forkme-img{:src => "./forkme.png"}
-
-    -# Load Gist by ID Prompt
-    #gist-prompt.reveal-modal.tiny{"data-reveal" => ""}
-      %h4 Load file by Gist ID
-      %form
-        %row
-          .small-2.columns
-            %label.right.inline{"for" => "gist-id"}
-              Gist ID:
-          .small-8.columns
-            %input#gist-id{"type" => "text"}
-          .small-2.columns
-            %a#open-gist-btn.button{:href => "#"} Go!
-      %a.close-reveal-modal &#215;
-
-    -# Download Parser Prompt
-    #download-prompt.reveal-modal.small{"data-reveal" => ""}
-      %h4 Download your parser.
-      %form
-        %row
-          .small-4.columns
-            %label.right.inline{"for" => "parser-variable-name"}
-              Parser variable name:
-          .small-5.columns
-            %input#parser-variable-name{"type" => "text", "placeholder" => "module.exports"}
-          .small-3.columns
-            %a#download-prompt-btn.button{:href => "#"} Snag it!
-        %row
-          .small-2.columns
-          .small-8.columns
-            %p (The raw source code will appear in an untitled pop-up.)
-          .small-2.columns
-      %a.close-reveal-modal &#215;
-
-    -# GitHub Token Prompt
-    #token-prompt.reveal-modal.tiny{"data-reveal" => ""}
-      %h4 Enter a GitHub personal access token:
-      %form
-        %row
-          .small-1.columns
-            %label.right.inline{"for" => "#access-token"}
-          .small-8.columns
-            %input#access-token{"type" => "text"}
-          .small-3.columns
-            %a#set-token-btn.button.small{:href => "#", "type" => "submit"} Set token
-        %row
-          .small-2.columns
-          .small-8.columns
-            %p
-              To generate a GitHub personal access token, go
-              %a{:href => "https://github.com/settings/applications"} here
-              \.
-          .small-2.columns
-      %a.close-reveal-modal &#215
-
-    -# Joyride
-    %ol.joyride-list{"data-joyride" => ""}
-
-      %li{"data-options" => "prev_button: false; postRideCallback: function(){alert('test');}"}
-        %h4 Welcome to pegedit
-        %p
-          %em
-            Please note that this site is an alpha-stage prototype under rapid development.
-            It is likely to change often and, at times, some features may be broken or only
-            partially implemented.
-        %p Click next for an extremely brief tour.
-        %p You can watch see this again at any time by clicking "Help" at the top of the screen.
-
-      -# PEG editor:
-      %li{"data-id" => "editor", "data-options" => "tip_location: right; prev_button: false"}
-        %h4 Make your parser...
-        %p To start, you enter your PEG.js grammar here.
-
-      -# Source editor:
-      %li#source-editor-tip{"data-id" => "stopTwo", "data-options" => "tip_location: left"}
-        %h4 Parse Something!
-        %p  The text that your PEG.js grammar will be parsing goes here.
-
-      -# Build Parser
-      %li{"data-id" => "build-parser-btn", "data-options" => "tip_location: right;", "data-button" => "Okay..."}
-        %h4 If you build it, they will come.
-        %p Here's where you click to build your parser.
-      -# Output panel:
-      %li{"data-id" => "bottom-right", "data-button" => "Okay..."}
-        %h4 3 Ways to See the Results!
-        %p Select one of the three tabs below to inspect your parser's results.
-
-      -# Parser Output
-      %li{"data-id" => "parser-output-tab", "data-options" => "tip_location: top"}
-        %h4 Parser output
-        %p This is where you can see the JSON representation of the parse tree produced by your PEG.
-
-      -# Tree View
-      %li{"data-id" => "tree-view-tab", "data-options" => "tip_location: top"}
-        %h4 What a pretty tree!
-        %p Thanks to the library, d3.js, you don't need an imagination to visualize your parse tree!
-
-      -# Console View
-      %li{"data-id" => "console-view-tab", "data-options" => "tip_location: top"}
-        %h4 Console View
-        %p This tab shows the results of traversing your parse tree...
-        %p Essentially, it's what you'd see if your program ran in a console.
-
-
-      %li{"data-id" => "samples", "data-button" => "Got it!"}
-        %h4 Try a sample to start!
-        %p Click here to pick one of the sample grammars.
-    -# Script imports:
-    %script(src="./bower_components/jquery/dist/jquery.min.js")
-    %script(src="./bower_components/foundation/js/foundation.min.js")
-    %script(src="./bower_components/foundation/js/foundation/foundation.joyride.js")
-    %script(src="./bower_components/foundation/js/foundation/foundation.topbar.js")
-    %script(src="./bower_components/foundation/js/foundation/foundation.offcanvas.js")
-    %script(src="./bower_components/foundation/js/foundation/foundation.tab.js")
-    %script(src="./bower_components/foundation/js/foundation/foundation.alert.js")
-    %script(src="./bower_components/ace-builds/src-min/ace.js")
-    %script(src="./bower_components/pegjs/peg-0.8.0.min.js")
-    %script(src="./bower_components/d3/d3.min.js")
-    %script(src="./bower_components/mousetrap/mousetrap.js")
-    %script(src="./bower_components/screenfull/dist/screenfull.js")
-    %script(src="./js/do-tree.js")
-    %script(src="./js/doc-ready.js")
-    %script(src="./js/app.js")
+                  %a{:href => "#"} Private Use
+            %li
+              %a{:href => "#"} Featured
+        %li
+          %a{:href => "#"} Gallery
+        %li
+          %a{:href => "#"} Events
+        %li
+          %a{:href => "#"} Careers
+        %li
+          %a{:href => "#"} Contact Us
+    / </div>
+    #jqxDockingLayout
+      / autoHideGroup
+      %div{"data-container" => "ToolboxPanel"}
+        List of tools
+      %div{"data-container" => "HelpPanel"}
+        Help topics
+      / documentGroup
+      %div{"data-container" => "Document1Panel"}
+        Document 1 content
+      %div{"data-container" => "Document2Panel"}
+        Document 2 content
+      / bottom tabbedGroup
+      %div{"data-container" => "ErrorListPanel"}
+        List of errors
+      / right tabbedGroup
+      %div{"data-container" => "SolutionExplorerPanel"}
+        Solution structure
+      %div{"data-container" => "PropertiesPanel"}
+        List of properties
+      / floatGroup
+      %div{"data-container" => "OutputPanel"}
+        Output
+    %script{:src => "bower_components/jquery/dist/jquery.js", :type => "text/javascript"}
+    %script{:src => "bower_components/jqwidgets/jqwidgets/jqxcore.js", :type => "text/javascript"}
+    %script{:src => "bower_components/jqwidgets/jqwidgets/jqxmenu.js", :type => "text/javascript"}
+    %script{:src => "bower_components/jqwidgets/jqwidgets/jqxribbon.js", :type => "text/javascript"}
+    %script{:src => "bower_components/jqwidgets/jqwidgets/jqxwindow.js", :type => "text/javascript"}
+    %script{:src => "bower_components/jqwidgets/jqwidgets/jqxlayout.js", :type => "text/javascript"}
+    %script{:src => "bower_components/jqwidgets/jqwidgets/jqxdockinglayout.js", :type => "text/javascript"}
+    %script{:src => "js/app.js", :type => "text/javascript"}

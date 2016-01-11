@@ -1,0 +1,14 @@
+{
+  "name": "jqwidgets",
+  "homepage": "https://github.com/jqwidgets/jQWidgets",
+  "_release": "d31aa60807",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "d31aa6080733aad7b08d03732d064baaa5fa7e67"
+  },
+  "_source": "git://github.com/jqwidgets/jQWidgets.git",
+  "_target": "*",
+  "_originalSource": "jqwidgets",
+  "_direct": true
+}
