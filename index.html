@@ -1,79 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>jQuery Docking Layout Sample</title>
     <link rel="stylesheet" href="bower_components/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="bower_components/jqwidgets/jqwidgets/styles/jqx.metrodark.css" type="text/css" />
 
-</head>
-<body>
-  <div id='jqxMenu'>
+  </head>
+  <body>
+    <div id='jqxMenu'>
       <ul>
-          <li><a href="#">Home</a></li>
-          <li>About Us
-              <ul>
-                  <li><a href="#">History</a></li>
-                  <li><a href="#">Our Vision</a></li>
-              </ul>
+        <li>
+          <a href="#">Home</a>
+        </li>
+        <li>About Us<ul>
+          <li>
+            <a href="#">History</a>
           </li>
-          <li>Services
+          <li>
+            <a href="#">Our Vision</a>
           </li>
-          <li>Products
-              <ul>
-                  <li><a href="#">New</a>
-                      <ul>
-                          <li><a href="#">Corporate Use</a></li>
-                          <li><a href="#">Private Use</a></li>
-                      </ul>
-                  </li>
-                  <li><a href="#">Used</a>
-                      <ul>
-                          <li><a href="#">Corporate Use</a></li>
-                          <li><a href="#">Private Use</a></li>
-                      </ul>
-                  </li>
-                  <li><a href="#">Featured</a></li>
-               </ul>
-          </li>
-          <li><a href="#">Gallery</a></li>
-          <li><a href="#">Events</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </li>
+      <li>Services</li>
+      <li>Products<ul>
+        <li>
+          <a href="#">New</a>
+          <ul>
+            <li>
+              <a href="#">Corporate Use</a>
+            </li>
+            <li>
+              <a href="#">Private Use</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Used</a>
+          <ul>
+            <li>
+              <a href="#">Corporate Use</a>
+            </li>
+            <li>
+              <a href="#">Private Use</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Featured</a>
+        </li>
       </ul>
+    </li>
+    <li>
+      <a href="#">Gallery</a>
+    </li>
+    <li>
+      <a href="#">Events</a>
+    </li>
+    <li>
+      <a href="#">Careers</a>
+    </li>
+    <li>
+      <a href="#">Contact Us</a>
+    </li>
+  </ul>
+</div>
+</div>
+<div id="jqxDockingLayout">
+  <!--autoHideGroup-->
+  <!--documentGroup-->
+  <div id="peg-editor" data-container="peg-editor-container">
+    <div id="editor">#Grammar goes here.</div>
   </div>
-  </div>
+  <div data-container="SourceCode">Document 2 content</div>
+  <!--bottom tabbedGroup-->
+  <div data-container="Other">List of errors</div>
+  <div data-container="ParserOutput">Parser Output</div>
+  <div data-container="ParseTree">Parse Tree</div>
 
-
-    <div id="jqxDockingLayout" style="width: 100% !important">
-
-        <!--autoHideGroup-->
-        <div data-container="ToolboxPanel">
-            List of tools</div>
-        <div data-container="HelpPanel">
-            Help topics</div>
-        <!--documentGroup-->
-        <div data-container="Document1Panel">
-            Document 1 content</div>
-        <div data-container="Document2Panel">
-            Document 2 content</div>
-        <!--bottom tabbedGroup-->
-        <div data-container="ErrorListPanel">
-            List of errors</div>
-        <!--right tabbedGroup-->
-        <div data-container="SolutionExplorerPanel">
-            Solution structure</div>
-        <div data-container="PropertiesPanel">
-            List of properties</div>
-        <!--floatGroup-->
-        <div data-container="OutputPanel">
-            Output</div>
-    </div>
-    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxmenu.js"></script>
-    <script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxribbon.js"></script>
-    <script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxwindow.js"></script>
-    <script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxlayout.js"></script>
-    <script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxdockinglayout.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
+  <!--right tabbedGroup
+  <div data-container="SolutionExplorerPanel">Solution structure</div>
+  <div data-container="PropertiesPanel">List of properties</div>
+  <!--floatGroup-
+  <div data-container="OutputPanel">Output</div>
+-->
+</div>
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="bower_components/ace-builds/src/ace.js"></script>
+<script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxmenu.js"></script>
+<script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxribbon.js"></script>
+<script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxwindow.js"></script>
+<script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxlayout.js"></script>
+<script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxdockinglayout.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>

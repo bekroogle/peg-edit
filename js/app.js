@@ -1,80 +1,67 @@
-var DOCUMENT_GROUP_WIDTH = window.innerWidth / 2;
-var MENU_WIDTH = window.innerWidth;
+var THEME_CHOICE = 'metrodark';
 
-$(document).ready(function () {
-  $("#jqxMenu").jqxMenu({ width: MENU_WIDTH, height: 30});
-  // the 'layout' JSON array defines the internal structure of the docking layout
-  var layout = [{
-      type: 'layoutGroup',
-      orientation: 'horizontal',
-      items: [{
-          type: 'autoHideGroup',
-          alignment: 'left',
-          width: 80,
-          unpinnedWidth: 200,
-          items: [{
-              type: 'layoutPanel',
-              title: 'Toolbox',
-              contentContainer: 'ToolboxPanel'
-          }, {
-              type: 'layoutPanel',
-              title: 'Help',
-              contentContainer: 'HelpPanel'
-          }]
-      }, {
-          type: 'layoutGroup',
-          orientation: 'vertical',
-          width: DOCUMENT_GROUP_WIDTH,
-          items: [{
-              type: 'documentGroup',
-              height: 400,
-              minHeight: 200,
-              items: [{
-                  type: 'documentPanel',
-                  title: 'Document 1',
-                  contentContainer: 'Document1Panel'
-              }, {
-                  type: 'documentPanel',
-                  title: 'Document 2',
-                  contentContainer: 'Document2Panel'
-              }]
-          }, {
-              type: 'tabbedGroup',
-              height: 200,
-              pinnedHeight: 30,
-              items: [{
-                  type: 'layoutPanel',
-                  title: 'Error List',
-                  contentContainer: 'ErrorListPanel'
-              }]
-          }]
-      }, {
-          type: 'tabbedGroup',
-          width: 220,
-          minWidth: 200,
-          items: [{
-              type: 'layoutPanel',
-              title: 'Solution Explorer',
-              contentContainer: 'SolutionExplorerPanel'
-          }, {
-              type: 'layoutPanel',
-              title: 'Properties',
-              contentContainer: 'PropertiesPanel'
-          }]
-      }]
+// the 'layout' JSON array defines the internal structure of the docking layout
+var layout = [{
+  type: 'layoutGroup',
+  orientation: 'vertical',
+  // height: window.innerHeight,
+  width: window.innerWidth,
+  items: [{
+    type: 'documentGroup',
+    height: window.innerHeight - 246,
+    width: '100%',
+    items: [{
+      type: 'documentPanel',
+      title: 'Grammar',
+      contentContainer: 'peg-editor-container'
+    }, {
+      type: 'documentPanel',
+      title: 'Source Code',
+      contentContainer: 'SourceCode'
+    }]
   }, {
-      type: 'floatGroup',
-      width: 200,
-      height: 200,
-      position: {
-          x: 150,
-          y: 150
-      },
-      items: [{
-          type: 'layoutPanel',
-          title: 'Output',
-          contentContainer: 'OutputPanel'
-      }]
-  }];
-  $('#jqxDockingLayout').jqxDockingLayout({ width: window.innerWidth, height: window.innerHeight, layout: layout });
+    type: 'tabbedGroup',
+    align: 'bottom',
+    height: 200,
+    pinnedHeight: 150,
+    items: [{
+      type: 'layoutPanel',
+      title: 'Parser Output',
+      container: 'ParserOutput'
+    }, {
+      type: 'layoutPanel',
+      title: 'Parse Tree',
+      container: 'ParseTree'
+    }]
+  }]
+}];
+
+$(window).on('resize', function(e) {
+  $('#jqxMenu').width(window.innerWidth);
+  // $('#jqxDockingLayout').jqxDockingLayout('refresh');
+  doDockingLayoutFlow();
 });
+
+var doMenuFlow = function() {
+  $("#jqxMenu").jqxMenu({
+    theme: THEME_CHOICE,
+    width: '100%',
+    height: 30
+  });
+};
+
+var doDockingLayoutFlow = function() {
+  $('#jqxDockingLayout').jqxDockingLayout({
+    theme: THEME_CHOICE,
+    width: '100%',
+    height: window.innerHeight - $('#jqxMenu').height(),
+    layout: layout,
+  });
+};
+
+doMenuFlow();
+doDockingLayoutFlow();
+
+var editor = ace.edit('editor');
+$('#editor').height('100%');
+$('#editor').width('100%');

@@ -18,6 +18,7 @@
   ],
   "dependencies": {
     "jqwidgets": "*",
-    "jquery": "~2.2.0"
+    "jquery": "~2.2.0",
+    "ace-builds": "~1.2.2"
   }
 }
