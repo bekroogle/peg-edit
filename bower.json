@@ -11,7 +11,8 @@
     "mousetrap": "~1.4.6",
     "ace-builds": "~1.1.8",
     "fontawesome": "~4.2.0",
-    "screenfull": "~2.0.0"
+    "screenfull": "~2.0.0",
+    "modernizr": "~2.8.3"
   },
   "homepage": "https://github.com/bekroogle/pegedit",
   "authors": [
